@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.spring.data.mongodb)
 
     testImplementation(libs.kotest)
+    testImplementation(libs.mockk)
 }
 
 testing {
