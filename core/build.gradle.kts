@@ -1,5 +1,5 @@
 version = "0.0.0-beta.1"
-group = "com.inflab"
+group = "com.github.inflab"
 
 plugins {
     alias(libs.plugins.kotiln.jvm)

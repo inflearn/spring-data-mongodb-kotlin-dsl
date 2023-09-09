@@ -4,4 +4,4 @@ plugins {
 }
 
 rootProject.name = "spring-data-mongodb-kotlin-dsl"
-include("spring-data-mongodb-kotlin-dsl")
+include("core")
