@@ -1,6 +1,6 @@
-package com.inflab.spring.data.mongodb.kotlin.dsl.extension
+package com.github.inflab.spring.data.mongodb.core.extension
 
-import com.inflab.spring.data.mongodb.kotlin.dsl.aggregation.AggregationDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.AggregationDsl
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 

@@ -1,6 +1,6 @@
-package com.inflab.spring.data.mongodb.kotlin.dsl.aggregation
+package com.github.inflab.spring.data.mongodb.core.aggregation
 
-import com.inflab.spring.data.mongodb.kotlin.dsl.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 
 /**

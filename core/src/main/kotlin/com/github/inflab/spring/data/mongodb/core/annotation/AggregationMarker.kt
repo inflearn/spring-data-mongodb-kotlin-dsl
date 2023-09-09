@@ -1,4 +1,4 @@
-package com.inflab.spring.data.mongodb.kotlin.dsl.annotation
+package com.github.inflab.spring.data.mongodb.core.annotation
 
 /**
  * Marker annotation indicating that the annotated class is part of the MongoDB aggregation DSL.

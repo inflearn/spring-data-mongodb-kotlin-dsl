@@ -1,4 +1,4 @@
-package com.inflab.spring.data.mongodb.kotlin.dsl
+package com.github.inflab.spring.data.mongodb.core
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.booleans.shouldBeTrue
