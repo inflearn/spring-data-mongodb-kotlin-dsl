@@ -27,6 +27,7 @@ testing {
 }
 
 java {
+    withSourcesJar()
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
@@ -36,7 +37,7 @@ tasks.jar {
     manifest {
         attributes(
             mapOf(
-                "Implementation-Title" to project.name,
+                "Implementation-Title" to "spring-data-mongodb-kotlin-dsl",
                 "Implementation-Version" to project.version,
             ),
         )
