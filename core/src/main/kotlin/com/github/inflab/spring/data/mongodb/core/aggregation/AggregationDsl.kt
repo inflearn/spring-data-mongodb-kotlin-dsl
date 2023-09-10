@@ -36,6 +36,11 @@ class AggregationDsl {
         operations += SearchStageDsl().apply(searchConfiguration).build()
     }
 
+    /**
+     * Builds the [Aggregation] using the configured [AggregationOperation]s.
+     *
+     * @return The [Aggregation] built using the configured operations.
+     */
     fun build(): Aggregation =
         Aggregation.newAggregation(operations)
 }
