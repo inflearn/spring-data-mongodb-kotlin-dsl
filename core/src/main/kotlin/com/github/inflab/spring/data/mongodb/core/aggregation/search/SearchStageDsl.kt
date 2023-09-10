@@ -49,5 +49,5 @@ class SearchStageDsl {
             field = value
         }
 
-    fun build() = SearchOperation(document)
+    internal fun build() = SearchOperation(document)
 }
