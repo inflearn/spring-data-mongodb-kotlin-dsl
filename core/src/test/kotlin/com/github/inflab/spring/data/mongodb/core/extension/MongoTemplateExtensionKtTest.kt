@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation
 
 internal class MongoTemplateExtensionKtTest : FreeSpec({
     data class TestCollection(val id: String)
+    data class TestResult(val count: Int)
 
     "should call aggregate with aggregation and collectionName" {
         // given
@@ -21,7 +22,7 @@ internal class MongoTemplateExtensionKtTest : FreeSpec({
         every { mongoTemplate.aggregate(any<Aggregation>(), any<String>(), any<Class<*>>()) } returns mockk()
 
         // when
-        mongoTemplate.aggregate<TestCollection>(
+        mongoTemplate.aggregate<TestCollection, TestResult>(
             aggregation = aggregation,
             collectionName = collectionName,
         )
@@ -31,7 +32,7 @@ internal class MongoTemplateExtensionKtTest : FreeSpec({
             mongoTemplate.aggregate(
                 any<Aggregation>(),
                 collectionName,
-                TestCollection::class.java,
+                TestResult::class.java,
             )
         }
     }
@@ -46,7 +47,7 @@ internal class MongoTemplateExtensionKtTest : FreeSpec({
         every { mongoTemplate.aggregate(any<Aggregation>(), any<String>(), any<Class<*>>()) } returns mockk()
 
         // when
-        mongoTemplate.aggregate<TestCollection>(
+        mongoTemplate.aggregate<TestCollection, TestResult>(
             aggregation = aggregation,
         )
 
@@ -56,7 +57,7 @@ internal class MongoTemplateExtensionKtTest : FreeSpec({
             mongoTemplate.aggregate(
                 any<Aggregation>(),
                 collectionName,
-                TestCollection::class.java,
+                TestResult::class.java,
             )
         }
     }

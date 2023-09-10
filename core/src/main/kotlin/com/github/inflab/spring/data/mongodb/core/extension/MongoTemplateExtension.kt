@@ -15,12 +15,12 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults
  * @return The [AggregationResults] of the aggregation.
  * @see [AggregationDsl]
  */
-inline fun <reified T> MongoTemplate.aggregate(
-    aggregation: AggregationDsl.() -> Unit,
+inline fun <reified T, reified O> MongoTemplate.aggregate(
     collectionName: String? = null,
-): AggregationResults<T> =
+    aggregation: AggregationDsl.() -> Unit,
+): AggregationResults<O> =
     aggregate(
         AggregationDsl().apply(aggregation).build(),
         collectionName ?: getCollectionName(T::class.java),
-        T::class.java,
+        O::class.java,
     )
