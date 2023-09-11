@@ -12,6 +12,6 @@ internal class AggregationKtTest : FreeSpec({
             count("count")
         }
 
-        aggregation shouldBe newAggregation(count().`as`("count"))
+        aggregation.toString() shouldBe newAggregation(count().`as`("count")).toString()
     }
 })
