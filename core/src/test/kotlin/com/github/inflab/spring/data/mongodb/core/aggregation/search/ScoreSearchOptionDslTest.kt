@@ -102,4 +102,84 @@ class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
     }
+
+    "constant" - {
+        "should set value with given one" {
+            // given
+            val option = score {
+                constant(2.0)
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "score": {
+                    "constant": {
+                      "value": 2.0
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "embedded" - {
+        "should set aggregate with strategy" {
+            // given
+            val option = score {
+                embedded(ScoreEmbeddedAggregateStrategy.MEAN)
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "score": {
+                    "embedded": {
+                      "aggregate": "mean"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should set outerScore with default strategy" {
+            // given
+            val option = score {
+                embedded {
+                    boost(2.0)
+                }
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "score": {
+                    "embedded": {
+                      "aggregate": "sum",
+                      "outerScore": {
+                        "boost": {
+                          "value": 2.0
+                        }
+                      }
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

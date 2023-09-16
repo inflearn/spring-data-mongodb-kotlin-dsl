@@ -46,5 +46,36 @@ class ScoreSearchOptionDsl {
         boost(path.name, undefined)
     }
 
+    /**
+     * Replaces the base score with a specified number.
+     *
+     * @param value Numeric value to replace the base score with.
+     */
+    fun constant(value: Double) {
+        document["constant"] = Document("value", value)
+    }
+
+    /**
+     * Configures the following:
+     *
+     * - Aggregate the scores of multiple matching embedded documents
+     * - Modify the score of an [EmbeddedDocument](https://www.mongodb.com/docs/atlas/atlas-search/embedded-document/#std-label-embedded-document-ref) operator after aggregating the scores from matching embedded documents.
+     *
+     * @param aggregate [ScoreEmbeddedAggregateStrategy] for combining scores of matching embedded documents.
+     * @param outerScore [ScoreSearchOptionDsl] for the score modification to apply after applying the aggregation strategy.
+     */
+    fun embedded(
+        aggregate: ScoreEmbeddedAggregateStrategy = ScoreEmbeddedAggregateStrategy.SUM,
+        outerScore: (ScoreSearchOptionDsl.() -> Unit)? = null,
+    ) {
+        document["embedded"] = Document("aggregate", aggregate.name.lowercase()).apply {
+            outerScore?.let {
+                put("outerScore", ScoreSearchOptionDsl().apply(it).get())
+            }
+        }
+    }
+
     internal fun build() = Document("score", document)
+
+    internal fun get(): Document = document
 }
