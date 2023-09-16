@@ -4,7 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.bson.Document
 
 /**
- * A Kotlin DSL to configure [SearchOperation]  using idiomatic Kotlin code.
+ * A Kotlin DSL to configure [SearchOperation] using idiomatic Kotlin code.
  *
  * @author Jake Son
  * @since 1.0
