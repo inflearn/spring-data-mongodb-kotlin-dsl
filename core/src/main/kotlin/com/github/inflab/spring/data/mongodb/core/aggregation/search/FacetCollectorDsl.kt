@@ -33,7 +33,8 @@ class FacetCollectorDsl {
      * Note that the string field must be indexed as [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
      *
      * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param numBuckets Maximum number of facet categories to return in the results. Value must be less than or equal to 1000.
+     * @param numBuckets Maximum number of facet categories to return in the results.
+     * Value must be less than or equal to 1000.
      * If specified, Atlas Search may return fewer categories than requested if the data is grouped into fewer categories than your requested number.
      * If omitted, defaults to 10, which means that Atlas Search will return only the top 10 facet categories by count.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#string-facets">String Facets</a>
@@ -51,7 +52,8 @@ class FacetCollectorDsl {
      * Note that the string field must be indexed as [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
      *
      * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param numBuckets Maximum number of facet categories to return in the results. Value must be less than or equal to 1000.
+     * @param numBuckets Maximum number of facet categories to return in the results.
+     * Value must be less than or equal to 1000.
      * If specified, Atlas Search may return fewer categories than requested if the data is grouped into fewer categories than your requested number.
      * If omitted, defaults to 10, which means that Atlas Search will return only the top 10 facet categories by count.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#string-facets">String Facets</a>

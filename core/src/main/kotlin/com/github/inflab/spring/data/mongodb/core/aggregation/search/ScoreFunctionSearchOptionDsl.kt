@@ -111,9 +111,12 @@ class ScoreFunctionSearchOptionDsl {
     /**
      * Create an expression that allows you to decay, or reduce by multiplying, the final scores of the documents based on the distance of a numeric field value from a specified origin point.
      *
-     * @param decay Rate at which you want to multiply the scores. Value must be a positive number between 0 and 1 exclusive. If omitted, defaults to 0.5.
+     * @param decay Rate at which you want to multiply the scores. Value must be a positive number between 0 and 1 exclusive.
+     * If omitted, defaults to 0.5.
      * For documents whose numeric field value (specified using path) is at a distance (specified using scale) away from origin plus or minus (±) offset, Atlas Search multiplies the current score using decay.
-     * @param offset Number to use to determine the distance from origin. The decay operation is performed only for documents whose distances are greater than origin plus or minus (±) offset. If ommitted, defaults to 0.
+     * @param offset Number to use to determine the distance from origin.
+     * The decay operation is performed only for documents whose distances are greater than origin plus or minus (±) offset.
+     * If ommitted, defaults to 0.
      * @param origin Point of origin from which to calculate the distance.
      * @param path Name of the numeric field whose value you want to use to multiply the base score.
      * @param scale Distance from origin plus or minus (±) offset at which scores must be multiplied.
@@ -129,7 +132,8 @@ class ScoreFunctionSearchOptionDsl {
     /**
      * Create an expression that calculates the log10 of given expression.
      *
-     * @param expression [Expression] to calculate the log10 of. If the specified expression evaluates to less than or equal to 0, then the log evaluates to undefined.
+     * @param expression [Expression] to calculate the log10 of.
+     * If the specified expression evaluates to less than or equal to 0, then the log evaluates to undefined.
      */
     fun log(expression: Expression) = Expression.Log(expression)
 
@@ -143,16 +147,20 @@ class ScoreFunctionSearchOptionDsl {
     /**
      * Create an expression that adds the results of multiple expressions.
      *
-     * @param expressions Adds a series of numbers. Takes an array of [Expression], which can have negative values. Array length must be greater than or equal to 2.
+     * @param expressions Adds a series of numbers.
+     * Takes an array of [Expression], which can have negative values.
+     * Array length must be greater than or equal to 2.
      */
-    fun add(vararg expressions: Expression) = Expression.Add(mutableListOf(*expressions))
+    fun add(vararg expressions: Expression) = Expression.Add(expressions.toMutableList())
 
     /**
      * Create an expression that multiplies the results of multiple expressions.
      *
-     * @param expressions Multiplies a series of numbers. Takes an array of [Expression], which can have negative values. Array length must be greater than or equal to 2.
+     * @param expressions Multiplies a series of numbers.
+     * Takes an array of [Expression], which can have negative values.
+     * Array length must be greater than or equal to 2.
      */
-    fun multiply(vararg expressions: Expression) = Expression.Multiply(mutableListOf(*expressions))
+    fun multiply(vararg expressions: Expression) = Expression.Multiply(expressions.toMutableList())
 
     internal fun build(): Document =
         checkNotNull(expression) { "Expression must not be null" }.toDocument()

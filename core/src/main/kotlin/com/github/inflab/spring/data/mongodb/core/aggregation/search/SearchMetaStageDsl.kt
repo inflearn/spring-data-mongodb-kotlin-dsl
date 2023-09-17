@@ -27,7 +27,8 @@ class SearchMetaStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollecto
     /**
      * Configures an option to include a lower bound count of the number of documents that match the query.
      *
-     * @param threshold Number of documents to include in the exact count. If omitted, defaults to 1000, which indicates that any number up to 1000 is an exact count and any number above 1000 is a rough count of the number of documents in the result.
+     * @param threshold Number of documents to include in the exact count.
+     * If omitted, defaults to 1000, which indicates that any number up to 1000 is an exact count and any number above 1000 is a rough count of the number of documents in the result.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/counting/#count-fts-results">Count Atlas Search Results</a>
      */
     fun lowerBoundCount(threshold: Int? = null) {
