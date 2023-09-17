@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperationCon
 /**
  * Encapsulates the aggregation framework `$search` operation.
  *
- * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/search">$search (aggregation)</a>
  * @author Jake Son
  * @since 1.0
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/search">$search (aggregation)</a>
  */
 class SearchOperation(
     private val document: Document,
