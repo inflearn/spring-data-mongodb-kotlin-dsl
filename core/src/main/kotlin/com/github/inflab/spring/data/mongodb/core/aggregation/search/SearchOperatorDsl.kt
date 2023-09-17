@@ -13,4 +13,8 @@ import org.bson.Document
 @AggregationMarker
 class SearchOperatorDsl : SearchOperator {
     override val operators = mutableListOf<Document>()
+
+    override fun text(configuration: TextSearchOperatorDsl.() -> Unit) {
+        operators.add(TextSearchOperatorDsl().apply(configuration).build())
+    }
 }
