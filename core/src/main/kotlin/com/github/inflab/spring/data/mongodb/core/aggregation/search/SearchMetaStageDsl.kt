@@ -47,7 +47,7 @@ class SearchMetaStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollecto
     }
 
     internal fun build(): SearchMetaOperation {
-        operations.forEach { document.putAll(it) }
+        operators.forEach { document.putAll(it) }
 
         return SearchMetaOperation(document)
     }
