@@ -11,4 +11,13 @@ import org.bson.Document
  */
 interface SearchOperator {
     val operators: MutableList<Document>
+
+    /**
+     * Performs a full-text search using the analyzer that you specify in the index configuration.
+     * If you omit an analyzer, the text operator uses the default standard analyzer.
+     *
+     * @param configuration The configuration block for the [TextSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/text/#text">text</a>
+     */
+    fun text(configuration: TextSearchOperatorDsl.() -> Unit)
 }
