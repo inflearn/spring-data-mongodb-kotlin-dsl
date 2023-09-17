@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 internal val jsonWriterSettings = JsonWriterSettings.builder().indent(true).build()
 
 fun Document.shouldBeJson(@Language("JSON") json: String) {
-    toJson(jsonWriterSettings) shouldBe json
+    toBsonDocument().toJson(jsonWriterSettings) shouldBe json
 }
 
 fun AggregationOperation.shouldBeJson(@Language("JSON") json: String) {
