@@ -66,46 +66,21 @@ class FacetSearchCollectorDsl {
     /**
      * Configures the numeric facet that allow you to determine the frequency of numeric values in your search results by breaking the results into separate ranges of numbers.
      *
-     * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param boundaries List of numeric values, in ascending order, that specify the boundaries for each bucket.
-     * You must specify at least two boundaries.
-     * Each adjacent pair of values acts as the inclusive lower bound and the exclusive upper bound for the bucket.
-     * @param default Name of an additional bucket that counts documents returned from the operator that do not fall within the specified boundaries.
-     * If omitted, Atlas Search includes the results of the facet operator that do not fall under a specified bucket also, but doesn't include it in any bucket counts.
+     * @param configuration The configuration block for the [NumericFacetDefinitionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#numeric-facets">Numeric Facets</a>
      */
-    fun String.numberFacet(path: String, boundaries: List<Number>, default: String? = null) {
-        facets[this] = Document().apply {
-            put("type", "number")
-            put("path", path)
-            put("boundaries", boundaries)
-            default?.let { put("default", it) }
-        }
-    }
-
-    /**
-     * Configures the numeric facet that allow you to determine the frequency of numeric values in your search results by breaking the results into separate ranges of numbers.
-     *
-     * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param boundaries List of numeric values, in ascending order, that specify the boundaries for each bucket.
-     * You must specify at least two boundaries.
-     * Each adjacent pair of values acts as the inclusive lower bound and the exclusive upper bound for the bucket.
-     * @param default Name of an additional bucket that counts documents returned from the operator that do not fall within the specified boundaries.
-     * If omitted, Atlas Search includes the results of the facet operator that do not fall under a specified bucket also, but doesn't include it in any bucket counts.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#numeric-facets">Numeric Facets</a>
-     */
-    fun String.numberFacet(path: KProperty<Number>, boundaries: List<Number>, default: String? = null) {
-        numberFacet(path.toDotPath(), boundaries, default)
+    infix fun String.numericFacet(configuration: NumericFacetDefinitionDsl.() -> Unit) {
+        facets[this] = NumericFacetDefinitionDsl().apply(configuration).get()
     }
 
     /**
      * Configures the date facet that allow you to narrow down search results based on a date.
      *
-     * @param definition The configuration block for the [DateFacetDefinitionDsl].
+     * @param configuration The configuration block for the [DateFacetDefinitionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#date-facets">Date Facets</a>
      */
-    infix fun String.dateFacet(definition: DateFacetDefinitionDsl.() -> Unit) {
-        facets[this] = DateFacetDefinitionDsl().apply(definition).get()
+    infix fun String.dateFacet(configuration: DateFacetDefinitionDsl.() -> Unit) {
+        facets[this] = DateFacetDefinitionDsl().apply(configuration).get()
     }
 
     internal fun build(): Document {
