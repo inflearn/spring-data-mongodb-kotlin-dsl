@@ -75,6 +75,18 @@ class ScoreSearchOptionDsl {
         }
     }
 
+    /**
+     *  Configures an option that allows you to alter the final score of the document using a numeric field.
+     *  You can specify the numeric field for computing the final score through an [expression](https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score/#std-label-function-score-expression).
+     *  If the final result of the function score is less than 0, Atlas Search replaces the score with 0.
+     *
+     * @param scoreFunctionConfiguration [ScoreFunctionSearchOptionDsl] to configure the score function.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score/#function">Score Function</a>
+     */
+    fun function(scoreFunctionConfiguration: ScoreFunctionSearchOptionDsl.() -> Unit) {
+        document["function"] = ScoreFunctionSearchOptionDsl().apply(scoreFunctionConfiguration).build()
+    }
+
     internal fun build() = Document("score", document)
 
     internal fun get(): Document = document

@@ -182,4 +182,31 @@ class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
     }
+
+    "function" - {
+        "should set function with given one" {
+            // given
+            val option = score {
+                function {
+                    expression = constant(3.0)
+                }
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "score": {
+                    "function": {
+                      "constant": 3.0
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
