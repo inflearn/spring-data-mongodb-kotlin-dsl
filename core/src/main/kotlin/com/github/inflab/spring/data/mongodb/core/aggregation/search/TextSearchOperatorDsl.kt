@@ -1,6 +1,7 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.firstOrAll
 import org.bson.Document
 import org.springframework.data.mapping.toDotPath
 import kotlin.reflect.KProperty
@@ -21,7 +22,7 @@ class TextSearchOperatorDsl {
      * If there are multiple terms in a string, Atlas Search also looks for a match for each term in the string separately.
      */
     fun query(vararg query: String) {
-        document["query"] = query.toList()
+        document["query"] = query.toList().firstOrAll()
     }
 
     /**
@@ -33,7 +34,7 @@ class TextSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     fun path(vararg path: String) {
-        document["path"] = path.toList()
+        document["path"] = path.toList().firstOrAll()
     }
 
     /**
@@ -45,7 +46,7 @@ class TextSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     fun path(vararg path: KProperty<String>) {
-        document["path"] = path.map { it.toDotPath() }
+        document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
     /**
