@@ -15,16 +15,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "boost": {
-                      "value": 2.0
-                    }
+                  "boost": {
+                    "value": 2.0
                   }
                 }
                 """.trimIndent(),
@@ -38,16 +36,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "boost": {
-                      "path": "path"
-                    }
+                  "boost": {
+                    "path": "path"
                   }
                 }
                 """.trimIndent(),
@@ -62,16 +58,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "boost": {
-                      "path": "path"
-                    }
+                  "boost": {
+                    "path": "path"
                   }
                 }
                 """.trimIndent(),
@@ -85,17 +79,15 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "boost": {
-                      "path": "path",
-                      "undefined": 0.0
-                    }
+                  "boost": {
+                    "path": "path",
+                    "undefined": 0.0
                   }
                 }
                 """.trimIndent(),
@@ -111,16 +103,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "constant": {
-                      "value": 2.0
-                    }
+                  "constant": {
+                    "value": 2.0
                   }
                 }
                 """.trimIndent(),
@@ -136,16 +126,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "embedded": {
-                      "aggregate": "mean"
-                    }
+                  "embedded": {
+                    "aggregate": "mean"
                   }
                 }
                 """.trimIndent(),
@@ -161,19 +149,17 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "embedded": {
-                      "aggregate": "sum",
-                      "outerScore": {
-                        "boost": {
-                          "value": 2.0
-                        }
+                  "embedded": {
+                    "aggregate": "sum",
+                    "outerScore": {
+                      "boost": {
+                        "value": 2.0
                       }
                     }
                   }
@@ -193,16 +179,14 @@ class ScoreSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.get()
 
             // then
             result.shouldBeJson(
                 """
                 {
-                  "score": {
-                    "function": {
-                      "constant": 3.0
-                    }
+                  "function": {
+                    "constant": 3.0
                   }
                 }
                 """.trimIndent(),

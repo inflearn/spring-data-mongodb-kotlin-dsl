@@ -2,6 +2,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.bson.Document
+import org.springframework.data.mapping.toDotPath
 import kotlin.reflect.KProperty
 
 /**
@@ -43,7 +44,7 @@ class ScoreSearchOptionDsl {
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.
      */
     fun boost(path: KProperty<Number>, undefined: Double? = null) {
-        boost(path.name, undefined)
+        boost(path.toDotPath(), undefined)
     }
 
     /**
@@ -86,8 +87,6 @@ class ScoreSearchOptionDsl {
     fun function(scoreFunctionConfiguration: ScoreFunctionSearchOptionDsl.() -> Unit) {
         document["function"] = ScoreFunctionSearchOptionDsl().apply(scoreFunctionConfiguration).build()
     }
-
-    internal fun build() = Document("score", document)
 
     internal fun get(): Document = document
 }
