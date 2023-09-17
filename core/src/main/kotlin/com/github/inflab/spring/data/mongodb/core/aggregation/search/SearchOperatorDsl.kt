@@ -6,9 +6,9 @@ import org.bson.Document
 /**
  * A Kotlin DSL to configure the collection of `$search operators` using idiomatic Kotlin code.
  *
- * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/operators-and-collectors/#operators">$search operators</a>
  * @author Jake Son
  * @since 1.0
+ * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/operators-and-collectors/#operators">$search operators</a>
  */
 @AggregationMarker
 class SearchOperatorDsl : SearchOperator {

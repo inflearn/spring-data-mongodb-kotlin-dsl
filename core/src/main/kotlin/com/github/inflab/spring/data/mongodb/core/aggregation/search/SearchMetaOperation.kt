@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperationCon
 /**
  * Encapsulates the aggregation framework `$searchMeta` operation.
  *
- * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$search (aggregation)</a>
  * @author Jake Son
  * @since 1.0
+ * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$search (aggregation)</a>
  */
 class SearchMetaOperation(
     private val document: Document,

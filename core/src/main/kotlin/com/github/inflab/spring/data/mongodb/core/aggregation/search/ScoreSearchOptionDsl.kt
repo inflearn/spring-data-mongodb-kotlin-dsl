@@ -7,9 +7,9 @@ import kotlin.reflect.KProperty
 /**
  * A Kotlin DSL to configure score option using idiomatic Kotlin code.
  *
- * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score">Modify the Score</a>
  * @author Jake Son
  * @since 1.0
+ * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score">Modify the Score</a>
  */
 @AggregationMarker
 class ScoreSearchOptionDsl {
