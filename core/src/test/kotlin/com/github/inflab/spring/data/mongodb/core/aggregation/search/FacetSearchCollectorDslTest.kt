@@ -122,12 +122,14 @@ class FacetSearchCollectorDslTest : FreeSpec({
         }
     }
 
-    "numberFacet" - {
-        "should set with property" {
+    "numericFacet" - {
+        "should set numeric facet" {
             // given
-            data class Test(val path: Int)
             val stage = facet {
-                "name".numberFacet(path = Test::path, boundaries = listOf(1, 2, 3))
+                "name" numericFacet {
+                    path("path")
+                    boundaries(1, 2, 3)
+                }
             }
 
             // when
@@ -147,38 +149,6 @@ class FacetSearchCollectorDslTest : FreeSpec({
                           2,
                           3
                         ]
-                      }
-                    }
-                  }
-                }
-                """.trimIndent(),
-            )
-        }
-
-        "should set with default" {
-            // given
-            val stage = facet {
-                "name".numberFacet(path = "path", boundaries = listOf(1, 2, 3), default = "default")
-            }
-
-            // when
-            val result = stage.build()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "facet": {
-                    "facets": {
-                      "name": {
-                        "type": "number",
-                        "path": "path",
-                        "boundaries": [
-                          1,
-                          2,
-                          3
-                        ],
-                        "default": "default"
                       }
                     }
                   }
