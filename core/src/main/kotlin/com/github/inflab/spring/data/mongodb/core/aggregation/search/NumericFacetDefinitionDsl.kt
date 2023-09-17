@@ -28,20 +28,20 @@ class NumericFacetDefinitionDsl {
     }
 
     /**
-     * Field path to facet on. You can specify a field that is indexed as a How to Index Date Fields.
+     * Field path to facet on. You can specify a field that is indexed as a How to Index Numeric Values.
      *
      * @param path Field path to facet on.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/date-type/#std-label-bson-data-types-date">How to Index Date Fields</a>
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/number-type/#std-label-bson-data-types-number">How to Index Numeric Values</a>
      */
     fun path(path: String) {
         document["path"] = path
     }
 
     /**
-     * Field path to facet on. You can specify a field that is indexed as a How to Index Date Fields.
+     * Field path to facet on. You can specify a field that is indexed as a How to Index Numeric Values.
      *
      * @param path Field path to facet on.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/date-type/#std-label-bson-data-types-date">How to Index Date Fields</a>
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/number-type/#std-label-bson-data-types-number">How to Index Numeric Values</a>
      */
     fun path(path: KProperty<Number>) {
         document["path"] = path.toDotPath()
