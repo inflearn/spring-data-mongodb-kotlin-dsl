@@ -23,9 +23,7 @@ class TextSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "text": {
-                    "query": [
-                      "query"
-                    ]
+                    "query": "query"
                   }
                 }
                 """.trimIndent(),
@@ -123,9 +121,7 @@ class TextSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "text": {
-                    "path": [
-                      "child.path"
-                    ]
+                    "path": "child.path"
                   }
                 }
                 """.trimIndent(),
