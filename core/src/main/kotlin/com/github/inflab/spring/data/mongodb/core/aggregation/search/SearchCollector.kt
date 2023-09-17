@@ -15,8 +15,8 @@ interface SearchCollector {
     /**
      * Groups query results by values or ranges in specified, faceted fields and returns the count for each of those groups.
      *
-     * @param facetConfiguration A [FacetCollectorDsl] to configure the `$facet` stage.
+     * @param facetConfiguration A [FacetSearchCollectorDsl] to configure the `$facet` stage.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet">facet</a>
      */
-    fun facet(facetConfiguration: FacetCollectorDsl.() -> Unit)
+    fun facet(facetConfiguration: FacetSearchCollectorDsl.() -> Unit)
 }

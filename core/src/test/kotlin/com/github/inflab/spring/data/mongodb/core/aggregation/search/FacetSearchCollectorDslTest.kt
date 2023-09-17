@@ -3,11 +3,10 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 import java.time.LocalDate
-import java.time.LocalDateTime
 
-class FacetCollectorDslTest : FreeSpec({
-    fun facet(block: FacetCollectorDsl.() -> Unit) =
-        FacetCollectorDsl().apply(block)
+class FacetSearchCollectorDslTest : FreeSpec({
+    fun facet(block: FacetSearchCollectorDsl.() -> Unit) =
+        FacetSearchCollectorDsl().apply(block)
 
     "operator" - {
         "should set operator" {
@@ -190,11 +189,13 @@ class FacetCollectorDslTest : FreeSpec({
     }
 
     "dateFacet" - {
-        "should set with property" {
+        "should set date facet" {
             // given
-            data class Test(val path: LocalDateTime)
             val stage = facet {
-                "name".dateFacet(path = Test::path, boundaries = listOf(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 2, 1)))
+                "name" dateFacet {
+                    path("path")
+                    boundaries(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 2, 1))
+                }
             }
 
             // when
@@ -217,38 +218,6 @@ class FacetCollectorDslTest : FreeSpec({
                             "${"$"}date": "2021-02-01T00:00:00Z"
                           }
                         ]
-                      }
-                    }
-                  }
-                }
-                """.trimIndent(),
-            )
-        }
-
-        "should set with default" {
-            // given
-            val stage = facet {
-                "name".dateFacet(path = "path", boundaries = listOf(LocalDateTime.of(2023, 1, 3, 10, 20, 30)), default = "default")
-            }
-
-            // when
-            val result = stage.build()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "facet": {
-                    "facets": {
-                      "name": {
-                        "type": "date",
-                        "path": "path",
-                        "boundaries": [
-                          {
-                            "${"$"}date": "2023-01-03T10:20:30Z"
-                          }
-                        ],
-                        "default": "default"
                       }
                     }
                   }

@@ -14,7 +14,7 @@ import org.bson.Document
 class SearchCollectorDsl : SearchCollector {
     override val collectors = mutableListOf<Document>()
 
-    override fun facet(facetConfiguration: FacetCollectorDsl.() -> Unit) {
-        collectors.add(FacetCollectorDsl().apply(facetConfiguration).build())
+    override fun facet(facetConfiguration: FacetSearchCollectorDsl.() -> Unit) {
+        collectors.add(FacetSearchCollectorDsl().apply(facetConfiguration).build())
     }
 }
