@@ -41,10 +41,12 @@ class FacetSearchCollectorDslTest : FreeSpec({
     }
 
     "stringFacet" - {
-        "should set with string value" {
+        "should set string facet" {
             // given
             val stage = facet {
-                "name".stringFacet(path = "path")
+                "name" stringFacet {
+                    path("path")
+                }
             }
 
             // when
@@ -59,60 +61,6 @@ class FacetSearchCollectorDslTest : FreeSpec({
                       "name": {
                         "type": "string",
                         "path": "path"
-                      }
-                    }
-                  }
-                }
-                """.trimIndent(),
-            )
-        }
-
-        "should set with property" {
-            // given
-            data class Test(val path: String)
-            val stage = facet {
-                "name".stringFacet(path = Test::path)
-            }
-
-            // when
-            val result = stage.build()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "facet": {
-                    "facets": {
-                      "name": {
-                        "type": "string",
-                        "path": "path"
-                      }
-                    }
-                  }
-                }
-                """.trimIndent(),
-            )
-        }
-
-        "should set with numBuckets" {
-            // given
-            val stage = facet {
-                "name".stringFacet(path = "path", numBuckets = 100)
-            }
-
-            // when
-            val result = stage.build()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "facet": {
-                    "facets": {
-                      "name": {
-                        "type": "string",
-                        "path": "path",
-                        "numBuckets": 100
                       }
                     }
                   }

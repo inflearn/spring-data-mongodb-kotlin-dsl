@@ -3,18 +3,15 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-class NumericFacetDefinitionDslTest : FreeSpec({
-    fun numericFacet(block: NumericFacetDefinitionDsl.() -> Unit) =
-        NumericFacetDefinitionDsl().apply(block)
+class StringFacetDefinitionDslTest : FreeSpec({
+    fun stringFacet(block: StringFacetDefinitionDsl.() -> Unit) =
+        StringFacetDefinitionDsl().apply(block)
 
     "boundaries" - {
-        "should set boundaries" {
+        "should set numBuckets" {
             // given
-            val stage = numericFacet {
-                boundaries(
-                    1,
-                    2,
-                )
+            val stage = stringFacet {
+                numBuckets(10)
             }
 
             // when
@@ -24,11 +21,8 @@ class NumericFacetDefinitionDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "type": "number",
-                  "boundaries": [
-                    1,
-                    2
-                  ]
+                  "type": "string",
+                  "numBuckets": 10
                 }
                 """.trimIndent(),
             )
@@ -38,7 +32,7 @@ class NumericFacetDefinitionDslTest : FreeSpec({
     "path" - {
         "should set path by string value" {
             // given
-            val stage = numericFacet {
+            val stage = stringFacet {
                 path("path")
             }
 
@@ -49,7 +43,7 @@ class NumericFacetDefinitionDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "type": "number",
+                  "type": "string",
                   "path": "path"
                 }
                 """.trimIndent(),
@@ -58,8 +52,8 @@ class NumericFacetDefinitionDslTest : FreeSpec({
 
         "should set path by property" {
             // given
-            data class Test(val path: Long)
-            val stage = numericFacet {
+            data class Test(val path: String)
+            val stage = stringFacet {
                 path(Test::path)
             }
 
@@ -70,30 +64,8 @@ class NumericFacetDefinitionDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "type": "number",
+                  "type": "string",
                   "path": "path"
-                }
-                """.trimIndent(),
-            )
-        }
-    }
-
-    "default" - {
-        "should set default" {
-            // given
-            val stage = numericFacet {
-                default("default")
-            }
-
-            // when
-            val result = stage.get()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "type": "number",
-                  "default": "default"
                 }
                 """.trimIndent(),
             )
