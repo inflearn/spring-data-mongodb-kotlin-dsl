@@ -11,6 +11,6 @@ import org.bson.Document
  * @since 1.0
  */
 @AggregationMarker
-open class SearchOperatorDsl {
-    protected val operations = mutableListOf<Document>()
+class SearchOperatorDsl : SearchOperator {
+    override val operations = mutableListOf<Document>()
 }
