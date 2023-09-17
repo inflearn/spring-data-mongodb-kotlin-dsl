@@ -1,6 +1,7 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import org.bson.Document
+import org.springframework.data.mapping.toDotPath
 import java.time.temporal.Temporal
 import kotlin.reflect.KProperty
 
@@ -56,7 +57,7 @@ class FacetCollectorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#string-facets">String Facets</a>
      */
     fun String.stringFacet(path: KProperty<String>, numBuckets: Int? = null) {
-        stringFacet(path.name, numBuckets)
+        stringFacet(path.toDotPath(), numBuckets)
     }
 
     /**
@@ -91,7 +92,7 @@ class FacetCollectorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#numeric-facets">Numeric Facets</a>
      */
     fun String.numberFacet(path: KProperty<Number>, boundaries: List<Number>, default: String? = null) {
-        numberFacet(path.name, boundaries, default)
+        numberFacet(path.toDotPath(), boundaries, default)
     }
 
     /**
@@ -128,7 +129,7 @@ class FacetCollectorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#date-facets">Date Facets</a>
      */
     fun String.dateFacet(path: KProperty<Temporal>, boundaries: List<Temporal>, default: String? = null) {
-        dateFacet(path.name, boundaries, default)
+        dateFacet(path.toDotPath(), boundaries, default)
     }
 
     internal fun build(): Document {
