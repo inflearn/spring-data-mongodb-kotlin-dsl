@@ -1,8 +1,8 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
+import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.bson.Document
 import org.springframework.data.mapping.toDotPath
-import java.time.temporal.Temporal
 import kotlin.reflect.KProperty
 
 /**
@@ -12,7 +12,8 @@ import kotlin.reflect.KProperty
  * @since 1.0
  * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet">facet</a>
  */
-class FacetCollectorDsl {
+@AggregationMarker
+class FacetSearchCollectorDsl {
     private val document = Document()
     private val facets = Document()
 
@@ -100,38 +101,11 @@ class FacetCollectorDsl {
     /**
      * Configures the date facet that allow you to narrow down search results based on a date.
      *
-     * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param boundaries List of date values that specify the boundaries for each bucket. You must specify:
-     * - At least two boundaries
-     * - Values in ascending order, with the earliest date first
-     * Each adjacent pair of values acts as the inclusive lower bound and the exclusive upper bound for the bucket.
-     * @param default Name of an additional bucket that counts documents returned from the operator that do not fall within the specified boundaries.
-     * If omitted, Atlas Search includes the results of the facet operator that do not fall under a specified bucket also, but Atlas Search doesn't include these results in any bucket counts.
+     * @param definition The configuration block for the [DateFacetDefinitionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#date-facets">Date Facets</a>
      */
-    fun String.dateFacet(path: String, boundaries: List<Temporal>, default: String? = null) {
-        facets[this] = Document().apply {
-            put("type", "date")
-            put("path", path)
-            put("boundaries", boundaries)
-            default?.let { put("default", it) }
-        }
-    }
-
-    /**
-     * Configures the date facet that allow you to narrow down search results based on a date.
-     *
-     * @param path Field path to facet on. You can specify a field that is indexed as a [How to Index String Fields For Faceted Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet).
-     * @param boundaries List of date values that specify the boundaries for each bucket. You must specify:
-     * - At least two boundaries
-     * - Values in ascending order, with the earliest date first
-     * Each adjacent pair of values acts as the inclusive lower bound and the exclusive upper bound for the bucket.
-     * @param default Name of an additional bucket that counts documents returned from the operator that do not fall within the specified boundaries.
-     * If omitted, Atlas Search includes the results of the facet operator that do not fall under a specified bucket also, but Atlas Search doesn't include these results in any bucket counts.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/facet/#date-facets">Date Facets</a>
-     */
-    fun String.dateFacet(path: KProperty<Temporal>, boundaries: List<Temporal>, default: String? = null) {
-        dateFacet(path.toDotPath(), boundaries, default)
+    infix fun String.dateFacet(definition: DateFacetDefinitionDsl.() -> Unit) {
+        facets[this] = DateFacetDefinitionDsl().apply(definition).get()
     }
 
     internal fun build(): Document {
