@@ -56,7 +56,7 @@ class ScoreSearchOptionDslTest : FreeSpec({
 
         "should set path from KProperty field" {
             // given
-            val testObject = object : Any() { val path = "path" }
+            val testObject = object : Any() { val path = 123 }
             val option = score {
                 boost(testObject::path)
             }
