@@ -88,7 +88,7 @@ class ScoreFunctionSearchOptionDslTest : FreeSpec({
 
         "should set path from KProperty field" {
             // given
-            val testObject = object : Any() { val path = "path" }
+            val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
                 expression = path(testObject::path)
             }
@@ -132,7 +132,7 @@ class ScoreFunctionSearchOptionDslTest : FreeSpec({
 
         "should set path from KProperty field with undefined" {
             // given
-            val testObject = object : Any() { val path = "path" }
+            val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
                 expression = path(testObject::path, 0.0)
             }

@@ -42,7 +42,7 @@ class ScoreSearchOptionDsl {
      * @param path [KProperty] of the numeric field.
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.
      */
-    fun boost(path: KProperty<*>, undefined: Double? = null) {
+    fun boost(path: KProperty<Number>, undefined: Double? = null) {
         boost(path.name, undefined)
     }
 
