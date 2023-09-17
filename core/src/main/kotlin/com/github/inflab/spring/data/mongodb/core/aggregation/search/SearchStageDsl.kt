@@ -11,7 +11,7 @@ import org.bson.Document
  * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-search">$search</a>
  */
 @AggregationMarker
-class SearchStageDsl : SearchOperatorDsl() {
+class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by SearchCollectorDsl() {
     private val document = Document()
 
     /**
