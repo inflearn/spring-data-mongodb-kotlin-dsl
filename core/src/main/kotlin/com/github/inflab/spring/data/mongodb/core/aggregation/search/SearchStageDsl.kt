@@ -8,8 +8,7 @@ import org.bson.Document
  *
  * @author Jake Son
  * @since 1.0
- * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/search">$search (aggregation)</a>
- * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/">Return Atlas Search Results or Metadata</a>
+ * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-search">$search</a>
  */
 @AggregationMarker
 class SearchStageDsl {
@@ -17,7 +16,7 @@ class SearchStageDsl {
 
     /**
      * Name of the Atlas Search index to use. If omitted, defaults to `default`.
-     * Atlas Search doesn't returns results if you misspell the index name or if the specified index doesn't already exist on the cluster.
+     * Atlas Search doesn't return results if you misspell the index name or if the specified index doesn't already exist on the cluster.
      */
     var index: String? = null
         set(value) {
