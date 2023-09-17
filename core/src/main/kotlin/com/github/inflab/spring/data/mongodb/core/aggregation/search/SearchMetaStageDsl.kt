@@ -4,14 +4,14 @@ import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.bson.Document
 
 /**
- * A Kotlin DSL to configure [SearchOperation] using idiomatic Kotlin code.
+ * A Kotlin DSL to configure [SearchMetaOperation] using idiomatic Kotlin code.
  *
  * @author Jake Son
  * @since 1.0
- * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-search">$search</a>
+ * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$searchMeta</a>
  */
 @AggregationMarker
-class SearchStageDsl {
+class SearchMetaStageDsl {
     private val document = Document()
 
     /**
@@ -21,30 +21,6 @@ class SearchStageDsl {
     var index: String? = null
         set(value) {
             value?.let { document["index"] = it }
-            field = value
-        }
-
-    /**
-     * Flag that specifies whether to perform a full document lookup on the backend database or return only stored source fields directly from Atlas Search.
-     * If omitted, defaults to false.
-     *
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/return-stored-source/#std-label-fts-return-stored-source-option">Return Stored Source Fields</a>
-     */
-    var returnStoredSource: Boolean? = null
-        set(value) {
-            value?.let { document["returnStoredSource"] = it }
-            field = value
-        }
-
-    /**
-     * Flag that specifies whether to retrieve a detailed breakdown of the score for the documents in the results.
-     * If omitted, defaults to false. To view the details, you must use the $meta expression in the $project stage.
-     *
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/get-details/#std-label-fts-score-details">Return the Score Details</a>
-     */
-    var scoreDetails: Boolean? = null
-        set(value) {
-            value?.let { document["scoreDetails"] = it }
             field = value
         }
 
@@ -70,5 +46,5 @@ class SearchStageDsl {
         document["count"] = Document("type", "total")
     }
 
-    internal fun build() = SearchOperation(document)
+    internal fun build() = SearchMetaOperation(document)
 }

@@ -3,14 +3,14 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-internal class SearchStageDslTest : FreeSpec({
-    fun search(block: SearchStageDsl.() -> Unit): SearchStageDsl =
-        SearchStageDsl().apply(block)
+class SearchMetaStageDslTest : FreeSpec({
+    fun searchMeta(block: SearchMetaStageDsl.() -> Unit): SearchMetaStageDsl =
+        SearchMetaStageDsl().apply(block)
 
     "index" - {
         "should set index with given name" {
             // given
-            val stage = search {
+            val stage = searchMeta {
                 index = "indexName"
             }
 
@@ -21,7 +21,7 @@ internal class SearchStageDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "${"$"}search": {
+                  "${"$"}searchMeta": {
                     "index": "indexName"
                   }
                 }
@@ -30,60 +30,10 @@ internal class SearchStageDslTest : FreeSpec({
         }
     }
 
-    "returnStoredSource" - {
-        listOf(true, false).forEach {
-            "should set returnStoredSource stage with $it" {
-                // given
-                val stage = search {
-                    returnStoredSource = it
-                }
-
-                // when
-                val result = stage.build()
-
-                // then
-                result.shouldBeJson(
-                    """
-                    {
-                      "${"$"}search": {
-                        "returnStoredSource": $it
-                      }
-                    }
-                    """.trimIndent(),
-                )
-            }
-        }
-    }
-
-    "scoreDetails" - {
-        listOf(true, false).forEach {
-            "should set scoreDetails stage with $it" {
-                // given
-                val stage = search {
-                    scoreDetails = it
-                }
-
-                // when
-                val result = stage.build()
-
-                // then
-                result.shouldBeJson(
-                    """
-                    {
-                      "${"$"}search": {
-                        "scoreDetails": $it
-                      }
-                    }
-                    """.trimIndent(),
-                )
-            }
-        }
-    }
-
     "lowerBoundCount" - {
         "should set lowerBoundCount stage with given threshold" {
             // given
-            val stage = search {
+            val stage = searchMeta {
                 lowerBoundCount(100)
             }
 
@@ -94,7 +44,7 @@ internal class SearchStageDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "${"$"}search": {
+                  "${"$"}searchMeta": {
                     "count": {
                       "type": "lowerBound",
                       "threshold": 100
@@ -107,7 +57,7 @@ internal class SearchStageDslTest : FreeSpec({
 
         "should set lowerBoundCount stage without threshold" {
             // given
-            val stage = search {
+            val stage = searchMeta {
                 lowerBoundCount()
             }
 
@@ -118,7 +68,7 @@ internal class SearchStageDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "${"$"}search": {
+                  "${"$"}searchMeta": {
                     "count": {
                       "type": "lowerBound"
                     }
@@ -132,7 +82,7 @@ internal class SearchStageDslTest : FreeSpec({
     "totalCount" - {
         "should set totalCount stage" {
             // given
-            val stage = search {
+            val stage = searchMeta {
                 totalCount()
             }
 
@@ -143,7 +93,7 @@ internal class SearchStageDslTest : FreeSpec({
             result.shouldBeJson(
                 """
                 {
-                  "${"$"}search": {
+                  "${"$"}searchMeta": {
                     "count": {
                       "type": "total"
                     }
