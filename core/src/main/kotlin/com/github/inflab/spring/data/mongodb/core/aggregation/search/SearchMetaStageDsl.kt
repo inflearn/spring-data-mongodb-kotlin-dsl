@@ -11,7 +11,7 @@ import org.bson.Document
  * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$searchMeta</a>
  */
 @AggregationMarker
-class SearchMetaStageDsl {
+class SearchMetaStageDsl : SearchOperatorDsl() {
     private val document = Document()
 
     /**
@@ -46,5 +46,9 @@ class SearchMetaStageDsl {
         document["count"] = Document("type", "total")
     }
 
-    internal fun build() = SearchMetaOperation(document)
+    internal fun build(): SearchMetaOperation {
+        operations.forEach { document.putAll(it) }
+
+        return SearchMetaOperation(document)
+    }
 }

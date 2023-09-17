@@ -11,7 +11,7 @@ import org.bson.Document
  * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-search">$search</a>
  */
 @AggregationMarker
-class SearchStageDsl {
+class SearchStageDsl : SearchOperatorDsl() {
     private val document = Document()
 
     /**
@@ -70,5 +70,9 @@ class SearchStageDsl {
         document["count"] = Document("type", "total")
     }
 
-    internal fun build() = SearchOperation(document)
+    internal fun build(): SearchOperation {
+        operations.forEach { document.putAll(it) }
+
+        return SearchOperation(document)
+    }
 }
