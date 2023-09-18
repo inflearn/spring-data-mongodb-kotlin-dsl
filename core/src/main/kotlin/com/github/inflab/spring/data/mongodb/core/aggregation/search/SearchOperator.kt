@@ -30,4 +30,13 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/equals/#equals">equals</a>
      */
     fun equal(configuration: EqualsSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Combines two or more operators into a single query.
+     * Each element of a compound query is called a clause, and each clause consists of one or more sub-queries.
+     *
+     * @param configuration The configuration block for the [CompoundSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/compound/#compound">compound</a>
+     */
+    fun compound(configuration: CompoundSearchOperatorDsl.() -> Unit)
 }
