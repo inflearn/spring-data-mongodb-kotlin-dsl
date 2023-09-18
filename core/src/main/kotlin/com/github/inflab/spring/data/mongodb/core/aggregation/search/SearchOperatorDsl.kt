@@ -17,4 +17,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun text(configuration: TextSearchOperatorDsl.() -> Unit) {
         operators.add(TextSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun equal(configuration: EqualsSearchOperatorDsl.() -> Unit) {
+        operators.add(EqualsSearchOperatorDsl().apply(configuration).build())
+    }
 }
