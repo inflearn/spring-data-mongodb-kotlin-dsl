@@ -73,6 +73,7 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
 
     internal fun build(): SearchOperation {
         operators.forEach { document.putAll(it) }
+        collectors.forEach { document.putAll(it) }
 
         return SearchOperation(document)
     }
