@@ -78,6 +78,8 @@ class EqualsSearchOperatorDsl {
      * - boost: multiply the result score by the given number.
      * - constant: replace the result score with the given number.
      * - function: replace the result score using the given expression.
+     *  @param scoreConfiguration The configuration block for [ScoreSearchOptionDsl]
+     *  @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score">Modify the Score</a>
      */
     fun score(scoreConfiguration: ScoreSearchOptionDsl.() -> Unit) {
         document["score"] = ScoreSearchOptionDsl().apply(scoreConfiguration).get()
