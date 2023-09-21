@@ -25,6 +25,9 @@ interface SearchOperator {
      * checks whether a field matches a value you specify. equals supports querying the following data types:
      * boolean, objectId,  number,  including int32, int64, and double, date
      * You can use the equals operator to query booleans, objectIds, numbers, and dates in arrays. If at least one element in the array matches the "value" field in the equals operator, Atlas Search adds the document to the result set.
+     *
+     * @param configuration The configuration block for the [EqualsSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/equals/#equals">equals</a>
      */
     fun equal(configuration: EqualsSearchOperatorDsl.() -> Unit)
 }
