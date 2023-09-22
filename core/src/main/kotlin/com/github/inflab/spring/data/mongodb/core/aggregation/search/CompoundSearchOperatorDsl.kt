@@ -15,6 +15,14 @@ class CompoundSearchOperatorDsl {
     private val document = Document()
 
     /**
+     * Specify a minimum number of should clauses that must match to include a document in the results.
+     * If omitted, it defaults to 0.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/compound/#minimumshouldmatch-example">minimumShouldMatch Example</a>
+     */
+    var minimumShouldMatch: Int? = null
+
+    /**
      * Modify the score of the entire compound clause.
      * You can use score to boost, replace, or otherwise alter the score.
      * If you don't specify score, the returned score is the sum of the scores of all the subqueries in the must and should clauses that generated a match.
@@ -50,8 +58,8 @@ class CompoundSearchOperatorDsl {
      * The returned score is the sum of the scores of all the subqueries in the clause.
      * Maps to the `OR` boolean operator.
      */
-    fun should(shouldConfiguration: ShouldSearchClauseDsl.() -> Unit) {
-        document["should"] = ShouldSearchClauseDsl().apply(shouldConfiguration).build()
+    fun should(shouldConfiguration: SearchOperatorDsl.() -> Unit) {
+        document["should"] = SearchOperatorDsl().apply(shouldConfiguration).operators
     }
 
     /**
@@ -62,5 +70,9 @@ class CompoundSearchOperatorDsl {
         document["filter"] = SearchOperatorDsl().apply(filterConfiguration).operators
     }
 
-    internal fun build() = Document("compound", document)
+    internal fun build(): Document {
+        minimumShouldMatch?.let { document.put("minimumShouldMatch", it) }
+
+        return Document("compound", document)
+    }
 }
