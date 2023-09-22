@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.FreeSpec
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class DateFacetDefinitionDslTest : FreeSpec({
+internal class DateFacetDefinitionDslTest : FreeSpec({
     fun dateFacet(block: DateFacetDefinitionDsl.() -> Unit) =
         DateFacetDefinitionDsl().apply(block)
 

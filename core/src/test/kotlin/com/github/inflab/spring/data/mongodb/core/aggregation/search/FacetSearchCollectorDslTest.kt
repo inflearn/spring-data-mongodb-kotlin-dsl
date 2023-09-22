@@ -4,7 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 import java.time.LocalDate
 
-class FacetSearchCollectorDslTest : FreeSpec({
+internal class FacetSearchCollectorDslTest : FreeSpec({
     fun facet(block: FacetSearchCollectorDsl.() -> Unit) =
         FacetSearchCollectorDsl().apply(block)
 

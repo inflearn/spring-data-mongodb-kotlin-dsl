@@ -3,7 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-class StringFacetDefinitionDslTest : FreeSpec({
+internal class StringFacetDefinitionDslTest : FreeSpec({
     fun stringFacet(block: StringFacetDefinitionDsl.() -> Unit) =
         StringFacetDefinitionDsl().apply(block)
 
