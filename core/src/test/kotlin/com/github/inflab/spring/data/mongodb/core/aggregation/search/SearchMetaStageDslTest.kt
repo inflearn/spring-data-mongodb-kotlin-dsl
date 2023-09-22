@@ -3,7 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-class SearchMetaStageDslTest : FreeSpec({
+internal class SearchMetaStageDslTest : FreeSpec({
     fun searchMeta(block: SearchMetaStageDsl.() -> Unit): SearchMetaStageDsl =
         SearchMetaStageDsl().apply(block)
 

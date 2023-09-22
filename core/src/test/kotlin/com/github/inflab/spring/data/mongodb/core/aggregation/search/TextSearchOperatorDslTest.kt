@@ -4,7 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 import org.springframework.data.mapping.div
 
-class TextSearchOperatorDslTest : FreeSpec({
+internal class TextSearchOperatorDslTest : FreeSpec({
     fun text(block: TextSearchOperatorDsl.() -> Unit): TextSearchOperatorDsl =
         TextSearchOperatorDsl().apply(block)
 

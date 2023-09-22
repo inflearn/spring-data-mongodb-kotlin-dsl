@@ -3,7 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-class ScoreSearchOptionDslTest : FreeSpec({
+internal class ScoreSearchOptionDslTest : FreeSpec({
     fun score(block: ScoreSearchOptionDsl.() -> Unit): ScoreSearchOptionDsl =
         ScoreSearchOptionDsl().apply(block)
 
