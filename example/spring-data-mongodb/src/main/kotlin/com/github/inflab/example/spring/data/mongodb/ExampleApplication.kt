@@ -1,4 +1,4 @@
-package com.github.inflab.example
+package com.github.inflab.example.spring.data.mongodb
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
