@@ -44,3 +44,7 @@ subprojects {
         }
     }
 }
+
+versionCatalogUpdate {
+    catalogFile.set(file("libs.example.versions.toml"))
+}
