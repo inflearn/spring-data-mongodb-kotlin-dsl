@@ -8,10 +8,12 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregat
 internal class AggregationKtTest : FreeSpec({
 
     "should create a new Aggregation" {
+        // when
         val aggregation = aggregation {
             count("count")
         }
 
+        // then
         aggregation.toString() shouldBe newAggregation(count().`as`("count")).toString()
     }
 })

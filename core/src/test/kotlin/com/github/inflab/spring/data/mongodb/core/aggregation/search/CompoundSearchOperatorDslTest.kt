@@ -10,12 +10,12 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "minimumShouldMatch" - {
         "should set with given value" {
             // given
-            val stage = compound {
+            val operator = compound {
                 minimumShouldMatch = 2
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(
@@ -33,14 +33,14 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "score" - {
         "should add score block" {
             // given
-            val stage = compound {
+            val operator = compound {
                 score {
                     constant(2.0)
                 }
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(
@@ -62,7 +62,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "must" - {
         "should add must block" {
             // given
-            val stage = compound {
+            val operator = compound {
                 must {
                     text {
                         path("field")
@@ -71,7 +71,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(
@@ -95,7 +95,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "mustNot" - {
         "should add mustNot block" {
             // given
-            val stage = compound {
+            val operator = compound {
                 mustNot {
                     text {
                         path("field")
@@ -104,7 +104,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(
@@ -128,7 +128,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "should" - {
         "should add should block" {
             // given
-            val stage = compound {
+            val operator = compound {
                 should {
                     text {
                         path("field")
@@ -137,7 +137,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(
@@ -161,7 +161,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
     "filter" - {
         "should add filter block" {
             // given
-            val stage = compound {
+            val operator = compound {
                 filter {
                     text {
                         path("field")
@@ -170,7 +170,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = operator.build()
 
             // then
             result.shouldBeJson(

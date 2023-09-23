@@ -12,7 +12,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
     "boundaries" - {
         "should set boundaries with LocalDate" {
             // given
-            val stage = dateFacet {
+            val definition = dateFacet {
                 boundaries(
                     LocalDate.of(2021, 1, 1),
                     LocalDate.of(2021, 2, 1),
@@ -20,7 +20,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -42,7 +42,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
 
         "should set boundaries with LocalDateTime" {
             // given
-            val stage = dateFacet {
+            val definition = dateFacet {
                 boundaries(
                     LocalDateTime.of(2021, 1, 1, 1, 20, 30),
                     LocalDateTime.of(2021, 2, 1, 2, 40, 50),
@@ -50,7 +50,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -74,12 +74,12 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
     "path" - {
         "should set path by string value" {
             // given
-            val stage = dateFacet {
+            val definition = dateFacet {
                 path("path")
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -95,12 +95,12 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
         "should set path by property" {
             // given
             data class Test(val path: LocalDateTime)
-            val stage = dateFacet {
+            val definition = dateFacet {
                 path(Test::path)
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -117,12 +117,12 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
     "default" - {
         "should set default" {
             // given
-            val stage = dateFacet {
+            val definition = dateFacet {
                 default("default")
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
