@@ -30,21 +30,14 @@ subprojects {
             }
         }
     }
-
-    java {
-        withSourcesJar()
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(8))
-        }
-    }
-
-    kotlin {
-        jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(8))
-        }
-    }
 }
 
 versionCatalogUpdate {
-    catalogFile.set(file("libs.example.versions.toml"))
+    catalogFile.set(file("libs.versions.toml"))
+
+    versionCatalogs {
+        create("example") {
+            catalogFile.set(file("libs.example.versions.toml"))
+        }
+    }
 }
