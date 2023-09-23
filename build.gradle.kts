@@ -5,16 +5,18 @@ plugins {
     alias(libs.plugins.version.catalog.update)
 }
 
-subprojects {
-    apply(plugin = "kotlin")
-    apply(plugin = "org.jmailen.kotlinter")
-
+allprojects {
     group = "com.github.inflab"
     version = "0.0.0-beta.1"
 
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    apply(plugin = "kotlin")
+    apply(plugin = "org.jmailen.kotlinter")
 
     dependencies {
         testImplementation(rootProject.libs.kotest)
@@ -32,11 +34,13 @@ subprojects {
     java {
         withSourcesJar()
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(8))
         }
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
     }
 }
