@@ -10,12 +10,12 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
     "boundaries" - {
         "should set numBuckets" {
             // given
-            val stage = stringFacet {
+            val definition = stringFacet {
                 numBuckets(10)
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -32,12 +32,12 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
     "path" - {
         "should set path by string value" {
             // given
-            val stage = stringFacet {
+            val definition = stringFacet {
                 path("path")
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -53,12 +53,12 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
         "should set path by property" {
             // given
             data class Test(val path: String)
-            val stage = stringFacet {
+            val definition = stringFacet {
                 path(Test::path)
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(

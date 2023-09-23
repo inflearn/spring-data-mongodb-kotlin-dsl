@@ -10,7 +10,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
     "boundaries" - {
         "should set boundaries" {
             // given
-            val stage = numericFacet {
+            val definition = numericFacet {
                 boundaries(
                     1,
                     2,
@@ -18,7 +18,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -38,12 +38,12 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
     "path" - {
         "should set path by string value" {
             // given
-            val stage = numericFacet {
+            val definition = numericFacet {
                 path("path")
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -59,12 +59,12 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
         "should set path by property" {
             // given
             data class Test(val path: Long)
-            val stage = numericFacet {
+            val definition = numericFacet {
                 path(Test::path)
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(
@@ -81,12 +81,12 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
     "default" - {
         "should set default" {
             // given
-            val stage = numericFacet {
+            val definition = numericFacet {
                 default("default")
             }
 
             // when
-            val result = stage.get()
+            val result = definition.get()
 
             // then
             result.shouldBeJson(

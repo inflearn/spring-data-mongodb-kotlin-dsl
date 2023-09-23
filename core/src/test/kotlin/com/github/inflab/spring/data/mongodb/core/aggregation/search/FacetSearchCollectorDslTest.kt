@@ -11,7 +11,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     "operator" - {
         "should set operator" {
             // given
-            val stage = facet {
+            val collector = facet {
                 operator {
                     text {
                         path("fieldName")
@@ -20,7 +20,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = collector.build()
 
             // then
             result.shouldBeJson(
@@ -43,14 +43,14 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     "stringFacet" - {
         "should set string facet" {
             // given
-            val stage = facet {
+            val collector = facet {
                 "name" stringFacet {
                     path("path")
                 }
             }
 
             // when
-            val result = stage.build()
+            val result = collector.build()
 
             // then
             result.shouldBeJson(
@@ -73,7 +73,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     "numericFacet" - {
         "should set numeric facet" {
             // given
-            val stage = facet {
+            val collector = facet {
                 "name" numericFacet {
                     path("path")
                     boundaries(1, 2, 3)
@@ -81,7 +81,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = collector.build()
 
             // then
             result.shouldBeJson(
@@ -109,7 +109,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     "dateFacet" - {
         "should set date facet" {
             // given
-            val stage = facet {
+            val collector = facet {
                 "name" dateFacet {
                     path("path")
                     boundaries(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 2, 1))
@@ -117,7 +117,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
             }
 
             // when
-            val result = stage.build()
+            val result = collector.build()
 
             // then
             result.shouldBeJson(
