@@ -1,5 +1,14 @@
 [versions]
-spring-data-mongodb = "3.1.4"
+kotlin = "1.9.20-Beta2"
+spring-boot = "3.1.4"
+spring-dependency-management = "1.1.3"
 
 [libraries]
-spring-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb", version.ref = "spring-data-mongodb" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+spring-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
+spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+[plugins]
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
