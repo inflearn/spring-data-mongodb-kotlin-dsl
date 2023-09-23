@@ -28,12 +28,23 @@ class AggregationDsl {
     /**
      * Configures a stage that performs a full-text search on the specified field or fields which must be covered by an Atlas Search index.
      *
-     * @param searchConfiguration custom configurations for the search stage
+     * @param searchConfiguration custom configurations for the search stage.
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/search">$search (aggregation)</a>
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/">Return Atlas Search Results or Metadata</a>
      */
     fun search(searchConfiguration: SearchStageDsl.() -> Unit) {
         operations += SearchStageDsl().apply(searchConfiguration).build()
+    }
+
+    /**
+     * Passes along the documents with the requested fields to the next stage in the pipeline.
+     * The specified fields can be existing fields from the input documents or newly computed fields.
+     *
+     * @param projectConfiguration custom configurations for the project stage.
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/project">$project (aggregation)</a>
+     */
+    fun project(projectConfiguration: ProjectStageDsl.() -> Unit) {
+        operations += ProjectStageDsl().apply(projectConfiguration).get()
     }
 
     /**

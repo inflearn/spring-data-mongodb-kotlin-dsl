@@ -10,10 +10,12 @@ internal class AggregationDslTest : FreeSpec({
 
     "count" - {
         "should create count stage with field name" {
+            // when
             val aggregation = aggregation {
                 count("fieldName")
             }
 
+            // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 Aggregation.count().`as`("fieldName"),
             ).toString()
@@ -22,14 +24,32 @@ internal class AggregationDslTest : FreeSpec({
 
     "search" - {
         "should create search stage with index option" {
+            // when
             val aggregation = aggregation {
                 search {
                     index = "indexName"
                 }
             }
 
+            // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 SearchOperation(Document("index", "indexName")),
+            ).toString()
+        }
+    }
+
+    "project" - {
+        "should create project stage with field name" {
+            // when
+            val aggregation = aggregation {
+                project {
+                    +"fieldName"
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.project("fieldName"),
             ).toString()
         }
     }
