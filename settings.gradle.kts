@@ -17,5 +17,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "spring-data-mongodb-kotlin-dsl"
-include("core")
-include("example")
+module(name = ":core", path = "core")
+module(name = ":example", path = "example")
+module(name = ":spring-data-mongodb-example", path = "example/spring-data-mongodb")
+
+fun module(name: String, path: String) {
+    include(name)
+    project(name).projectDir = file(path)
+}
