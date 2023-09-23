@@ -4,6 +4,7 @@ kotest = "5.7.2"
 kotlin = "1.9.20-Beta2"
 kotlinter = "3.16.0"
 mockk = "1.13.7"
+# @pin
 spring-data-mongodb = "2.7.16"
 version-catalog-update = "0.8.1"
 
