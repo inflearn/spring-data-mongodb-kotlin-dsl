@@ -1,19 +1,18 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
+import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.doubles.shouldBeBetween
 import io.kotest.matchers.doubles.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 
 @Ignored
-internal class ScoreSearchRepositoryTest : FreeSpec({
-    val connectionString = "mongodb+srv://<username>:<password>@<host>/sample_mflix?retryWrites=true&w=majority"
-    val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
-    val scoreSearchRepository = ScoreSearchRepository(mongoTemplate)
+@AtlasTest(database = "sample_mflix")
+internal class ScoreSearchRepositoryTest(
+    private val scoreSearchRepository: ScoreSearchRepository,
+) : FreeSpec({
 
     "findTitleAndPlotWithBoost" {
         // when

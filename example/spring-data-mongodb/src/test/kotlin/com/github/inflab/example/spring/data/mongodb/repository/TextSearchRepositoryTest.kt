@@ -1,17 +1,16 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
+import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.shouldBe
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 
 @Ignored
-internal class TextSearchRepositoryTest : FreeSpec({
-    val connectionString = "mongodb+srv://<username>:<password>@<host>/sample_mflix?retryWrites=true&w=majority"
-    val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
-    val textSearchRepository = TextSearchRepository(mongoTemplate)
+@AtlasTest(database = "sample_mflix")
+internal class TextSearchRepositoryTest(
+    private val textSearchRepository: TextSearchRepository,
+) : FreeSpec({
 
     "findTitleWithSufer" {
         // when

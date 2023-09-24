@@ -1,23 +1,22 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
+import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.date.shouldBeBetween
 import io.kotest.matchers.shouldBe
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 import java.time.LocalDateTime
 
 @Ignored
-internal class RangeSearchRepositoryTest : FreeSpec({
-    val connectionString = "mongodb+srv://<username>:<password>@<host>/sample_mflix?retryWrites=true&w=majority"
-    val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
-    val textSearchRepository = RangeSearchRepository(mongoTemplate)
+@AtlasTest(database = "sample_mflix")
+internal class RangeSearchRepositoryTest(
+    private val rangeSearchRepository: RangeSearchRepository,
+) : FreeSpec({
 
     "findRuntimeBetween" {
         // when
-        val result = textSearchRepository.findRuntimeBetween()
+        val result = rangeSearchRepository.findRuntimeBetween()
 
         // then
         result.mappedResults.take(5).map { it.title } shouldBe listOf(
@@ -35,7 +34,7 @@ internal class RangeSearchRepositoryTest : FreeSpec({
         val start = LocalDateTime.of(2010, 1, 1, 0, 0, 0)
         val end = LocalDateTime.of(2015, 1, 1, 0, 0, 0)
 
-        val result = textSearchRepository.findReleasedBetween()
+        val result = rangeSearchRepository.findReleasedBetween()
 
         // then
         result.mappedResults.take(5).map { it.released }.forAll {
