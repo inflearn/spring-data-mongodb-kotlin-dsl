@@ -48,5 +48,16 @@ class StringFacetDefinitionDsl {
         document["path"] = path.toDotPath()
     }
 
+    /**
+     * Field path to facet on. You can specify a field that is indexed as a How to Index String Fields For Faceted Search.
+     *
+     * @param path Field path to facet on.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet">How to Index String Fields For Faceted Search</a>
+     */
+    @JvmName("pathIterable")
+    fun path(path: KProperty<Iterable<String>>) {
+        document["path"] = path.toDotPath()
+    }
+
     internal fun get() = document
 }
