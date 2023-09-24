@@ -12,15 +12,15 @@ class TextSearchRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
 
-    data class FindTitleSuferDto(
+    data class TitleAndScoreDto(
         val title: String,
         val score: Double,
     )
 
     /**
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/text/#basic-example">Text Basic Example</a>
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/text/#basic-example">Basic Example</a>
      */
-    fun findTitleSufer(): AggregationResults<FindTitleSuferDto> {
+    fun findTitleWithSufer(): AggregationResults<TitleAndScoreDto> {
         val aggregation = aggregation {
             search {
                 text {
@@ -36,6 +36,30 @@ class TextSearchRepository(
             }
         }
 
-        return mongoTemplate.aggregate<Movies, FindTitleSuferDto>(aggregation)
+        return mongoTemplate.aggregate<Movies, TitleAndScoreDto>(aggregation)
+    }
+
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/text/#fuzzy-examples">Fuzzy Example</a>
+     */
+    fun findTitleWithNawYarkByFuzzy(): AggregationResults<TitleAndScoreDto> {
+        val aggregation = aggregation {
+            search {
+                text {
+                    path(Movies::title)
+                    query("naw yark")
+                    fuzzy(maxEdits = 1, prefixLength = 2)
+                }
+            }
+
+            // TODO: add $limit stage
+
+            project {
+                +Movies::title
+                searchScore()
+            }
+        }
+
+        return mongoTemplate.aggregate<Movies, TitleAndScoreDto>(aggregation)
     }
 }
