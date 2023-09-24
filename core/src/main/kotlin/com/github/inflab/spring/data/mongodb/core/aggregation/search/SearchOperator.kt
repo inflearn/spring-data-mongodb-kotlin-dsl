@@ -22,7 +22,7 @@ interface SearchOperator {
     fun text(configuration: TextSearchOperatorDsl.() -> Unit)
 
     /**
-     * checks whether a field matches a value you specify. equals supports querying the following data types:
+     * Checks whether a field matches a value you specify. equals supports querying the following data types:
      * boolean, objectId,  number,  including int32, int64, and double, date
      * You can use the equals operator to query booleans, objectIds, numbers, and dates in arrays. If at least one element in the array matches the "value" field in the equals operator, Atlas Search adds the document to the result set.
      *
@@ -39,4 +39,13 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/compound/#compound">compound</a>
      */
     fun compound(configuration: CompoundSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Performs search for documents containing an ordered sequence of terms using the `analyzer` specified in the `index configuration`.
+     * If no analyzer is specified, the default `standard` analyzer is used.
+     *
+     * @param configuration The configuration block for the [PhraseSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/phrase">phrase</a>
+     */
+    fun phrase(configuration: PhraseSearchOperatorDsl.() -> Unit)
 }
