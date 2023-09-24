@@ -26,7 +26,7 @@ jobs:
         with:
           arguments: lintKotlin
 
-      - name: Test
+      - name: Test Coverage
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: test
+          arguments: koverVerify
