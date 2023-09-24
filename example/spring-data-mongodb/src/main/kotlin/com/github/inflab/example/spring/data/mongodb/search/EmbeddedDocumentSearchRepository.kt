@@ -1,4 +1,4 @@
-package com.github.inflab.example.spring.data.mongodb.search.embeddedDocument
+package com.github.inflab.example.spring.data.mongodb.search
 
 import com.github.inflab.example.spring.data.mongodb.entity.supplies.SaleItem
 import com.github.inflab.example.spring.data.mongodb.entity.supplies.Sales
