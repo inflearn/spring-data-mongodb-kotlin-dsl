@@ -78,6 +78,8 @@ class TextSearchOperatorDsl {
      * - boost: multiply the result score by the given number.
      * - constant: replace the result score with the given number.
      * - function: replace the result score using the given expression.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/scoring/#std-label-scoring-ref">Score the Documents in the Results</a>
      */
     fun score(scoreConfiguration: ScoreSearchOptionDsl.() -> Unit) {
         document["score"] = ScoreSearchOptionDsl().apply(scoreConfiguration).get()
