@@ -70,5 +70,26 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should set path by iterable property" {
+            // given
+            data class Test(val path: List<String>)
+            val definition = stringFacet {
+                path(Test::path)
+            }
+
+            // when
+            val result = definition.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "type": "string",
+                  "path": "path"
+                }
+                """.trimIndent(),
+            )
+        }
     }
 })
