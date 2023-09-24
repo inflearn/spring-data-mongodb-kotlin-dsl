@@ -1,20 +1,19 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
+import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 import java.util.Date
 
 @Ignored
-internal class FacetSearchRepositoryTest : FreeSpec({
-    val connectionString = "mongodb+srv://<username>:<password>@<host>/sample_mflix?retryWrites=true&w=majority"
-    val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
-    val facetSearchRepository = FacetSearchRepository(mongoTemplate)
+@AtlasTest(database = "sample_mflix")
+internal class FacetSearchRepositoryTest(
+    private val facetSearchRepository: FacetSearchRepository,
+) : FreeSpec({
 
     "findYearWithStringFacet" {
         // when

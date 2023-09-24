@@ -1,18 +1,17 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
+import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 
 @Ignored
-internal class EmbeddedDocumentSearchRepositoryTest : FreeSpec({
-    val connectionString = "mongodb+srv://<username>:<password>@<host>/sample_supplies?retryWrites=true&w=majority"
-    val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
-    val embeddedDocumentSearchRepository = EmbeddedDocumentSearchRepository(mongoTemplate)
+@AtlasTest(database = "sample_supplies")
+internal class EmbeddedDocumentSearchRepositoryTest(
+    private val embeddedDocumentSearchRepository: EmbeddedDocumentSearchRepository,
+) : FreeSpec({
 
     "findItemsByMean" {
         // when
