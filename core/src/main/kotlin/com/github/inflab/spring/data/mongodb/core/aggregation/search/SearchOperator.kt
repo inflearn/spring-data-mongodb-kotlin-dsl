@@ -58,7 +58,18 @@ interface SearchOperator {
      *
      * You can use the range operator to find results that are within a given numeric or date range.
      *
+     * @param configuration The configuration block for the [RangeSearchOperatorDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/range">range</a>
      */
     fun range(configuration: RangeSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Constrains multiple query predicates to be satisfied from a single element of an array of embedded documents.
+     * `embeddedDocument` can be used only for queries over fields of type [How to Index Fields in Arrays of Objects and Documents](https://www.mongodb.com/docs/atlas/atlas-search/field-types/embedded-documents-type/#std-label-bson-data-types-embedded-documents).
+     * This operator is similar to [$elemMatch](https://www.mongodb.com/docs/manual/reference/operator/query/elemMatch/)
+     *
+     * @param configuration The configuration block for the [EmbeddedDocumentSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/embedded-document">embeddedDocument</a>
+     */
+    fun embeddedDocument(configuration: EmbeddedDocumentSearchOperatorDsl.() -> Unit)
 }
