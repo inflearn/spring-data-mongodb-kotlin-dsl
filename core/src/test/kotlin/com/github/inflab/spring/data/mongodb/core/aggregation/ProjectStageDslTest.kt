@@ -171,4 +171,129 @@ internal class ProjectStageDslTest : FreeSpec({
             )
         }
     }
+
+    "searchScore" - {
+        "should add search score meta with given alias" {
+            // given
+            val stage = project {
+                searchScore("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "searchScore"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "searchScoreDetails" - {
+        "should add search score details meta with given alias" {
+            // given
+            val stage = project {
+                searchScoreDetails("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "searchScoreDetails"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "searchHighlights" - {
+        "should add search highlights meta with given alias" {
+            // given
+            val stage = project {
+                searchHighlights("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "searchHighlights"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "textScore" - {
+        "should add text score meta with given alias" {
+            // given
+            val stage = project {
+                textScore("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "textScore"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "indexKey" - {
+        "should add index key meta with given alias" {
+            // given
+            val stage = project {
+                indexKey("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "indexKey"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
