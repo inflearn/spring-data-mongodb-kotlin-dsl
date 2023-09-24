@@ -1,9 +1,11 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import org.springframework.data.mapping.div
 import org.springframework.data.mapping.toDotPath
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty1
 
 /**
  * A Kotlin DSL to configure $project stage using idiomatic Kotlin code.
@@ -43,6 +45,13 @@ class ProjectStageDsl {
     operator fun KProperty<*>.unaryMinus() {
         operation = operation.andExclude(this.toDotPath())
     }
+
+    operator fun <T, U> KProperty<T?>.rangeTo(other: KProperty1<T, U>): KProperty<U> =
+        this / other
+
+    @JvmName("timesIterable")
+    operator fun <T, U> KProperty<Iterable<T?>>.rangeTo(other: KProperty1<T, U>): KProperty<U> =
+        (this as KProperty<T>) / other
 
     /**
      * Specifies the suppression of the _id field.

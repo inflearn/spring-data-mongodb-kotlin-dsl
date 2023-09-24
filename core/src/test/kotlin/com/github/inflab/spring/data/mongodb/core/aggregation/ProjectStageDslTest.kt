@@ -2,7 +2,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
-import org.springframework.data.mapping.div
 
 internal class ProjectStageDslTest : FreeSpec({
     data class Child(val field: String)
@@ -36,7 +35,7 @@ internal class ProjectStageDslTest : FreeSpec({
         "should add a field by property" {
             // given
             val stage = project {
-                +(Parent::child / Child::field)
+                +(Parent::child..Child::field)
                 +Parent::parentField
             }
 
@@ -50,6 +49,27 @@ internal class ProjectStageDslTest : FreeSpec({
                   "${'$'}project": {
                     "field": "${'$'}child.field",
                     "parentField": 1
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should add a nested property" {
+            // given
+            val stage = project {
+                +(Parent::child..Child::field)
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "field": "${'$'}child.field"
                   }
                 }
                 """.trimIndent(),
@@ -82,7 +102,7 @@ internal class ProjectStageDslTest : FreeSpec({
         "should exclude a field by property" {
             // given
             val stage = project {
-                -(Parent::child / Child::field)
+                -(Parent::child..Child::field)
                 -Parent::parentField
             }
 
@@ -151,7 +171,7 @@ internal class ProjectStageDslTest : FreeSpec({
         "should add a field with alias by property" {
             // given
             val stage = project {
-                (Parent::child / Child::field) alias "alias"
+                (Parent::child..Child::field) alias "alias"
                 Parent::parentField alias "alias2"
             }
 
