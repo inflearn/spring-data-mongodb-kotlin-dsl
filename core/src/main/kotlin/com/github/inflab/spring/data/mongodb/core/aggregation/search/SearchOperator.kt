@@ -48,4 +48,17 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/phrase">phrase</a>
      */
     fun phrase(configuration: PhraseSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Supports querying and scoring numeric and date values.
+     * This operator can be used to perform a search over:
+     *
+     * - Number fields of BSON int32, int64, and double data types.
+     * - Date fields of BSON date data type in `ISODate` format.
+     *
+     * You can use the range operator to find results that are within a given numeric or date range.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/range">range</a>
+     */
+    fun range(configuration: RangeSearchOperatorDsl.() -> Unit)
 }

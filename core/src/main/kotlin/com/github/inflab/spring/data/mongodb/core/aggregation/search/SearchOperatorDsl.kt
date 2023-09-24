@@ -29,4 +29,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun phrase(configuration: PhraseSearchOperatorDsl.() -> Unit) {
         operators.add(PhraseSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun range(configuration: RangeSearchOperatorDsl.() -> Unit) {
+        operators.add(RangeSearchOperatorDsl().apply(configuration).build())
+    }
 }
