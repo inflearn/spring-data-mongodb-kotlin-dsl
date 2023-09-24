@@ -21,6 +21,7 @@ data class Movies(
     val rated: String,
     val lastupdated: LocalDateTime,
     val year: Int,
+    val imdb: MovieImdb,
     val contries: List<String>,
     val type: String,
     val numMflixComments: Int,

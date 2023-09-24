@@ -2,6 +2,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.bson.Document
+import org.springframework.data.mapping.toDotPath
 import kotlin.reflect.KProperty
 
 /**
@@ -106,7 +107,7 @@ class ScoreFunctionSearchOptionDsl {
      * @param value [KProperty] of numeric field. Field can contain negative numeric values.
      * @param undefined Value to use if the numeric field specified using value is missing in the document. If omitted, defaults to 0.
      */
-    fun path(value: KProperty<Number>, undefined: Double? = null) = Expression.Path(value.name, undefined)
+    fun path(value: KProperty<Number>, undefined: Double? = null) = Expression.Path(value.toDotPath(), undefined)
 
     /**
      * Create an expression that allows you to decay, or reduce by multiplying, the final scores of the documents based on the distance of a numeric field value from a specified origin point.
