@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaStageDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchStageDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import org.springframework.data.mongodb.core.aggregation.Aggregation
@@ -34,6 +35,16 @@ class AggregationDsl {
      */
     fun search(searchConfiguration: SearchStageDsl.() -> Unit) {
         operations += SearchStageDsl().apply(searchConfiguration).build()
+    }
+
+    /**
+     * Configures a stage that returns different types of metadata result documents.
+     *
+     * @param searchMetaConfiguration custom configurations for the searchMeta stage.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$searchMeta</a>
+     */
+    fun searchMeta(searchMetaConfiguration: SearchMetaStageDsl.() -> Unit) {
+        operations += SearchMetaStageDsl().apply(searchMetaConfiguration).build()
     }
 
     /**

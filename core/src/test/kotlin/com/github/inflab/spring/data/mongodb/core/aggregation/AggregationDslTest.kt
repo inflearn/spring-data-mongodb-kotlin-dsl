@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaOperation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchOperation
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -34,6 +35,22 @@ internal class AggregationDslTest : FreeSpec({
             // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 SearchOperation(Document("index", "indexName")),
+            ).toString()
+        }
+    }
+
+    "searchMeta" - {
+        "should create searchMeta stage with index option" {
+            // when
+            val aggregation = aggregation {
+                searchMeta {
+                    index = "indexName"
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                SearchMetaOperation(Document("index", "indexName")),
             ).toString()
         }
     }
