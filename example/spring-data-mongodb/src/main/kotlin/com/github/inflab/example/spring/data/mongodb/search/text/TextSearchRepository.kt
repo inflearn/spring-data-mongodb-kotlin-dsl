@@ -28,6 +28,12 @@ class TextSearchRepository(
                     query("surfer")
                 }
             }
+
+            project {
+                excludeId()
+                +Movies::title
+                searchScore()
+            }
         }
 
         return mongoTemplate.aggregate<Movies, FindTitleSuferDto>(aggregation)
