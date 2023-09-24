@@ -63,7 +63,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
 
         "should set path by property" {
             // given
-            data class TestCollection(val field: String)
+            data class TestCollection(val field: List<String>)
             val operator = embeddedDocument {
                 path(TestCollection::field)
             }
@@ -85,7 +85,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
 
         "should set path by nested property" {
             // given
-            data class Child(val path: String)
+            data class Child(val path: List<String>)
             data class Parent(val child: Child)
             val operator = embeddedDocument {
                 path(Parent::child / Child::path)

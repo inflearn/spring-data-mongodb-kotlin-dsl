@@ -49,7 +49,7 @@ class EmbeddedDocumentSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/embedded-documents-type/#std-label-bson-data-types-embedded-documents">How to Index Fields in Arrays of Objects and Documents</a>
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    fun path(path: KProperty<Any>) {
+    fun <T> path(path: KProperty<Iterable<T>>) {
         document["path"] = path.toDotPath()
     }
 
