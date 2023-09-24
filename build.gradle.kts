@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.ben.manes.versions)
     alias(libs.plugins.version.catalog.update)
+    alias(libs.plugins.kover)
 }
 
 allprojects {
@@ -17,6 +18,7 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "org.jmailen.kotlinter")
+    apply(plugin = "org.jetbrains.kotlinx.kover")
 
     dependencies {
         testImplementation(rootProject.libs.kotest)
@@ -27,6 +29,20 @@ subprojects {
         suites {
             val test by getting(JvmTestSuite::class) {
                 useJUnitJupiter()
+            }
+        }
+    }
+
+    koverReport {
+        filters {
+            excludes {
+                classes("com.github.inflab.example.*")
+            }
+        }
+        verify {
+            rule {
+                isEnabled = true
+                minBound(90)
             }
         }
     }
