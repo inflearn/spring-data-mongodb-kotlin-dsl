@@ -63,6 +63,31 @@ class PhraseSearchOperatorDsl {
     }
 
     /**
+     * The indexed field or fields to search.
+     * You can also specify a wildcard path to search.
+     * See path construction for more information.
+     *
+     * @param path The indexed field or fields to search.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
+     */
+    @JvmName("pathIterable")
+    fun path(vararg path: KProperty<Iterable<String>>) {
+        document["path"] = path.map { it.toDotPath() }.firstOrAll()
+    }
+
+    /**
+     * The indexed field or fields to search.
+     * You can also specify a wildcard path to search.
+     * See path construction for more information.
+     *
+     * @param configuration The configuration block for the [PathSearchOptionDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
+     */
+    fun path(configuration: PathSearchOptionDsl<String>.() -> Unit) {
+        document["path"] = PathSearchOptionDsl<String>().apply(configuration).build()
+    }
+
+    /**
      * Score to assign to matching search results.
      * You can modify the default score using the following options:
      *
