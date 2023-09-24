@@ -5,7 +5,9 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
+import org.springframework.stereotype.Repository
 
+@Repository
 class SearchMetaRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
@@ -20,7 +22,7 @@ class SearchMetaRepository(
         val aggregation = aggregation {
             searchMeta {
                 range {
-                    path("year")
+                    path(Movies::year)
                     gte(1998)
                     lt(1999)
                 }
