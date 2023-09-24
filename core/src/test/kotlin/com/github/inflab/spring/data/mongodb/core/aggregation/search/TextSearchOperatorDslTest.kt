@@ -80,6 +80,28 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
+        "should set path by iterable property" {
+            // given
+            data class TestCollection(val path1: List<String>)
+            val operator = text {
+                path(TestCollection::path1)
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "text": {
+                    "path": "path1"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
         "should set path by multiple properties" {
             // given
             data class TestCollection(val path1: String, val path2: String)
@@ -122,6 +144,36 @@ internal class TextSearchOperatorDslTest : FreeSpec({
                 {
                   "text": {
                     "path": "child.path"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should set path by option block" {
+            // given
+            data class TestCollection(val path1: String, val path2: List<String>)
+            val operator = text {
+                path {
+                    +"path0"
+                    +TestCollection::path1
+                    +TestCollection::path2
+                }
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "text": {
+                    "path": [
+                      "path0",
+                      "path1",
+                      "path2"
+                    ]
                   }
                 }
                 """.trimIndent(),
