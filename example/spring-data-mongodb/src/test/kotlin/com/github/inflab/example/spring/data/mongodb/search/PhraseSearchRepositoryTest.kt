@@ -1,4 +1,4 @@
-package com.github.inflab.example.spring.data.mongodb.search.phrase
+package com.github.inflab.example.spring.data.mongodb.search
 
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec

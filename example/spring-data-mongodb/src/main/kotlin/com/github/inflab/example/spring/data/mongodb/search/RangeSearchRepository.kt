@@ -1,4 +1,4 @@
-package com.github.inflab.example.spring.data.mongodb.search.range
+package com.github.inflab.example.spring.data.mongodb.search
 
 import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
