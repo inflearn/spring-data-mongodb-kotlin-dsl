@@ -21,6 +21,15 @@ internal class EqualsSearchRepositoryTest(
         result.mappedResults.map { it.score }.forAll { it shouldBe 1.0 }
     }
 
+    "findTeammates" {
+        // when
+        val result = equalsSearchRepository.findTeammates()
+
+        // then
+        result.mappedResults.map { it.name } shouldBe listOf("Fred Osgood")
+        result.mappedResults.map { it.score }.forAll { it shouldBe 1.0 }
+    }
+
     "findAccountCreated" {
         // when
         val result = equalsSearchRepository.findAccountCreated()
@@ -28,5 +37,23 @@ internal class EqualsSearchRepositoryTest(
         // then
         result.mappedResults.map { it.name } shouldBe listOf("Ellen Smith")
         result.mappedResults.map { it.score }.forAll { it shouldBe 1.0 }
+    }
+
+    "findEmployeeNumber" {
+        // when
+        val result = equalsSearchRepository.findEmployeeNumber()
+
+        // then
+        result.mappedResults.map { it.name } shouldBe listOf("Fred Osgood")
+        result.mappedResults.map { it.score }.forAll { it shouldBe 1.0 }
+    }
+
+    "findByMultipleCriteria" {
+        // when
+        val result = equalsSearchRepository.findByMultipleCriteria()
+
+        // then
+        result.mappedResults.map { it.name } shouldBe listOf("Jim Hall")
+        result.mappedResults.map { it.score }.forAll { it shouldBe 2.0 }
     }
 })
