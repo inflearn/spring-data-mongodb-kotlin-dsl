@@ -48,7 +48,7 @@ internal fun toFieldName(property: KProperty<*>): String {
  *
  * For example, referring to the field "author.name":
  * ```
- * Book::author / Author::name isEqualTo "Herman Melville"
+ * Book::author..Author::name isEqualTo "Herman Melville"
  * ```
  * @author Jake Son
  * @since 1.0
@@ -62,7 +62,7 @@ operator fun <T, U> KProperty<T?>.rangeTo(other: KProperty1<T, U>): KProperty<U>
  *
  * For example, referring to the field "authors.name":
  * ```
- * Book::authors / Author::name isEqualTo "Herman Melville"
+ * Book::authors..Author::name isEqualTo "Herman Melville"
  * ```
  * @author Jake Son
  * @since 1.0

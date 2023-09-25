@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 import org.springframework.data.mapping.div
@@ -132,7 +133,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             data class Child(val path: String)
             data class Parent(val child: Child)
             val operator = text {
-                path(Parent::child / Child::path)
+                path(Parent::child..Child::path)
             }
 
             // when
