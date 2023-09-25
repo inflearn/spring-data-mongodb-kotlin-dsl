@@ -1,8 +1,8 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
-import org.springframework.data.mapping.toDotPath
 import kotlin.reflect.KProperty
 
 /**

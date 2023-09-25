@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 

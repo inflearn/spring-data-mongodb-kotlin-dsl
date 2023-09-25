@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

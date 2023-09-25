@@ -3,7 +3,7 @@ package com.github.inflab.example.spring.data.mongodb.repository
 import com.github.inflab.example.spring.data.mongodb.entity.mflix.MovieImdb
 import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
-import org.springframework.data.mapping.div
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -32,7 +32,7 @@ class ScoreSearchRepository(
                             query("Helsinki")
                             path(Movies::title)
                             score {
-                                boost(path = Movies::imdb / MovieImdb::rating, undefined = 3.0)
+                                boost(path = Movies::imdb..MovieImdb::rating, undefined = 3.0)
                             }
                         }
                     }
@@ -102,7 +102,7 @@ class ScoreSearchRepository(
                     score {
                         function {
                             expression = multiply(
-                                path(value = Movies::imdb / MovieImdb::rating, undefined = 2.0),
+                                path(value = Movies::imdb..MovieImdb::rating, undefined = 2.0),
                                 score(),
                             )
                         }
@@ -137,7 +137,7 @@ class ScoreSearchRepository(
                     score {
                         function {
                             expression = gauss(
-                                path = path(value = Movies::imdb / MovieImdb::rating, undefined = 4.6),
+                                path = path(value = Movies::imdb..MovieImdb::rating, undefined = 4.6),
                                 origin = 9.5,
                                 scale = 5.0,
                                 offset = 0.0,
@@ -172,7 +172,7 @@ class ScoreSearchRepository(
                     query("men")
                     score {
                         function {
-                            expression = path(value = Movies::imdb / MovieImdb::rating, undefined = 4.6)
+                            expression = path(value = Movies::imdb..MovieImdb::rating, undefined = 4.6)
                         }
                     }
                 }
@@ -202,7 +202,7 @@ class ScoreSearchRepository(
                     score {
                         function {
                             expression = log(
-                                path(value = Movies::imdb / MovieImdb::rating, undefined = 10.0),
+                                path(value = Movies::imdb..MovieImdb::rating, undefined = 10.0),
                             )
                         }
                     }
