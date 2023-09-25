@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.spring.data.mongodb)
+    implementation(kotlin("reflect"))
 }
 
 tasks.jar {
