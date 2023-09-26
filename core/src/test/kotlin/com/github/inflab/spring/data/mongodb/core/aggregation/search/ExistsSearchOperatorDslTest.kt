@@ -2,7 +2,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.shouldBe
 
 internal class ExistsSearchOperatorDslTest : FreeSpec({
     fun exists(block: ExistsSearchOperatorDsl.() -> Unit): ExistsSearchOperatorDsl =
@@ -32,8 +31,8 @@ internal class ExistsSearchOperatorDslTest : FreeSpec({
 
         "should set path by property" {
             // given
-            data class Test (
-                val property: String
+            data class Test(
+                val property: String,
             )
 
             val operator = exists {

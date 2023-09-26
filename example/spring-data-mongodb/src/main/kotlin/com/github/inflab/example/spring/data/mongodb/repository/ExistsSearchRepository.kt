@@ -1,6 +1,5 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
-import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.example.spring.data.mongodb.entity.sample.Fruits
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.springframework.data.mongodb.core.MongoTemplate
