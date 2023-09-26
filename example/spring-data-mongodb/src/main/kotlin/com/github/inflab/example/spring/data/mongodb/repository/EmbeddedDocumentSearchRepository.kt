@@ -4,6 +4,7 @@ import com.github.inflab.example.spring.data.mongodb.entity.supplies.SaleItem
 import com.github.inflab.example.spring.data.mongodb.entity.supplies.Sales
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.ScoreEmbeddedAggregateStrategy
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
