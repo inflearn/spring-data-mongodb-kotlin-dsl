@@ -72,4 +72,14 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/embedded-document">embeddedDocument</a>
      */
     fun embeddedDocument(configuration: EmbeddedDocumentSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Tests if a path to a specified indexed field name exists in a document.
+     * If the specified field exists but is not indexed, the document is not included with the result set.
+     * `exists` is often used as part of a compound query in conjunction with other search clauses.
+     *
+     * @param configuration The configuration block for the [ExistsSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/exists">exists</a>
+     */
+    fun exists(configuration: ExistsSearchOperatorDsl.() -> Unit)
 }

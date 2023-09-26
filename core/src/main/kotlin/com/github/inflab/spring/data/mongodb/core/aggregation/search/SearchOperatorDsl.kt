@@ -37,4 +37,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun embeddedDocument(configuration: EmbeddedDocumentSearchOperatorDsl.() -> Unit) {
         operators.add(EmbeddedDocumentSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun exists(configuration: ExistsSearchOperatorDsl.() -> Unit) {
+        operators.add(ExistsSearchOperatorDsl().apply(configuration).build())
+    }
 }
