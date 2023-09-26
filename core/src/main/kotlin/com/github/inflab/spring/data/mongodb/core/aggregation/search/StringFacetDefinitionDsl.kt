@@ -44,7 +44,7 @@ class StringFacetDefinitionDsl {
      * @param path Field path to facet on.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet">How to Index String Fields For Faceted Search</a>
      */
-    fun path(path: KProperty<String>) {
+    fun path(path: KProperty<String?>) {
         document["path"] = path.toDotPath()
     }
 
@@ -55,7 +55,7 @@ class StringFacetDefinitionDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/string-facet-type/#std-label-bson-data-types-string-facet">How to Index String Fields For Faceted Search</a>
      */
     @JvmName("pathIterable")
-    fun path(path: KProperty<Iterable<String>>) {
+    fun path(path: KProperty<Iterable<String?>?>) {
         document["path"] = path.toDotPath()
     }
 

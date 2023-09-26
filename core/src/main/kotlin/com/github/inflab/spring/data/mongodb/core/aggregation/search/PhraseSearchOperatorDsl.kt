@@ -58,7 +58,7 @@ class PhraseSearchOperatorDsl {
      * @param path The indexed field or fields to search.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    fun path(vararg path: KProperty<String>) {
+    fun path(vararg path: KProperty<String?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
@@ -71,7 +71,7 @@ class PhraseSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     @JvmName("pathIterable")
-    fun path(vararg path: KProperty<Iterable<String>>) {
+    fun path(vararg path: KProperty<Iterable<String?>?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 

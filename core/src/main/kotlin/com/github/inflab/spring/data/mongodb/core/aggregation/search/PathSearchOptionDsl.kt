@@ -27,7 +27,7 @@ class PathSearchOptionDsl<T> {
     /**
      * The indexed field to search.
      */
-    operator fun KProperty<T>.unaryPlus() {
+    operator fun KProperty<T?>.unaryPlus() {
         path.add(this.toDotPath())
     }
 
@@ -35,7 +35,7 @@ class PathSearchOptionDsl<T> {
      * The indexed array field to search.
      */
     @JvmName("unaryPlusIterable")
-    operator fun KProperty<Iterable<T>>.unaryPlus() {
+    operator fun KProperty<Iterable<T?>?>.unaryPlus() {
         path.add(this.toDotPath())
     }
 

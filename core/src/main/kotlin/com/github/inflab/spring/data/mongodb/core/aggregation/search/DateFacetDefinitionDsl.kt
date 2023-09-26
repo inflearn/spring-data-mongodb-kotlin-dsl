@@ -47,7 +47,7 @@ class DateFacetDefinitionDsl {
      * @param path Field path to facet on.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/date-type/#std-label-bson-data-types-date">How to Index Date Fields</a>
      */
-    fun path(path: KProperty<Temporal>) {
+    fun path(path: KProperty<Temporal?>) {
         document["path"] = path.toDotPath()
     }
 
