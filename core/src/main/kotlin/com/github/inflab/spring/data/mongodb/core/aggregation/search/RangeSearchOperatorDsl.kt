@@ -108,7 +108,7 @@ class RangeSearchOperatorDsl {
      * @param path The indexed field or fields to search.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    fun <T : Number> path(vararg path: KProperty<T>) {
+    fun <T : Number> path(vararg path: KProperty<T?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
@@ -120,7 +120,7 @@ class RangeSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     @JvmName("pathTemporal")
-    fun <T : Temporal> path(vararg path: KProperty<T>) {
+    fun <T : Temporal> path(vararg path: KProperty<T?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 

@@ -43,7 +43,7 @@ class NumericFacetDefinitionDsl {
      * @param path Field path to facet on.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/number-type/#std-label-bson-data-types-number">How to Index Numeric Values</a>
      */
-    fun path(path: KProperty<Number>) {
+    fun path(path: KProperty<Number?>) {
         document["path"] = path.toDotPath()
     }
 

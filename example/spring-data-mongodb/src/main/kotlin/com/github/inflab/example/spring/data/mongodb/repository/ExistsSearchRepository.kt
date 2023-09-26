@@ -25,7 +25,7 @@ class ExistsSearchRepository(
                         }
                         text {
                             query("apple")
-                            path("type")
+                            path(Fruits::type)
                         }
                     }
                     should {
