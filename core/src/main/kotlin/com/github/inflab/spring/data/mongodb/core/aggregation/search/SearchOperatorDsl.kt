@@ -49,4 +49,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun geoWithin(configuration: GeoWithinSearchOperatorDsl.() -> Unit) {
         operators.add(GeoWithinSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun moreLikeThis(configuration: MoreLikeThisSearchOperatorDsl.() -> Unit) {
+        operators.add(MoreLikeThisSearchOperatorDsl().apply(configuration).build())
+    }
 }
