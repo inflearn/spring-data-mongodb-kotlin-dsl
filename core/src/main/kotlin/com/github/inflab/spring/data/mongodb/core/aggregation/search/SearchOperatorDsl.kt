@@ -41,4 +41,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun exists(configuration: ExistsSearchOperatorDsl.() -> Unit) {
         operators.add(ExistsSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun geoShape(configuration: GeoShapeSearchOperatorDsl.() -> Unit) {
+        operators.add(GeoShapeSearchOperatorDsl().apply(configuration).build())
+    }
 }
