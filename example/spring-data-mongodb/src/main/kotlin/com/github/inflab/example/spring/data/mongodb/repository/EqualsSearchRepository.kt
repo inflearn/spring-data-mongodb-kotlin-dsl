@@ -23,7 +23,7 @@ class EqualsSearchRepository(
         val aggregation = aggregation {
             search {
                 equal {
-                    path("verified_user")
+                    path(Users::verifiedUser)
                     value(true)
                 }
             }
@@ -113,7 +113,7 @@ class EqualsSearchRepository(
                 compound {
                     must {
                         equal {
-                            path("verified_user")
+                            path(Users::verifiedUser)
                             value(true)
                         }
                     }
