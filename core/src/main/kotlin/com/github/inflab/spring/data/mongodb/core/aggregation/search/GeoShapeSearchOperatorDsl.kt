@@ -4,6 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.firstOrAll
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
+import org.springframework.data.mongodb.core.geo.GeoJson
 import org.springframework.data.mongodb.core.geo.GeoJsonLineString
 import org.springframework.data.mongodb.core.geo.GeoJsonMultiPolygon
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
@@ -87,45 +88,19 @@ class GeoShapeSearchOperatorDsl {
      * @param path The indexed field or fields to search.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    @JvmName("pathPoint")
-    fun path(vararg path: KProperty<GeoJsonPoint?>) {
+    fun path(vararg path: KProperty<GeoJson<*>?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
     /**
-     * Indexed geo type field or fields to search.
-     * See Path Construction for more information.
+     * The indexed field or fields to search.
+     * See path construction for more information.
      *
-     * @param path The indexed field or fields to search.
+     * @param configuration The configuration block for the [PathSearchOptionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    @JvmName("pathLineString")
-    fun path(vararg path: KProperty<GeoJsonLineString?>) {
-        document["path"] = path.map { it.toDotPath() }.firstOrAll()
-    }
-
-    /**
-     * Indexed geo type field or fields to search.
-     * See Path Construction for more information.
-     *
-     * @param path The indexed field or fields to search.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
-     */
-    @JvmName("pathPolygon")
-    fun path(vararg path: KProperty<GeoJsonPolygon?>) {
-        document["path"] = path.map { it.toDotPath() }.firstOrAll()
-    }
-
-    /**
-     * Indexed geo type field or fields to search.
-     * See Path Construction for more information.
-     *
-     * @param path The indexed field or fields to search.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
-     */
-    @JvmName("pathMultiPolygon")
-    fun path(vararg path: KProperty<GeoJsonMultiPolygon?>) {
-        document["path"] = path.map { it.toDotPath() }.firstOrAll()
+    fun path(configuration: PathSearchOptionDsl<GeoJson<*>>.() -> Unit) {
+        document["path"] = PathSearchOptionDsl<GeoJson<*>>().apply(configuration).build()
     }
 
     /**
