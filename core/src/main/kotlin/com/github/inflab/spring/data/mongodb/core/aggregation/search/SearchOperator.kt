@@ -82,4 +82,12 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/exists">exists</a>
      */
     fun exists(configuration: ExistsSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Supports querying shapes with a relation to a given geometry if indexShapes is set to true in the index definition.
+     *
+     * @param configuration The configuration block for the [GeoShapeSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/geoShape">geoShape</a>
+     */
+    fun geoShape(configuration: GeoShapeSearchOperatorDsl.() -> Unit)
 }
