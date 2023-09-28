@@ -53,4 +53,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun moreLikeThis(configuration: MoreLikeThisSearchOperatorDsl.() -> Unit) {
         operators.add(MoreLikeThisSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun wildcard(configuration: WildcardSearchOperatorDsl.() -> Unit) {
+        operators.add(WildcardSearchOperatorDsl().apply(configuration).build())
+    }
 }
