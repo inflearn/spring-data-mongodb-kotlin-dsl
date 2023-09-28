@@ -45,4 +45,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun geoShape(configuration: GeoShapeSearchOperatorDsl.() -> Unit) {
         operators.add(GeoShapeSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun geoWithin(configuration: GeoWithinSearchOperatorDsl.() -> Unit) {
+        operators.add(GeoWithinSearchOperatorDsl().apply(configuration).build())
+    }
 }
