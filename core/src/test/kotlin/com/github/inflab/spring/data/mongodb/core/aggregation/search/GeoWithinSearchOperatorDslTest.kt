@@ -28,21 +28,19 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
                 {
                   "geoWithin": {
                     "box": {
-                      "box": {
-                        "bottomLeft": {
-                          "type": "Point",
-                          "coordinates": [
-                            1.0,
-                            2.0
-                          ]
-                        },
-                        "topRight": {
-                          "type": "Point",
-                          "coordinates": [
-                            3.0,
-                            4.0
-                          ]
-                        }
+                      "bottomLeft": {
+                        "type": "Point",
+                        "coordinates": [
+                          1.0,
+                          2.0
+                        ]
+                      },
+                      "topRight": {
+                        "type": "Point",
+                        "coordinates": [
+                          3.0,
+                          4.0
+                        ]
                       }
                     }
                   }
@@ -67,17 +65,15 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "geoWithin": {
-                    "box": {
-                      "circle": {
-                        "center": {
-                          "type": "Point",
-                          "coordinates": [
-                            1.0,
-                            2.0
-                          ]
-                        },
-                        "radius": 3.0
-                      }
+                    "circle": {
+                      "center": {
+                        "type": "Point",
+                        "coordinates": [
+                          1.0,
+                          2.0
+                        ]
+                      },
+                      "radius": 3.0
                     }
                   }
                 }
