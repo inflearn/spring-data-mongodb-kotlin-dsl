@@ -9,7 +9,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
         EmbeddedDocumentSearchOperatorDsl().apply(block)
 
     "operator" - {
-        "should set operator" {
+        "should build an operator" {
             // given
             val operator = embeddedDocument {
                 operator {
@@ -40,7 +40,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = embeddedDocument {
                 path("path1")
@@ -61,7 +61,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by property" {
+        "should build a path by property" {
             // given
             data class TestCollection(val field: List<String>)
             val operator = embeddedDocument {
@@ -83,7 +83,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by nested property" {
+        "should build a path by nested property" {
             // given
             data class Child(val path: List<String>)
             data class Parent(val child: Child)
@@ -108,7 +108,7 @@ internal class EmbeddedDocumentSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = embeddedDocument {
                 score {

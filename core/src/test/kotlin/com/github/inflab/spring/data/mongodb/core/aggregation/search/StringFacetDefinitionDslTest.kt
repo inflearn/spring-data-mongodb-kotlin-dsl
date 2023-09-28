@@ -8,7 +8,7 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
         StringFacetDefinitionDsl().apply(block)
 
     "boundaries" - {
-        "should set numBuckets" {
+        "should build a numBuckets" {
             // given
             val definition = stringFacet {
                 numBuckets(10)
@@ -30,7 +30,7 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by string value" {
+        "should build a path by string value" {
             // given
             val definition = stringFacet {
                 path("path")
@@ -50,7 +50,7 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
             )
         }
 
-        "should set path by property" {
+        "should build a path by property" {
             // given
             data class Test(val path: String)
             val definition = stringFacet {
@@ -71,7 +71,7 @@ internal class StringFacetDefinitionDslTest : FreeSpec({
             )
         }
 
-        "should set path by iterable property" {
+        "should build a path by iterable property" {
             // given
             data class Test(val path: List<String>)
             val definition = stringFacet {

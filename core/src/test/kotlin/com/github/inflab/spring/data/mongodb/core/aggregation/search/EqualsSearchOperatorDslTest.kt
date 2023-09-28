@@ -11,7 +11,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
         EqualsSearchOperatorDsl().apply(block)
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = equal {
                 path("path")
@@ -32,7 +32,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by properties" {
+        "should build a path by properties" {
             // given
             data class Test(val property: String)
             val operator = equal {
@@ -57,7 +57,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
 
     "value" - {
         listOf(true, false).forEach {
-            "should set value by boolean $it" {
+            "should build a value by boolean $it" {
                 // given
                 val operator = equal {
                     value(it)
@@ -79,7 +79,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
             }
         }
 
-        "should set value by LocalDateTime" {
+        "should build a value by LocalDateTime" {
             // given
             val operator = equal {
                 value(LocalDateTime.of(2023, 9, 18, 4, 10, 50, 1))
@@ -102,7 +102,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set value by LocalDate" {
+        "should build a value by LocalDate" {
             // given
             val operator = equal {
                 value(LocalDate.of(2023, 9, 18))
@@ -125,7 +125,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set value by number" {
+        "should build a value by number" {
             // given
             val operator = equal {
                 value(1)
@@ -146,7 +146,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set value by ObjectId" {
+        "should build a value by ObjectId" {
             // given
             val operator = equal {
                 value(ObjectId("6145f2b3d9b9f3b3e8f1b1a1"))
@@ -171,7 +171,7 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = equal {
                 score {

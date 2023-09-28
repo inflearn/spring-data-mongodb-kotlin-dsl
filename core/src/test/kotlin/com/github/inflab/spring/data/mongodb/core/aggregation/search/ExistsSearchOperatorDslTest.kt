@@ -8,7 +8,7 @@ internal class ExistsSearchOperatorDslTest : FreeSpec({
         ExistsSearchOperatorDsl().apply(block)
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = exists {
                 path("path")
@@ -29,7 +29,7 @@ internal class ExistsSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by property" {
+        "should build a path by property" {
             // given
             data class Test(
                 val property: String,
@@ -56,7 +56,7 @@ internal class ExistsSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score by score option" {
+        "should build a score by score option" {
             // given
             val operator = exists {
                 score {

@@ -9,7 +9,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
         FacetSearchCollectorDsl().apply(block)
 
     "operator" - {
-        "should set operator" {
+        "should build an operator" {
             // given
             val collector = facet {
                 operator {
@@ -41,7 +41,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     }
 
     "stringFacet" - {
-        "should set string facet" {
+        "should build a string facet" {
             // given
             val collector = facet {
                 "name" stringFacet {
@@ -71,7 +71,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     }
 
     "numericFacet" - {
-        "should set numeric facet" {
+        "should build a numeric facet" {
             // given
             val collector = facet {
                 "name" numericFacet {
@@ -107,7 +107,7 @@ internal class FacetSearchCollectorDslTest : FreeSpec({
     }
 
     "dateFacet" - {
-        "should set date facet" {
+        "should build a date facet" {
             // given
             val collector = facet {
                 "name" dateFacet {

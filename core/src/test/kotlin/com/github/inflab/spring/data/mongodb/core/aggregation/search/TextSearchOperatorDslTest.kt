@@ -9,7 +9,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
         TextSearchOperatorDsl().apply(block)
 
     "query" - {
-        "should set query by string" {
+        "should build a query by string" {
             // given
             val operator = text {
                 query("query")
@@ -30,7 +30,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set query by multiple strings" {
+        "should build a query by multiple strings" {
             // given
             val operator = text {
                 query("query1", "query2")
@@ -56,7 +56,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = text {
                 path("path1", "path2")
@@ -80,7 +80,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by iterable property" {
+        "should build a path by iterable property" {
             // given
             data class TestCollection(val path1: List<String>)
             val operator = text {
@@ -102,7 +102,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by multiple properties" {
+        "should build a path by multiple properties" {
             // given
             data class TestCollection(val path1: String, val path2: String)
             val operator = text {
@@ -127,7 +127,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by nested property" {
+        "should build a path by nested property" {
             // given
             data class Child(val path: String)
             data class Parent(val child: Child)
@@ -150,7 +150,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by option block" {
+        "should build a path by option block" {
             // given
             data class TestCollection(val path1: String, val path2: List<String>)
             val operator = text {
@@ -182,7 +182,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
     }
 
     "fuzzy" - {
-        "should set fuzzy with maxEdits" {
+        "should build a fuzzy with maxEdits" {
             // given
             val operator = text {
                 fuzzy(maxEdits = 1)
@@ -205,7 +205,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set fuzzy with prefixLength" {
+        "should build a fuzzy with prefixLength" {
             // given
             val operator = text {
                 fuzzy(prefixLength = 1)
@@ -228,7 +228,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set fuzzy with prefixLength" {
+        "should build a fuzzy with prefixLength" {
             // given
             val operator = text {
                 fuzzy(prefixLength = 1)
@@ -253,7 +253,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = text {
                 score {
@@ -282,7 +282,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
     }
 
     "synonyms" - {
-        "should set synonyms" {
+        "should build a synonyms" {
             // given
             val operator = text {
                 synonyms("synonyms")

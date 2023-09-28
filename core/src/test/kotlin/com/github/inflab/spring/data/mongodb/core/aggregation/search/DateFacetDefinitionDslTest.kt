@@ -10,7 +10,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
         DateFacetDefinitionDsl().apply(block)
 
     "boundaries" - {
-        "should set boundaries with LocalDate" {
+        "should build a boundaries with LocalDate" {
             // given
             val definition = dateFacet {
                 boundaries(
@@ -40,7 +40,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
             )
         }
 
-        "should set boundaries with LocalDateTime" {
+        "should build a boundaries with LocalDateTime" {
             // given
             val definition = dateFacet {
                 boundaries(
@@ -72,7 +72,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by string value" {
+        "should build a path by string value" {
             // given
             val definition = dateFacet {
                 path("path")
@@ -92,7 +92,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
             )
         }
 
-        "should set path by property" {
+        "should build a path by property" {
             // given
             data class Test(val path: LocalDateTime)
             val definition = dateFacet {
@@ -115,7 +115,7 @@ internal class DateFacetDefinitionDslTest : FreeSpec({
     }
 
     "default" - {
-        "should set default" {
+        "should build a default" {
             // given
             val definition = dateFacet {
                 default("default")
