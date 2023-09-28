@@ -29,10 +29,7 @@ class GeoWithinSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/geojson">GeoJSON Objects</a>
      */
     fun box(bottomLeft: GeoJsonPoint, topRight: GeoJsonPoint) {
-        document["box"] = Document(
-            "box",
-            Document("bottomLeft", bottomLeft.toJson()).append("topRight", topRight.toJson()),
-        )
+        document["box"] = Document("bottomLeft", bottomLeft.toJson()).append("topRight", topRight.toJson())
     }
 
     /**
@@ -44,10 +41,7 @@ class GeoWithinSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/geojson">GeoJSON Objects</a>
      */
     fun circle(center: GeoJsonPoint, radius: Number) {
-        document["box"] = Document(
-            "circle",
-            Document("center", center.toJson()).append("radius", radius),
-        )
+        document["circle"] = Document("center", center.toJson()).append("radius", radius)
     }
 
     /**
