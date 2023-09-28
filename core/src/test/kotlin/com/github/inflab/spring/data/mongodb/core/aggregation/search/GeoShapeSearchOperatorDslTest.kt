@@ -129,7 +129,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set multiy polygon" {
+        "should set multi polygon" {
             // given
             val operator = geoShape {
                 geometry(
@@ -279,6 +279,36 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
                 {
                   "geoShape": {
                     "path": "child.path"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should set path by option block" {
+            // given
+            data class TestCollection(val path1: GeoJsonPolygon, val path2: GeoJsonPoint)
+            val operator = geoShape {
+                path {
+                    +"path0"
+                    +TestCollection::path1
+                    +TestCollection::path2
+                }
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "geoShape": {
+                    "path": [
+                      "path0",
+                      "path1",
+                      "path2"
+                    ]
                   }
                 }
                 """.trimIndent(),
