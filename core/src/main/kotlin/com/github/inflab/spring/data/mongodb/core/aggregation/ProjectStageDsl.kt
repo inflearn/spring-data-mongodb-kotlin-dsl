@@ -2,7 +2,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
-import org.springframework.data.mapping.div
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import kotlin.reflect.KProperty
 

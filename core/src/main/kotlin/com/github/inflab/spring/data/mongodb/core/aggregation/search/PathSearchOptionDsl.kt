@@ -3,7 +3,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.firstOrAll
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
-import org.springframework.data.mapping.div
 import kotlin.reflect.KProperty
 
 /**
