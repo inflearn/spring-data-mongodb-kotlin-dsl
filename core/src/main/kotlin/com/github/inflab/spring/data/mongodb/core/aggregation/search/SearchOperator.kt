@@ -90,4 +90,13 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/geoShape">geoShape</a>
      */
     fun geoShape(configuration: GeoShapeSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Supports querying geographic points within a given geometry.
+     * Only points are returned, even if `indexShapes` value is `true` in the index definition.
+     *
+     * @param configuration The configuration block for the [GeoWithinSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/geoWithin">geoWithin</a>
+     */
+    fun geoWithin(configuration: GeoWithinSearchOperatorDsl.() -> Unit)
 }
