@@ -108,4 +108,12 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/morelikethis">moreLikeThis</a>
      */
     fun moreLikeThis(configuration: MoreLikeThisSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Enables queries which use special characters in the search string that can match any character.
+     *
+     * @param configuration The configuration block for the [WildcardSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/wildcard">wildcard</a>
+     */
+    fun wildcard(configuration: WildcardSearchOperatorDsl.() -> Unit)
 }
