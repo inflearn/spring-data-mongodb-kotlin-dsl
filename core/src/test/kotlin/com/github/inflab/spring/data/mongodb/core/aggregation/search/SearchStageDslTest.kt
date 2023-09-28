@@ -8,7 +8,7 @@ internal class SearchStageDslTest : FreeSpec({
         SearchStageDsl().apply(block)
 
     "index" - {
-        "should set index with given name" {
+        "should build an index with given name" {
             // given
             val stage = search {
                 index = "indexName"
@@ -32,7 +32,7 @@ internal class SearchStageDslTest : FreeSpec({
 
     "returnStoredSource" - {
         listOf(true, false).forEach {
-            "should set returnStoredSource stage with $it" {
+            "should build a returnStoredSource stage with $it" {
                 // given
                 val stage = search {
                     returnStoredSource = it
@@ -57,7 +57,7 @@ internal class SearchStageDslTest : FreeSpec({
 
     "scoreDetails" - {
         listOf(true, false).forEach {
-            "should set scoreDetails stage with $it" {
+            "should build a scoreDetails stage with $it" {
                 // given
                 val stage = search {
                     scoreDetails = it
@@ -81,7 +81,7 @@ internal class SearchStageDslTest : FreeSpec({
     }
 
     "lowerBoundCount" - {
-        "should set lowerBoundCount stage with given threshold" {
+        "should build a lowerBoundCount stage with given threshold" {
             // given
             val stage = search {
                 lowerBoundCount(100)
@@ -105,7 +105,7 @@ internal class SearchStageDslTest : FreeSpec({
             )
         }
 
-        "should set lowerBoundCount stage without threshold" {
+        "should build a lowerBoundCount stage without threshold" {
             // given
             val stage = search {
                 lowerBoundCount()
@@ -130,7 +130,7 @@ internal class SearchStageDslTest : FreeSpec({
     }
 
     "totalCount" - {
-        "should set totalCount stage" {
+        "should build a totalCount stage" {
             // given
             val stage = search {
                 totalCount()

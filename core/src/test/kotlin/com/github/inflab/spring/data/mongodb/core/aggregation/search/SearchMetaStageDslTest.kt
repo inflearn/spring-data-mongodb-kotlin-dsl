@@ -8,7 +8,7 @@ internal class SearchMetaStageDslTest : FreeSpec({
         SearchMetaStageDsl().apply(block)
 
     "index" - {
-        "should set index with given name" {
+        "should build an index with given name" {
             // given
             val stage = searchMeta {
                 index = "indexName"
@@ -31,7 +31,7 @@ internal class SearchMetaStageDslTest : FreeSpec({
     }
 
     "lowerBoundCount" - {
-        "should set lowerBoundCount stage with given threshold" {
+        "should build a lowerBoundCount stage with given threshold" {
             // given
             val stage = searchMeta {
                 lowerBoundCount(100)
@@ -55,7 +55,7 @@ internal class SearchMetaStageDslTest : FreeSpec({
             )
         }
 
-        "should set lowerBoundCount stage without threshold" {
+        "should build a lowerBoundCount stage without threshold" {
             // given
             val stage = searchMeta {
                 lowerBoundCount()
@@ -80,7 +80,7 @@ internal class SearchMetaStageDslTest : FreeSpec({
     }
 
     "totalCount" - {
-        "should set totalCount stage" {
+        "should build a totalCount stage" {
             // given
             val stage = searchMeta {
                 totalCount()

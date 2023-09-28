@@ -23,7 +23,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val option = scoreFunction {
                 expression = score()
@@ -44,7 +44,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "constant" - {
-        "should set value with given one" {
+        "should build a value with given one" {
             // given
             val option = scoreFunction {
                 expression = constant(2.0)
@@ -65,7 +65,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path from string field" {
+        "should build a path from string field" {
             // given
             val option = scoreFunction {
                 expression = path("path")
@@ -86,7 +86,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path from KProperty field" {
+        "should build a path from KProperty field" {
             // given
             val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
@@ -108,7 +108,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path from string field with undefined" {
+        "should build a path from string field with undefined" {
             // given
             val option = scoreFunction {
                 expression = path("path", 0.0)
@@ -130,7 +130,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path from KProperty field with undefined" {
+        "should build a path from KProperty field with undefined" {
             // given
             val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
@@ -155,7 +155,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "gauss" - {
-        "should set gauss" {
+        "should build a gauss" {
             // given
             val option = scoreFunction {
                 expression = gauss(
@@ -190,7 +190,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "log" - {
-        "should set log" {
+        "should build a log" {
             // given
             val option = scoreFunction {
                 expression = log(path("path"))
@@ -215,7 +215,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "log1p" - {
-        "should set log1p" {
+        "should build a log1p" {
             // given
             val option = scoreFunction {
                 expression = log1p(path("path"))
@@ -306,7 +306,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
     }
 
     "nested expressions" - {
-        "should set nested expressions" {
+        "should build a nested expressions" {
             // given
             val option = scoreFunction {
                 expression = add(

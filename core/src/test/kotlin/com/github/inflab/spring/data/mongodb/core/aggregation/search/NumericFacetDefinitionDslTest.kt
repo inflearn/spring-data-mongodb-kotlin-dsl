@@ -8,7 +8,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
         NumericFacetDefinitionDsl().apply(block)
 
     "boundaries" - {
-        "should set boundaries" {
+        "should build a boundaries" {
             // given
             val definition = numericFacet {
                 boundaries(
@@ -36,7 +36,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by string value" {
+        "should build a path by string value" {
             // given
             val definition = numericFacet {
                 path("path")
@@ -56,7 +56,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
             )
         }
 
-        "should set path by property" {
+        "should build a path by property" {
             // given
             data class Test(val path: Long)
             val definition = numericFacet {
@@ -79,7 +79,7 @@ internal class NumericFacetDefinitionDslTest : FreeSpec({
     }
 
     "default" - {
-        "should set default" {
+        "should build a default" {
             // given
             val definition = numericFacet {
                 default("default")

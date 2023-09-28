@@ -8,7 +8,7 @@ internal class CompoundSearchOperatorDslTest : FreeSpec({
         CompoundSearchOperatorDsl().apply(block)
 
     "minimumShouldMatch" - {
-        "should set with given value" {
+        "should build a with given value" {
             // given
             val operator = compound {
                 minimumShouldMatch = 2

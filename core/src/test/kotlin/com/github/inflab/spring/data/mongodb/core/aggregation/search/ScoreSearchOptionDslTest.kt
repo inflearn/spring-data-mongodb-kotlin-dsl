@@ -8,7 +8,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
         ScoreSearchOptionDsl().apply(block)
 
     "boost" - {
-        "should set value with given one" {
+        "should build a value with given one" {
             // given
             val option = score {
                 boost(2.0)
@@ -29,7 +29,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path from string field" {
+        "should build a path from string field" {
             // given
             val option = score {
                 boost("path")
@@ -50,7 +50,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path from KProperty field" {
+        "should build a path from KProperty field" {
             // given
             val testObject = object : Any() { val path = 123 }
             val option = score {
@@ -72,7 +72,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set path with undefined value" {
+        "should build a path with undefined value" {
             // given
             val option = score {
                 boost("path", undefined = 0.0)
@@ -96,7 +96,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
     }
 
     "constant" - {
-        "should set value with given one" {
+        "should build a value with given one" {
             // given
             val option = score {
                 constant(2.0)
@@ -119,7 +119,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
     }
 
     "embedded" - {
-        "should set aggregate with strategy" {
+        "should build an aggregate with strategy" {
             // given
             val option = score {
                 embedded(ScoreEmbeddedAggregateStrategy.MEAN)
@@ -140,7 +140,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
             )
         }
 
-        "should set outerScore with default strategy" {
+        "should build an outerScore with default strategy" {
             // given
             val option = score {
                 embedded {
@@ -170,7 +170,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
     }
 
     "function" - {
-        "should set function with given one" {
+        "should build a function with given one" {
             // given
             val option = score {
                 function {

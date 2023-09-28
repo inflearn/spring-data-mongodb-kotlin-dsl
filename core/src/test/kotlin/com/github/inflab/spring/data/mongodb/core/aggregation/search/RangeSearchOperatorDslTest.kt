@@ -10,7 +10,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
         RangeSearchOperatorDsl().apply(block)
 
     "lt & lte" - {
-        "should set value with number" {
+        "should build a value with number" {
             // given
             val operator = range {
                 lt(1.5)
@@ -33,7 +33,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set value with temporal" {
+        "should build a value with temporal" {
             // given
             val operator = range {
                 lt(LocalDateTime.of(2021, 2, 1, 10, 2, 3))
@@ -62,7 +62,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
     }
 
     "gt & gte" - {
-        "should set value with number" {
+        "should build a value with number" {
             // given
             val operator = range {
                 gt(1.5)
@@ -85,7 +85,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set value with temporal" {
+        "should build a value with temporal" {
             // given
             val operator = range {
                 gt(LocalDateTime.of(2021, 2, 1, 10, 2, 3))
@@ -114,7 +114,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = range {
                 path("path1", "path2")
@@ -138,7 +138,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by number properties" {
+        "should build a path by number properties" {
             // given
             data class TestCollection(val path1: Int, val path2: Double)
             val operator = range {
@@ -163,7 +163,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by temporal properties" {
+        "should build a path by temporal properties" {
             // given
             data class TestCollection(val path1: LocalDateTime, val path2: LocalDate)
             val operator = range {
@@ -190,7 +190,7 @@ internal class RangeSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = range {
                 score {

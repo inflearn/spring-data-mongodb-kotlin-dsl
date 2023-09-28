@@ -223,7 +223,7 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = geoWithin {
                 path("path1", "path2")
@@ -247,7 +247,7 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by multiple properties" {
+        "should build a path by multiple properties" {
             // given
             data class TestCollection(val path1: GeoJsonPolygon, val path2: GeoJsonPolygon)
             val operator = geoWithin {
@@ -272,7 +272,7 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by nested property" {
+        "should build a path by nested property" {
             // given
             data class Child(val path: GeoJsonLineString)
             data class Parent(val child: Child)
@@ -295,7 +295,7 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by option block" {
+        "should build a path by option block" {
             // given
             data class TestCollection(val path1: GeoJsonPolygon, val path2: GeoJsonPoint)
             val operator = geoWithin {
@@ -327,7 +327,7 @@ internal class GeoWithinSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = geoWithin {
                 score {

@@ -14,7 +14,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
         GeoShapeSearchOperatorDsl().apply(block)
 
     "geometry" - {
-        "should set point" {
+        "should build a point" {
             // given
             val operator = geoShape {
                 geometry(GeoJsonPoint(1.0, 0.0))
@@ -41,7 +41,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set line string" {
+        "should build a line string" {
             // given
             val operator = geoShape {
                 geometry(
@@ -79,7 +79,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set polygon" {
+        "should build a polygon" {
             // given
             val operator = geoShape {
                 geometry(
@@ -129,7 +129,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set multi polygon" {
+        "should build a multi polygon" {
             // given
             val operator = geoShape {
                 geometry(
@@ -213,7 +213,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = geoShape {
                 path("path1", "path2")
@@ -237,7 +237,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by multiple properties" {
+        "should build a path by multiple properties" {
             // given
             data class TestCollection(val path1: GeoJsonPolygon, val path2: GeoJsonPolygon)
             val operator = geoShape {
@@ -262,7 +262,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by nested property" {
+        "should build a path by nested property" {
             // given
             data class Child(val path: GeoJsonLineString)
             data class Parent(val child: Child)
@@ -285,7 +285,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by option block" {
+        "should build a path by option block" {
             // given
             data class TestCollection(val path1: GeoJsonPolygon, val path2: GeoJsonPoint)
             val operator = geoShape {
@@ -318,7 +318,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
 
     "relation" - {
         GeoShapeRelation.entries.forEach {
-            "should set relation to $it" {
+            "should build a relation to $it" {
                 // given
                 val operator = geoShape {
                     relation = it
@@ -342,7 +342,7 @@ internal class GeoShapeSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = geoShape {
                 score {
