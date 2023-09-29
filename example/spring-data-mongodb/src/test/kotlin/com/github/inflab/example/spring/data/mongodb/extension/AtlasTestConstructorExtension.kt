@@ -3,6 +3,8 @@ package com.github.inflab.example.spring.data.mongodb.extension
 import io.kotest.core.annotation.AutoScan
 import io.kotest.core.extensions.ConstructorExtension
 import io.kotest.core.spec.Spec
+import org.springframework.boot.env.YamlPropertySourceLoader
+import org.springframework.core.io.ClassPathResource
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 import kotlin.reflect.KClass
@@ -10,7 +12,14 @@ import kotlin.reflect.full.primaryConstructor
 
 @AutoScan
 internal object AtlasTestConstructorExtension : ConstructorExtension {
-    private const val ATLAS_DOMAIN = "<username>:<password>@<host>"
+    private val ATLAS_DOMAIN by lazy {
+        val property = YamlPropertySourceLoader().load("env", ClassPathResource("application.yml")).first()
+        val username = property.getProperty("spring.data.mongodb.username") ?: throw IllegalStateException("spring.data.mongodb.username is not set")
+        val password = property.getProperty("spring.data.mongodb.password") ?: throw IllegalStateException("spring.data.mongodb.password is not set")
+        val host = property.getProperty("spring.data.mongodb.host") ?: throw IllegalStateException("spring.data.mongodb.host is not set")
+
+        "$username:$password@$host"
+    }
 
     override fun <T : Spec> instantiate(clazz: KClass<T>): Spec? {
         val atlasTest = clazz.annotations.find { it is AtlasTest } as AtlasTest? ?: return null
