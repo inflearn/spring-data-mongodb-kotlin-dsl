@@ -24,6 +24,15 @@ class AggregationDsl {
     private var options: AggregationOptions? = null
 
     /**
+     * Adds a raw [stage][AggregationOperation] to the pipeline.
+     *
+     * @param stage The [AggregationOperation] to add to the pipeline.
+     */
+    fun stage(stage: AggregationOperation) {
+        operations += stage
+    }
+
+    /**
      * Configures a set of aggregation options that can be used within an aggregation pipeline.
      *
      * @param allowDiskUse Override `allowDiskUseByDefault` for a specific query.
