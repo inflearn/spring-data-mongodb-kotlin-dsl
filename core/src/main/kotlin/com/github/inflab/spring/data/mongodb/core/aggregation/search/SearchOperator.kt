@@ -100,14 +100,6 @@ interface SearchOperator {
      */
     fun geoWithin(configuration: GeoWithinSearchOperatorDsl.() -> Unit)
 
-    /**
-     * Returns documents similar to input documents.
-     * The moreLikeThis operator allows you to build features for your applications that display similar or alternative results based on one or more given documents.
-     *
-     * @param configuration The configuration block for the [MoreLikeThisSearchOperatorDsl].
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/morelikethis">moreLikeThis</a>
-     */
-    fun moreLikeThis(configuration: MoreLikeThisSearchOperatorDsl.() -> Unit)
 
     /**
      * Enables queries which use special characters in the search string that can match any character.
