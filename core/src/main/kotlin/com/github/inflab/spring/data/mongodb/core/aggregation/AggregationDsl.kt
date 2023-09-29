@@ -3,8 +3,14 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaStageDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchStageDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions.DomainTypeMapping
+import org.springframework.data.mongodb.core.query.Collation
+import kotlin.time.Duration
+import kotlin.time.toJavaDuration
 
 /**
  * A Kotlin DSL to configure [Aggregation] using idiomatic Kotlin code.
@@ -15,6 +21,55 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 @AggregationMarker
 class AggregationDsl {
     private val operations = mutableListOf<AggregationOperation>()
+    private var options: AggregationOptions? = null
+
+    /**
+     * Configures a set of aggregation options that can be used within an aggregation pipeline.
+     *
+     * @param allowDiskUse Override `allowDiskUseByDefault` for a specific query.
+     * @param explain Specifies to return the information on the processing of the pipeline.
+     * @param cursor Specify a document that contains options that control the creation of the cursor object.
+     * @param cursorBatchSize Indicates a cursor with a non-default batch size.
+     * @param collation Specifies the collation to use for the operation.
+     * @param comment A user-provided comment to attach to this command.
+     * @param hint The index to use for the aggregation.
+     * @param maxTime Specifies a time limit in [Duration].
+     * @param skipOutput Skip results when running an aggregation.
+     * Useful in combination with `$merge` or `$out`.
+     * @param domainTypeMapping Specifies a domain type mappings supported by the mapping layer.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/command/aggregate/#command-fields">Aggregation Options</a>
+     */
+    fun options(
+        allowDiskUse: Boolean? = null,
+        explain: Boolean? = null,
+        cursor: Document? = null,
+        cursorBatchSize: Int? = null,
+        collation: Collation? = null,
+        comment: String? = null,
+        hint: Document? = null,
+        maxTime: Duration? = null,
+        skipOutput: Boolean? = null,
+        domainTypeMapping: DomainTypeMapping? = null,
+    ) {
+        val builder = AggregationOptions.builder()
+        allowDiskUse?.let { builder.allowDiskUse(it) }
+        explain?.let { builder.explain(it) }
+        cursor?.let { builder.cursor(it) }
+        cursorBatchSize?.let { builder.cursorBatchSize(it) }
+        collation?.let { builder.collation(it) }
+        comment?.let { builder.comment(it) }
+        hint?.let { builder.hint(it) }
+        maxTime?.let { builder.maxTime(it.toJavaDuration()) }
+        if (skipOutput == true) builder.skipOutput()
+        when (domainTypeMapping) {
+            DomainTypeMapping.STRICT -> builder.strictMapping()
+            DomainTypeMapping.RELAXED -> builder.relaxedMapping()
+            DomainTypeMapping.NONE -> builder.noMapping()
+            null -> {}
+        }
+
+        options = builder.build()
+    }
 
     /**
      * Passes a document to the next stage that contains a count of the number of documents input to the stage.
@@ -73,6 +128,9 @@ class AggregationDsl {
      *
      * @return The [Aggregation] built using the configured operations.
      */
-    fun build(): Aggregation =
-        Aggregation.newAggregation(operations)
+    fun build(): Aggregation {
+        val aggregation = Aggregation.newAggregation(operations)
+
+        return options?.let { aggregation.withOptions(it) } ?: aggregation
+    }
 }

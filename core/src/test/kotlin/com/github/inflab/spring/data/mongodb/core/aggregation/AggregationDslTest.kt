@@ -3,11 +3,31 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaOperation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchOperation
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 
 internal class AggregationDslTest : FreeSpec({
+
+    "option" - {
+        "should add an options" {
+            // when
+            val aggregation = aggregation {
+                options(
+                    allowDiskUse = true,
+                    explain = true,
+                )
+                count("fieldName")
+            }
+
+            // then
+            aggregation.options.isAllowDiskUse.shouldBeTrue()
+            aggregation.options.isExplain.shouldBeTrue()
+            aggregation.options.isSkipResults.shouldBeFalse()
+        }
+    }
 
     "count" - {
         "should create count stage with field name" {
