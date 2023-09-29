@@ -8,6 +8,7 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.StringOperators
 
 internal class AggregationDslTest : FreeSpec({
 
@@ -101,6 +102,37 @@ internal class AggregationDslTest : FreeSpec({
             // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 Aggregation.project("fieldName"),
+            ).toString()
+        }
+    }
+
+    "sort" - {
+        "should create sort stage with field name" {
+            // when
+            val aggregation = aggregation {
+                sort {
+                    "fieldName" by Ascending
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                ExtendedSortOperation().apply { ascending("fieldName") },
+            ).toString()
+        }
+    }
+
+    "sortByCount" - {
+        "should create sortByCount stage with expression" {
+            // when
+            val expression = StringOperators.valueOf("fieldName").ltrim()
+            val aggregation = aggregation {
+                sortByCount(expression)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.sortByCount(expression),
             ).toString()
         }
     }
