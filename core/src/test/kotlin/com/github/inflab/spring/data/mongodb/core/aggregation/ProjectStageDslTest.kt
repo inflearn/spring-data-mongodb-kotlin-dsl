@@ -3,6 +3,8 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
+import org.springframework.data.mongodb.core.aggregation.StringOperators
 
 internal class ProjectStageDslTest : FreeSpec({
     data class Child(val field: String)
@@ -310,6 +312,61 @@ internal class ProjectStageDslTest : FreeSpec({
                   "${'$'}project": {
                     "alias": {
                       "${'$'}meta": "indexKey"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "expression" - {
+        "should add a field with string" {
+            // given
+            val stage = project {
+                "field" expression ArithmeticOperators.valueOf("target").multiplyBy(3)
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "field": {
+                      "${'$'}multiply": [
+                        "${'$'}target",
+                        3
+                      ]
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should add a field with property" {
+            // given
+            val stage = project {
+                Child::field expression StringOperators.valueOf("target").substring(0, 3)
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "field": {
+                      "${'$'}substr": [
+                        "${'$'}target",
+                        0,
+                        3
+                      ]
                     }
                   }
                 }

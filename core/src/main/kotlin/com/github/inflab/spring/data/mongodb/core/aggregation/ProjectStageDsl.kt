@@ -3,6 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.ProjectionOperation
 import kotlin.reflect.KProperty
 
@@ -43,6 +44,24 @@ class ProjectStageDsl {
      */
     operator fun KProperty<*>.unaryMinus() {
         operation = operation.andExclude(this.toDotPath())
+    }
+
+    /**
+     * Specifies the expression of a field.
+     *
+     * @param expression The expression for the field.
+     */
+    infix fun String.expression(expression: AggregationExpression) {
+        operation = operation.and(expression).`as`(this)
+    }
+
+    /**
+     * Specifies the expression of a field.
+     *
+     * @param expression The expression for the field.
+     */
+    infix fun KProperty<*>.expression(expression: AggregationExpression) {
+        operation = operation.and(expression).`as`(this.toDotPath())
     }
 
     /**
