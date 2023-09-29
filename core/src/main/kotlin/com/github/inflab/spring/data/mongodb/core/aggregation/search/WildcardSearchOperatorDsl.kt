@@ -26,7 +26,6 @@ class WildcardSearchOperatorDsl {
             field = value
         }
 
-
     /**
      * The string or strings to search for.
      *
@@ -100,5 +99,4 @@ class WildcardSearchOperatorDsl {
     }
 
     internal fun build() = Document("wildcard", document)
-
 }

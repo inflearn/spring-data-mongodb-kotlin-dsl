@@ -3,9 +3,8 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
-import org.springframework.data.mongodb.core.query.Query.query
 
-internal class WildcardSearchOperatorDslTest: FreeSpec({
+internal class WildcardSearchOperatorDslTest : FreeSpec({
     fun wildcard(block: WildcardSearchOperatorDsl.() -> Unit) =
         WildcardSearchOperatorDsl().apply(block)
 
