@@ -9,12 +9,45 @@ internal class MoreLikeThisSearchOperatorDslTest : FreeSpec({
         MoreLikeThisSearchOperatorDsl().apply(block)
 
     "like" - {
-        "should build a like option" {
+        "should build a like option by args" {
             // given
             val operator = moreLikeThis {
                 like(
                     Document("foo", "bar"),
                     Document("baz", "qux"),
+                )
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "moreLikeThis": {
+                    "like": [
+                      {
+                        "foo": "bar"
+                      },
+                      {
+                        "baz": "qux"
+                      }
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build a like option by list" {
+            // given
+            val operator = moreLikeThis {
+                like(
+                    listOf(
+                        Document("foo", "bar"),
+                        Document("baz", "qux"),
+                    ),
                 )
             }
 
