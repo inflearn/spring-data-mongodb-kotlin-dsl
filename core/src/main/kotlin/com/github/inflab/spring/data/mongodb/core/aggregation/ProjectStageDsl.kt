@@ -3,6 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation
 import kotlin.reflect.KProperty
 
 /**
@@ -14,7 +15,7 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class ProjectStageDsl {
-    private var operation = Aggregation.project()
+    private var operation: ProjectionOperation = Aggregation.project()
 
     /**
      * Specifies the inclusion of a field.
