@@ -11,6 +11,7 @@ import kotlin.reflect.full.primaryConstructor
 @AutoScan
 internal object AtlasTestConstructorExtension : ConstructorExtension {
     private const val ATLAS_DOMAIN = "<username>:<password>@<host>"
+
     override fun <T : Spec> instantiate(clazz: KClass<T>): Spec? {
         val atlasTest = clazz.annotations.find { it is AtlasTest } as AtlasTest? ?: return null
 
