@@ -11,6 +11,20 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation
 
 internal class AggregationDslTest : FreeSpec({
 
+    "stage" - {
+        "should add a raw stage" {
+            // when
+            val aggregation = aggregation {
+                stage(Aggregation.count().`as`("test"))
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.count().`as`("test"),
+            ).toString()
+        }
+    }
+
     "option" - {
         "should add an options" {
             // when
