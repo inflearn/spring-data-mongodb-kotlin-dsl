@@ -24,6 +24,15 @@ class MoreLikeThisSearchOperatorDsl {
     }
 
     /**
+     * One or more BSON documents that Atlas Search uses to extract representative terms to query for.
+     *
+     * @param bson One BSON document or an array of documents.
+     */
+    fun like(bson: List<Document>) {
+        document["like"] = bson
+    }
+
+    /**
      * Configures the Score to assign to matching search results.
      * You can modify the default score using the following options:
      *
