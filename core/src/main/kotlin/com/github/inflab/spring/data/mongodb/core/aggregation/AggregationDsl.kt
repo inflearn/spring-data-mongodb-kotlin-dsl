@@ -59,6 +59,16 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that sorts all input documents and returns them to the pipeline in sorted order.
+     *
+     * @param sortConfiguration custom configurations for the sort stage.
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sort">$sort (aggregation)</a>
+     */
+    fun sort(sortConfiguration: SortStageDsl.() -> Unit) {
+        operations += SortStageDsl().apply(sortConfiguration).get()
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
