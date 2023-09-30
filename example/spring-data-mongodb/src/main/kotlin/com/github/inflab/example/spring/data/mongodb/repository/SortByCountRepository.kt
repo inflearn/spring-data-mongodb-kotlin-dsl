@@ -10,18 +10,18 @@ class SortByCountRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
 
-    data class IdAndCount(val id: String, val count: Int)
+    data class IdAndCountDto(val id: String, val count: Int)
 
     /**
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#example">Example</a>
      */
-    fun sortByTags(): AggregationResults<IdAndCount> {
+    fun sortByTags(): AggregationResults<IdAndCountDto> {
         val aggregation = aggregation {
             unwind { path("tags") }
             sortByCount("tags")
         }
 
-        return mongoTemplate.aggregate(aggregation, EXHIBITS, IdAndCount::class.java)
+        return mongoTemplate.aggregate(aggregation, EXHIBITS, IdAndCountDto::class.java)
     }
 
     companion object {
