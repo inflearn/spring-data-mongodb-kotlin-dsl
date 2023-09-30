@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.index.TextIndexDefinition
 
-class SortRepositoryTest : FreeSpec({
+internal class SortRepositoryTest : FreeSpec({
     val mongoTemplate = makeMongoTemplate()
     val sortRepository = SortRepository(mongoTemplate)
 
