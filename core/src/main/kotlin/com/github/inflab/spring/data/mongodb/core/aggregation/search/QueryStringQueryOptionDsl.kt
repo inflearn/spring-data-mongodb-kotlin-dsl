@@ -73,7 +73,7 @@ class QueryStringQueryOptionDsl {
      * @param rightInclusion The right value is included in the range
      * @param field Indexed field to search
      */
-    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion : Boolean = true, field:String? = null): Query {
+    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion: Boolean = true, field: String? = null): Query {
         val leftBracket = if (leftInclusion) "[" else "{"
         val rightBracket = if (rightInclusion) "]" else "}"
 

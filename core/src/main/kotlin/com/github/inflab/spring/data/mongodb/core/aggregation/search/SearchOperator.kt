@@ -116,4 +116,13 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/wildcard">wildcard</a>
      */
     fun wildcard(configuration: WildcardSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Supports querying a combination of indexed fields and values.
+     * You can perform text, wildcard, regular expression, fuzzy, and range searches on string fields using the queryString operator.
+     *
+     * @param configuration The configuration block for the [QueryStringSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/queryString">queryString</a>
+     */
+    fun queryString(configuration: QueryStringSearchOperatorDsl.() -> Unit)
 }
