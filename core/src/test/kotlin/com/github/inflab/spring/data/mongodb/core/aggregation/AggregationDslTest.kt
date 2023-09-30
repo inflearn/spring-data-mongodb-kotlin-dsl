@@ -9,6 +9,8 @@ import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.StringOperators
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.TextCriteria
 
 internal class AggregationDslTest : FreeSpec({
 
@@ -133,6 +135,47 @@ internal class AggregationDslTest : FreeSpec({
             // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 Aggregation.sortByCount(expression),
+            ).toString()
+        }
+    }
+
+    "match" - {
+        "should create match stage with criteria" {
+            // when
+            val criteria = Criteria.where("fieldName")
+            val aggregation = aggregation {
+                match(criteria)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.match(criteria),
+            ).toString()
+        }
+
+        "should create match stage with criteria definition" {
+            // when
+            val criteria = TextCriteria.forDefaultLanguage().matching("operating")
+            val aggregation = aggregation {
+                match(criteria)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.match(criteria),
+            ).toString()
+        }
+
+        "should create match stage with aggregation expression" {
+            // when
+            val expression = StringOperators.valueOf("fieldName").ltrim()
+            val aggregation = aggregation {
+                match(expression)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.match(expression),
             ).toString()
         }
     }

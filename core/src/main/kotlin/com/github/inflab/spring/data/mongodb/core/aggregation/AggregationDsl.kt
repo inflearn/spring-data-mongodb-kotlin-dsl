@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions.DomainTypeMapping
 import org.springframework.data.mongodb.core.query.Collation
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.CriteriaDefinition
 import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
@@ -144,6 +146,33 @@ class AggregationDsl {
      */
     fun sortByCount(expression: AggregationExpression) {
         operations += Aggregation.sortByCount(expression)
+    }
+
+    /**
+     * Creates a new $match stage using the given [Criteria].
+     *
+     * @param criteria The [Criteria] to match documents against.
+     */
+    fun match(criteria: Criteria) {
+        operations += Aggregation.match(criteria)
+    }
+
+    /**
+     * Creates a new $match stage using the given [CriteriaDefinition].
+     *
+     * @param criteria The [CriteriaDefinition] to match documents against.
+     */
+    fun match(criteria: CriteriaDefinition) {
+        operations += Aggregation.match(criteria)
+    }
+
+    /**
+     * Creates a new $match stage using the given [AggregationExpression].
+     *
+     * @param expression The [AggregationExpression] to match documents against.
+     */
+    fun match(expression: AggregationExpression) {
+        operations += Aggregation.match(expression)
     }
 
     /**
