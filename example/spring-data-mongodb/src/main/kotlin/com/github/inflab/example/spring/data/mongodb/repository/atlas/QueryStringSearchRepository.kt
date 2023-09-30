@@ -29,7 +29,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::fullplot)
                     query {
-                        query = sub(text("captain") or text("kirk"), "plot") and text("enterprise")
+                        sub(text("captain") or text("kirk"), "plot") and text("enterprise")
                     }
                 }
             }
@@ -59,7 +59,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::plot)
                     query {
-                        query = range(left = "count", right = WILDCARD, leftInclusion = true, rightInclusion = true, field = "title")
+                        range(left = "count", right = WILDCARD, leftInclusion = true, rightInclusion = true, field = "title")
                     }
                 }
             }
@@ -84,7 +84,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::title)
                     query {
-                        query = fuzzy("catch", 2)
+                        fuzzy("catch", 2)
                     }
                 }
             }
@@ -109,7 +109,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::title)
                     query {
-                        query = wildcard("cou*t?*")
+                        wildcard("cou*t?*")
                     }
                 }
             }
@@ -134,7 +134,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::title)
                     query {
-                        query = regex(".tal(y|ian)")
+                        regex(".tal(y|ian)")
                     }
                 }
             }

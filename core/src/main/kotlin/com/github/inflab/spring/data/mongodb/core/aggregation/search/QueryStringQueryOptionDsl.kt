@@ -11,7 +11,7 @@ import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
  */
 @AggregationMarker
 class QueryStringQueryOptionDsl {
-    var query: Query? = null
+    private lateinit var query: Query
 
     class Query(val value: String, val field: String?) {
         override fun toString(): String {
@@ -41,7 +41,9 @@ class QueryStringQueryOptionDsl {
     fun text(value: String, field: String? = null): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
 
-        return Query("\"$escaped\"", field)
+        query = Query("\"$escaped\"", field)
+
+        return query
     }
 
     /**
@@ -51,7 +53,9 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun wildcard(value: String, field: String? = null): Query {
-        return Query(value, field)
+        query = Query(value, field)
+
+        return query
     }
 
     /**
@@ -61,7 +65,9 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun regex(pattern: String, field: String? = null): Query {
-        return Query("/$pattern/", field)
+        query = Query("/$pattern/", field)
+
+        return query
     }
 
     /**
@@ -88,7 +94,9 @@ class QueryStringQueryOptionDsl {
             else -> "\"$right\""
         }
 
-        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field)
+        query = Query("$leftBracket$leftExp TO $rightExp$rightBracket", field)
+
+        return query
     }
 
     /**
@@ -99,46 +107,56 @@ class QueryStringQueryOptionDsl {
      * @param field indexed field to search
      */
     fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query {
-        return Query("$value~$maxEdits", field)
+        query = Query("$value~$maxEdits", field)
+
+        return query
     }
 
     /**
      * Creates a delimiters for subqueries.
      *
-     * @param query The Query for subqueries.
+     * @param inputQuery The Query for subqueries.
      */
-    fun sub(query: Query, field: String? = null): Query {
-        return Query("${field?.let { "$it:" }.orEmpty()}(${query.value})", query.field)
+    fun sub(inputQuery: Query, field: String? = null): Query {
+        query = Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
+
+        return query
     }
 
     /**
      * Creates an operator that indicates `NOT` boolean operator.
      * Specified search value must be absent for a document to be included in the results.
      *
-     * @param query The Query to apply.
+     * @param inputQuery The Query to apply.
      */
-    fun not(query: Query): Query {
-        return Query("NOT (${query.value})", query.field)
+    fun not(inputQuery: Query): Query {
+        query = Query("NOT (${inputQuery.value})", inputQuery.field)
+
+        return query
     }
 
     /**
      * Creates an operator that indicates `AND` boolean operator.
      * All search values must be present for a document to be included in the results.
      *
-     * @param query The Query to apply.
+     * @param inputQuery The Query to apply.
      */
-    infix fun Query.and(query: Query): Query {
-        return Query("$this AND $query", null)
+    infix fun Query.and(inputQuery: Query): Query {
+        query = Query("$this AND $inputQuery", null)
+
+        return query
     }
 
     /**
      * Creates an operator that indicates OR boolean operator.
      * At least one of the search value must be present for a document to be included in the results.
      *
-     * @param query The Query to apply.
+     * @param inputQuery The Query to apply.
      */
-    infix fun Query.or(query: Query): Query {
-        return Query("$this OR $query", null)
+    infix fun Query.or(inputQuery: Query): Query {
+        query = Query("$this OR $inputQuery", null)
+
+        return query
     }
 
     internal fun build(): String {
