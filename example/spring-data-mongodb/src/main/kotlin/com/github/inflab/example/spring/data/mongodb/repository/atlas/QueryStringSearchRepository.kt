@@ -29,7 +29,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::fullplot)
                     query {
-                        sub(text("captain") or text("kirk"), "plot") and text("enterprise")
+                        sub(text("captain") or text("kirk"), PlotAndFullplotDto::plot) and text("enterprise")
                     }
                 }
             }
@@ -59,7 +59,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::plot)
                     query {
-                        range(left = "count", right = WILDCARD, leftInclusion = true, rightInclusion = true, field = "title")
+                        range(left = "count", right = WILDCARD, leftInclusion = true, rightInclusion = true, PlotAndFullplotDto::title)
                     }
                 }
             }
