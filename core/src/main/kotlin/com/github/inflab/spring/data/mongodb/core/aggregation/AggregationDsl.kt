@@ -3,6 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaStageDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchStageDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOptions.Doma
 import org.springframework.data.mongodb.core.query.Collation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.CriteriaDefinition
+import kotlin.reflect.KProperty
 import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
@@ -133,6 +135,32 @@ class AggregationDsl {
      */
     fun sort(sortConfiguration: SortStageDsl.() -> Unit) {
         operations += SortStageDsl().apply(sortConfiguration).get()
+    }
+
+    /**
+     * Configures a stage that groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
+     * Each output document contains two fields: an `_id` field containing the distinct grouping value, and a `count` field containing the number of documents belonging to that grouping or category.
+     * The documents are sorted by `count` in descending order.
+     *
+     * @param field The field path.
+     * @see <a href="https://www.mongodb.com/docs/v7.0/meta/aggregation-quick-reference/#std-label-agg-quick-ref-field-paths">Field Paths</a>
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sortByCount">$sortByCount (aggregation)</a>
+     */
+    fun sortByCount(field: String) {
+        operations += Aggregation.sortByCount(field)
+    }
+
+    /**
+     * Configures a stage that groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
+     * Each output document contains two fields: an `_id` field containing the distinct grouping value, and a `count` field containing the number of documents belonging to that grouping or category.
+     * The documents are sorted by `count` in descending order.
+     *
+     * @param field The field path.
+     * @see <a href="https://www.mongodb.com/docs/v7.0/meta/aggregation-quick-reference/#std-label-agg-quick-ref-field-paths">Field Paths</a>
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sortByCount">$sortByCount (aggregation)</a>
+     */
+    fun sortByCount(field: KProperty<*>) {
+        sortByCount(field.toDotPath())
     }
 
     /**

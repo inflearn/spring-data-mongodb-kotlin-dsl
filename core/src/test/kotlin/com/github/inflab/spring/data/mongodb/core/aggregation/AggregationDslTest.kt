@@ -125,6 +125,31 @@ internal class AggregationDslTest : FreeSpec({
     }
 
     "sortByCount" - {
+        "should create sortByCount stage with string" {
+            // when
+            val aggregation = aggregation {
+                sortByCount("fieldName")
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.sortByCount("fieldName"),
+            ).toString()
+        }
+
+        "should create sortByCount stage with property" {
+            // when
+            data class Test(val fieldName: String)
+            val aggregation = aggregation {
+                sortByCount(Test::fieldName)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.sortByCount("fieldName"),
+            ).toString()
+        }
+
         "should create sortByCount stage with expression" {
             // when
             val expression = StringOperators.valueOf("fieldName").ltrim()
