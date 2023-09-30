@@ -4,6 +4,8 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 internal class QueryStringQueryOptionDslTest : FreeSpec({
+    data class Sample(val field: String)
+
     fun query(block: QueryStringQueryOptionDsl.() -> Unit) =
         QueryStringQueryOptionDsl().apply(block)
 
@@ -21,10 +23,23 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             result shouldBe "\"search\""
         }
 
-        "should add a text with field" {
+        "should add a text with string field" {
             // given
             val option = query {
                 text("search", "field")
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "field:\"search\""
+        }
+
+        "should add a text with property field" {
+            // given
+            val option = query {
+                text("search", Sample::field)
             }
 
             // when
@@ -62,10 +77,23 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             result shouldBe "search*?"
         }
 
-        "should add a wildcard with field" {
+        "should add a wildcard with string field" {
             // given
             val option = query {
                 wildcard("search", "field")
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "field:search"
+        }
+
+        "should add a wildcard with property field" {
+            // given
+            val option = query {
+                wildcard("search", Sample::field)
             }
 
             // when
@@ -90,10 +118,23 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             result shouldBe "/search/"
         }
 
-        "should add a regex with field" {
+        "should add a regex with string field" {
             // given
             val option = query {
                 regex("search", "field")
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "field:/search/"
+        }
+
+        "should add a regex with property field" {
+            // given
+            val option = query {
+                regex("search", Sample::field)
             }
 
             // when
@@ -172,10 +213,23 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             result shouldBe "search~2"
         }
 
-        "should add a fuzzy with field" {
+        "should add a fuzzy with string field" {
             // given
             val option = query {
                 fuzzy("search", 3, "field")
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "field:search~3"
+        }
+
+        "should add a fuzzy with property field" {
+            // given
+            val option = query {
+                fuzzy("search", 3, Sample::field)
             }
 
             // when
@@ -245,17 +299,30 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             result shouldBe "(\"a\" OR \"b\") AND \"c\""
         }
 
-        "should add subquery block with field" {
+        "should add subquery block with string field" {
             // given
             val option = query {
-                sub(text("a") or text("b"), "c")
+                sub(text("a") or text("b"), "field")
             }
 
             // when
             val result = option.build()
 
             // then
-            result shouldBe "c:(\"a\" OR \"b\")"
+            result shouldBe "field:(\"a\" OR \"b\")"
+        }
+
+        "should add subquery block with property field" {
+            // given
+            val option = query {
+                sub(text("a") or text("b"), Sample::field)
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "field:(\"a\" OR \"b\")"
         }
     }
 })
