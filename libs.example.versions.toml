@@ -1,12 +1,17 @@
 [versions]
+kotest-testcontainers = "2.0.2"
 kotlin = "1.9.20-Beta2"
 spring-boot = "3.1.4"
 spring-dependency-management = "1.1.3"
+testcontainers = "1.16.0"
 
 [libraries]
+kotest-testcontainers = { module = "io.kotest.extensions:kotest-extensions-testcontainers", version.ref = "kotest-testcontainers" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 spring-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
 spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+testcontainers = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
+testcontainers-mongodb = { module = "org.testcontainers:mongodb" }
 
 [plugins]
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
