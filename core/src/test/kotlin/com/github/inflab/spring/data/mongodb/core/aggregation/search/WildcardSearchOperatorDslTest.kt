@@ -9,7 +9,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
         WildcardSearchOperatorDsl().apply(block)
 
     "allowAnalyzedField" - {
-        "should set with given value" {
+        "should build an option with given value" {
             // given
             val operator = wildcard {
                 allowAnalyzedField = true
@@ -32,7 +32,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
     }
 
     "query" - {
-        "should set query by string" {
+        "should build a query by string" {
             // given
             val operator = wildcard {
                 query("query")
@@ -53,7 +53,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set query by multiple strings" {
+        "should build a query by multiple strings" {
             // given
             val operator = wildcard {
                 query("query1", "query2")
@@ -79,7 +79,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
     }
 
     "path" - {
-        "should set path by strings" {
+        "should build a path by strings" {
             // given
             val operator = wildcard {
                 path("path1", "path2")
@@ -103,7 +103,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by iterable property" {
+        "should build a path by iterable property" {
             // given
             data class TestCollection(val path1: List<String>)
             val operator = wildcard {
@@ -125,7 +125,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by multiple properties" {
+        "should build a path by multiple properties" {
             // given
             data class TestCollection(val path1: String, val path2: String)
             val operator = wildcard {
@@ -150,7 +150,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by nested property" {
+        "should build a path by nested property" {
             // given
             data class Child(val path: String)
             data class Parent(val child: Child)
@@ -173,7 +173,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
             )
         }
 
-        "should set path by option block" {
+        "should build a path by option block" {
             // given
             data class TestCollection(val path1: String, val path2: List<String>)
             val operator = wildcard {
@@ -205,7 +205,7 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
     }
 
     "score" - {
-        "should set score" {
+        "should build a score" {
             // given
             val operator = wildcard {
                 score {
