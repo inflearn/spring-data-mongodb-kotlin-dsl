@@ -57,7 +57,7 @@ internal class QueryStringSearchOperatorDslTest : FreeSpec({
             // given
             val operator = queryString {
                 query {
-                    query = text("search")
+                    text("search")
                 }
             }
 
