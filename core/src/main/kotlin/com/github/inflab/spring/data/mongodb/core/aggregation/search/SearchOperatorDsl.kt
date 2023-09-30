@@ -57,4 +57,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun wildcard(configuration: WildcardSearchOperatorDsl.() -> Unit) {
         operators.add(WildcardSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun queryString(configuration: QueryStringSearchOperatorDsl.() -> Unit) {
+        operators.add(QueryStringSearchOperatorDsl().apply(configuration).build())
+    }
 }

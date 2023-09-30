@@ -33,7 +33,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             // then
             result shouldBe "\"field\":\"search\""
         }
-        
+
         "should escape special characters" {
             // given
             val option = query {
