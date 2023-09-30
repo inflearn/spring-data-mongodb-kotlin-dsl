@@ -1,13 +1,11 @@
-package com.github.inflab.example.spring.data.mongodb.repository
+package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 
-@Ignored
 @AtlasTest(database = "sample_supplies")
 internal class EmbeddedDocumentSearchRepositoryTest(
     private val embeddedDocumentSearchRepository: EmbeddedDocumentSearchRepository,

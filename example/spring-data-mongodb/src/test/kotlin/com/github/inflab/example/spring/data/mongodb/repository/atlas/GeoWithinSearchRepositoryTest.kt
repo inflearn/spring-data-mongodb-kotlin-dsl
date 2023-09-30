@@ -1,11 +1,9 @@
-package com.github.inflab.example.spring.data.mongodb.repository
+package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-@Ignored
 @AtlasTest(database = "sample_airbnb")
 internal class GeoWithinSearchRepositoryTest(
     private val geoWithinSearchRepository: GeoWithinSearchRepository,

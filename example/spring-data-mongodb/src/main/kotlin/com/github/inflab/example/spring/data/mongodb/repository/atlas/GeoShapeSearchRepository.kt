@@ -1,4 +1,4 @@
-package com.github.inflab.example.spring.data.mongodb.repository
+package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviews
 import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviewsAddress
