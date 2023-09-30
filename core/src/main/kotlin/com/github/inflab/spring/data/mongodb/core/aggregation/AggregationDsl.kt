@@ -98,7 +98,7 @@ class AggregationDsl {
     /**
      * Configures a stage that performs a full-text search on the specified field or fields which must be covered by an Atlas Search index.
      *
-     * @param searchConfiguration custom configurations for the search stage.
+     * @param searchConfiguration The configuration block for the [SearchStageDsl].
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/search">$search (aggregation)</a>
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/">Return Atlas Search Results or Metadata</a>
      */
@@ -109,7 +109,7 @@ class AggregationDsl {
     /**
      * Configures a stage that returns different types of metadata result documents.
      *
-     * @param searchMetaConfiguration custom configurations for the searchMeta stage.
+     * @param searchMetaConfiguration The configuration block for the [SearchMetaStageDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#-searchmeta">$searchMeta</a>
      */
     fun searchMeta(searchMetaConfiguration: SearchMetaStageDsl.() -> Unit) {
@@ -120,7 +120,7 @@ class AggregationDsl {
      * Passes along the documents with the requested fields to the next stage in the pipeline.
      * The specified fields can be existing fields from the input documents or newly computed fields.
      *
-     * @param projectConfiguration custom configurations for the project stage.
+     * @param projectConfiguration The configuration block for the [ProjectStageDsl].
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/project">$project (aggregation)</a>
      */
     fun project(projectConfiguration: ProjectStageDsl.() -> Unit) {
@@ -130,7 +130,7 @@ class AggregationDsl {
     /**
      * Configures a stage that sorts all input documents and returns them to the pipeline in sorted order.
      *
-     * @param sortConfiguration custom configurations for the sort stage.
+     * @param sortConfiguration The configuration block for the [SortStageDsl].
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sort">$sort (aggregation)</a>
      */
     fun sort(sortConfiguration: SortStageDsl.() -> Unit) {
@@ -180,6 +180,7 @@ class AggregationDsl {
      * Creates a new $match stage using the given [Criteria].
      *
      * @param criteria The [Criteria] to match documents against.
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/">$match (aggregation)</a>
      */
     fun match(criteria: Criteria) {
         operations += Aggregation.match(criteria)
@@ -189,6 +190,7 @@ class AggregationDsl {
      * Creates a new $match stage using the given [CriteriaDefinition].
      *
      * @param criteria The [CriteriaDefinition] to match documents against.
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/">$match (aggregation)</a>
      */
     fun match(criteria: CriteriaDefinition) {
         operations += Aggregation.match(criteria)
@@ -198,9 +200,21 @@ class AggregationDsl {
      * Creates a new $match stage using the given [AggregationExpression].
      *
      * @param expression The [AggregationExpression] to match documents against.
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/">$match (aggregation)</a>
      */
     fun match(expression: AggregationExpression) {
         operations += Aggregation.match(expression)
+    }
+
+    /**
+     * Configures a stage that deconstructs an array field from the input documents to output a document for each element.
+     * Each output document is the input document with the value of the array field replaced by the element.
+     *
+     * @param unwindConfiguration The configuration block for the [UnwindStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/unwind">$unwind (aggregation)</a>
+     */
+    fun unwind(unwindConfiguration: UnwindStageDsl.() -> Unit) {
+        UnwindStageDsl().apply(unwindConfiguration).build()?.let { operations += it }
     }
 
     /**
