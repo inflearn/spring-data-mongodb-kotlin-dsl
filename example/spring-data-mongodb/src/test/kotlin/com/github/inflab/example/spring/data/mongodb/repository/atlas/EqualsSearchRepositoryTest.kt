@@ -1,12 +1,10 @@
-package com.github.inflab.example.spring.data.mongodb.repository
+package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-@Ignored
 @AtlasTest(database = "sample")
 internal class EqualsSearchRepositoryTest(
     private val equalsSearchRepository: EqualsSearchRepository,

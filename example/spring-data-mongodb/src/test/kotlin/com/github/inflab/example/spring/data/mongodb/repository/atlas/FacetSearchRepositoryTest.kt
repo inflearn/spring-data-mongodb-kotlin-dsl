@@ -1,7 +1,6 @@
-package com.github.inflab.example.spring.data.mongodb.repository
+package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
@@ -9,7 +8,6 @@ import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import java.util.Date
 
-@Ignored
 @AtlasTest(database = "sample_mflix")
 internal class FacetSearchRepositoryTest(
     private val facetSearchRepository: FacetSearchRepository,
