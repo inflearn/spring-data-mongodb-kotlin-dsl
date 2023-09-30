@@ -17,7 +17,7 @@ class QueryStringQueryOptionDsl {
         override fun toString(): String {
             return when (field) {
                 null -> value
-                else -> "\"$field\":$value"
+                else -> "$field:$value"
             }
         }
     }
@@ -51,7 +51,7 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun wildcard(value: String, field: String? = null): Query {
-        return Query("\"$value\"", field)
+        return Query(value, field)
     }
 
     /**
@@ -99,7 +99,7 @@ class QueryStringQueryOptionDsl {
      * @param field indexed field to search
      */
     fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query {
-        return Query("\"$value\"~$maxEdits", field)
+        return Query("$value~$maxEdits", field)
     }
 
     /**
@@ -107,8 +107,8 @@ class QueryStringQueryOptionDsl {
      *
      * @param query The Query for subqueries.
      */
-    fun sub(query: Query): Query {
-        return Query("(${query.value})", query.field)
+    fun sub(query: Query, field: String? = null): Query {
+        return Query("${field?.let { "$it:" }.orEmpty()}(${query.value})", query.field)
     }
 
     /**
