@@ -204,4 +204,22 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "unwind" - {
+        "should create unwind stage" {
+            // when
+            val aggregation = aggregation {
+                unwind {
+                    path("fieldName")
+                    includeArrayIndex = "index"
+                    preserveNullAndEmptyArrays = true
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.unwind("fieldName", "index", true),
+            ).toString()
+        }
+    }
 })
