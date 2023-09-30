@@ -1,6 +1,8 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
+import kotlin.reflect.KProperty
 
 /**
  * A Kotlin DSL to configure queryString query option operator using idiomatic Kotlin code.
@@ -47,6 +49,20 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a text query.
+     *
+     * @param value The value to search
+     * @param field Indexed field search
+     */
+    fun text(value: String, field: KProperty<String?>): Query {
+        val escaped = value.replace("*", "\\*").replace("?", "\\?")
+
+        query = Query("\"$escaped\"", field.toDotPath())
+
+        return query
+    }
+
+    /**
      * Creates a wildcard query.
      *
      * @param value The value to search
@@ -59,6 +75,18 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a wildcard query.
+     *
+     * @param value The value to search
+     * @param field Indexed field to search
+     */
+    fun wildcard(value: String, field: KProperty<String?>): Query {
+        query = Query(value, field.toDotPath())
+
+        return query
+    }
+
+    /**
      * Creates a regex query.
      *
      * @param pattern The pattern to search
@@ -66,6 +94,18 @@ class QueryStringQueryOptionDsl {
      */
     fun regex(pattern: String, field: String? = null): Query {
         query = Query("/$pattern/", field)
+
+        return query
+    }
+
+    /**
+     * Creates a regex query.
+     *
+     * @param pattern The pattern to search
+     * @param field Indexed field to search
+     */
+    fun regex(pattern: String, field: KProperty<String?>): Query {
+        query = Query("/$pattern/", field.toDotPath())
 
         return query
     }
@@ -100,6 +140,35 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a range query.
+     *
+     * @param left The left value to search
+     * @param right The right value to search
+     * @param leftInclusion The left value is included in the range
+     * @param rightInclusion The right value is included in the range
+     * @param field Indexed field to search
+     */
+    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion: Boolean = true, field: KProperty<String?>): Query {
+        val leftBracket = if (leftInclusion) "[" else "{"
+        val rightBracket = if (rightInclusion) "]" else "}"
+
+        val leftExp = when (left) {
+            WILDCARD -> WILDCARD
+            QUESTION -> QUESTION
+            else -> "\"$left\""
+        }
+        val rightExp = when (right) {
+            WILDCARD -> WILDCARD
+            QUESTION -> QUESTION
+            else -> "\"$right\""
+        }
+
+        query = Query("$leftBracket$leftExp TO $rightExp$rightBracket", field.toDotPath())
+
+        return query
+    }
+
+    /**
      * Creates a fuzzy query.
      *
      * @param value The value to search
@@ -113,12 +182,36 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a fuzzy query.
+     *
+     * @param value The value to search
+     * @param maxEdits Maximum number of single-character edits required to match the specified search term.
+     * @param field indexed field to search
+     */
+    fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query {
+        query = Query("$value~$maxEdits", field.toDotPath())
+
+        return query
+    }
+
+    /**
      * Creates a delimiters for subqueries.
      *
      * @param inputQuery The Query for subqueries.
      */
     fun sub(inputQuery: Query, field: String? = null): Query {
         query = Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
+
+        return query
+    }
+
+    /**
+     * Creates a delimiters for subqueries.
+     *
+     * @param inputQuery The Query for subqueries.
+     */
+    fun sub(inputQuery: Query, field: KProperty<String?>): Query {
+        query = Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
 
         return query
     }
