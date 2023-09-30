@@ -12,6 +12,9 @@ dependencies {
     implementation(exampleLibs.spring.data.mongodb)
 
     testImplementation(exampleLibs.spring.test)
+    testImplementation(exampleLibs.kotest.testcontainers)
+    testImplementation(platform(exampleLibs.testcontainers))
+    testImplementation(exampleLibs.testcontainers.mongodb)
 }
 
 java {
