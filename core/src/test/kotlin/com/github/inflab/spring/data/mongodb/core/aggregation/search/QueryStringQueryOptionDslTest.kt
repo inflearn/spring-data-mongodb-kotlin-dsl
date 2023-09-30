@@ -31,7 +31,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"field\":\"search\""
+            result shouldBe "field:\"search\""
         }
 
         "should escape special characters" {
@@ -59,7 +59,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"search*?\""
+            result shouldBe "search*?"
         }
 
         "should add a wildcard with field" {
@@ -72,7 +72,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"field\":\"search\""
+            result shouldBe "field:search"
         }
     }
 
@@ -100,7 +100,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"field\":/search/"
+            result shouldBe "field:/search/"
         }
     }
 
@@ -169,7 +169,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"search\"~2"
+            result shouldBe "search~2"
         }
 
         "should add a fuzzy with field" {
@@ -182,7 +182,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "\"field\":\"search\"~3"
+            result shouldBe "field:search~3"
         }
     }
 
@@ -212,7 +212,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "(\"search1\" AND \"search2\")"
+            result shouldBe "\"search1\" AND \"search2\""
         }
     }
 
@@ -227,7 +227,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             val result = option.build()
 
             // then
-            result shouldBe "(\"search1\" OR \"search2\")"
+            result shouldBe "\"search1\" OR \"search2\""
         }
     }
 
@@ -243,6 +243,19 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
             // then
             result shouldBe "(\"a\" OR \"b\") AND \"c\""
+        }
+
+        "should add subquery block with field" {
+            // given
+            val option = query {
+                query = sub(text("a") or text("b"), "c")
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "c:(\"a\" OR \"b\")"
         }
     }
 })
