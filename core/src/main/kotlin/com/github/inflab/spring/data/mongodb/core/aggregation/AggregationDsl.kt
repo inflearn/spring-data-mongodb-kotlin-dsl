@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.search.PathSearchOptionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaStageDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchStageDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions.DomainTypeMapping
+import org.springframework.data.mongodb.core.aggregation.UnsetOperation
 import org.springframework.data.mongodb.core.query.Collation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.CriteriaDefinition
@@ -228,6 +230,16 @@ class AggregationDsl {
      */
     fun lookup(lookupConfiguration: LookupStageDsl.() -> Unit) {
         operations += LookupStageDsl().apply(lookupConfiguration).get()
+    }
+
+    /**
+     * Configures a stage that removes/excludes fields from documents.
+     *
+     * @param pathConfiguration The configuration block for the [PathSearchOptionDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/unset">$unset (aggregation)</a>
+     */
+    fun unset(pathConfiguration: PathSearchOptionDsl<Any>.() -> Unit) {
+        operations += UnsetOperation.unset(*PathSearchOptionDsl<Any>().apply(pathConfiguration).get().toTypedArray())
     }
 
     /**

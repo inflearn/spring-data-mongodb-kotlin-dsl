@@ -38,5 +38,7 @@ class PathSearchOptionDsl<T> {
         path.add(this.toDotPath())
     }
 
+    internal fun get() = path
+
     internal fun build() = path.firstOrAll()
 }
