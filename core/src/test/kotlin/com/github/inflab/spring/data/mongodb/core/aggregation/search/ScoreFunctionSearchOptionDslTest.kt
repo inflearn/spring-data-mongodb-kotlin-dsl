@@ -1,36 +1,21 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.shouldBe
 
 internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
-    fun scoreFunction(block: ScoreFunctionSearchOptionDsl.() -> Unit): ScoreFunctionSearchOptionDsl =
-        ScoreFunctionSearchOptionDsl().apply(block)
-
-    "error" - {
-        "should throw exception when expression is not set" {
-            // given
-            val option = scoreFunction { }
-
-            // when
-            val exception = shouldThrow<IllegalStateException> { option.build() }
-
-            // then
-            exception.message shouldBe "Expression must not be null"
-        }
-    }
+    fun scoreFunction(block: ScoreFunctionSearchOptionDsl.() -> ScoreFunctionSearchOptionDsl.Expression) =
+        ScoreFunctionSearchOptionDsl().block()
 
     "score" - {
         "should build a score" {
             // given
             val option = scoreFunction {
-                expression = score()
+                score()
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -47,11 +32,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a value with given one" {
             // given
             val option = scoreFunction {
-                expression = constant(2.0)
+                constant(2.0)
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -68,11 +53,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a path from string field" {
             // given
             val option = scoreFunction {
-                expression = path("path")
+                path("path")
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -90,11 +75,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             // given
             val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
-                expression = path(testObject::path)
+                path(testObject::path)
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -111,11 +96,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a path from string field with undefined" {
             // given
             val option = scoreFunction {
-                expression = path("path", 0.0)
+                path("path", 0.0)
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -134,11 +119,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             // given
             val testObject = object : Any() { val path = 123 }
             val option = scoreFunction {
-                expression = path(testObject::path, 0.0)
+                path(testObject::path, 0.0)
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -158,7 +143,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a gauss" {
             // given
             val option = scoreFunction {
-                expression = gauss(
+                gauss(
                     decay = 0.5,
                     offset = 1.0,
                     origin = 2.0,
@@ -168,7 +153,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -193,11 +178,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a log" {
             // given
             val option = scoreFunction {
-                expression = log(path("path"))
+                log(path("path"))
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -218,11 +203,11 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a log1p" {
             // given
             val option = scoreFunction {
-                expression = log1p(path("path"))
+                log1p(path("path"))
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -243,14 +228,14 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should add expressions" {
             // given
             val option = scoreFunction {
-                expression = add(
+                add(
                     constant(1.0),
                     path("path"),
                 )
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -276,14 +261,14 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should multiply expressions" {
             // given
             val option = scoreFunction {
-                expression = multiply(
+                multiply(
                     constant(1.0),
                     path("path"),
                 )
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
@@ -309,7 +294,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
         "should build a nested expressions" {
             // given
             val option = scoreFunction {
-                expression = add(
+                add(
                     log1p(path("path")),
                     multiply(
                         constant(2.0),
@@ -319,7 +304,7 @@ internal class ScoreFunctionSearchOptionDslTest : FreeSpec({
             }
 
             // when
-            val result = option.build()
+            val result = option.toDocument()
 
             // then
             result.shouldBeJson(
