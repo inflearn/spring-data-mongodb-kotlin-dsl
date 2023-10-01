@@ -218,6 +218,19 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing.
+     * The `$lookup` stage adds a new array field to each input document.
+     * The new array field contains the matching documents from the "joined" collection.
+     * The `$lookup` stage passes these reshaped documents to the next stage.
+     *
+     * @param lookupConfiguration The configuration block for the [LookupStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/lookup">$lookup (aggregation)</a>
+     */
+    fun lookup(lookupConfiguration: LookupStageDsl.() -> Unit) {
+        operations += LookupStageDsl().apply(lookupConfiguration).get()
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
