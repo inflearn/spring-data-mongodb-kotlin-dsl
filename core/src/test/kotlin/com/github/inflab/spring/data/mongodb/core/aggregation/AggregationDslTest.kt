@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.StringOperators
+import org.springframework.data.mongodb.core.aggregation.UnionWithOperation
 import org.springframework.data.mongodb.core.aggregation.UnsetOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.TextCriteria
@@ -265,6 +266,22 @@ internal class AggregationDslTest : FreeSpec({
             // then
             aggregation.toString() shouldBe Aggregation.newAggregation(
                 UnsetOperation.unset("fieldName", "single", "multiple"),
+            ).toString()
+        }
+    }
+
+    "unionWith" - {
+        "should create unionWith stage" {
+            // when
+            val aggregation = aggregation {
+                unionWith {
+                    coll("collectionName")
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                UnionWithOperation.unionWith("collectionName"),
             ).toString()
         }
     }
