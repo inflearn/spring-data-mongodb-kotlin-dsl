@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.StringOperators
+import org.springframework.data.mongodb.core.aggregation.UnsetOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.TextCriteria
 
@@ -243,6 +244,27 @@ internal class AggregationDslTest : FreeSpec({
                     foreignField("foreignField")
                     `as`("as")
                 },
+            ).toString()
+        }
+    }
+
+    "unset" - {
+        "should create unset stage" {
+            // given
+            data class Test(val single: String?, val multiple: List<Int?>?)
+
+            // when
+            val aggregation = aggregation {
+                unset {
+                    +"fieldName"
+                    +Test::single
+                    +Test::multiple
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                UnsetOperation.unset("fieldName", "single", "multiple"),
             ).toString()
         }
     }
