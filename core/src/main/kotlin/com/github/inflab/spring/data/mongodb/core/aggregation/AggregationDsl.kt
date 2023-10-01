@@ -243,6 +243,20 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that performs a union of two collections.
+     * `$unionWith` combines pipeline results from two collections into a single result set.
+     * The stage outputs the combined result set (including duplicates) to the next stage.
+     *
+     * The order in which the combined result set documents are output is unspecified.
+     *
+     * @param unionWithConfiguration The configuration block for the [UnionWithStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/unionWith/">$unionWith (aggregation)</a>
+     */
+    fun unionWith(unionWithConfiguration: UnionWithStageDsl.() -> Unit) {
+        UnionWithStageDsl().apply(unionWithConfiguration).build()?.let { operations += it }
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
