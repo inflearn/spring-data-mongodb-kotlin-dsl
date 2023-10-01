@@ -39,7 +39,7 @@ internal fun asString(property: KProperty<*>): String {
 internal fun toFieldName(property: KProperty<*>): String {
     val fieldAnnotation = property.javaField?.getAnnotation(Field::class.java) ?: return property.name
 
-    return fieldAnnotation.value.ifEmpty { fieldAnnotation.name.ifEmpty { property.name } }
+    return fieldAnnotation.value.ifEmpty { fieldAnnotation.name }.ifEmpty { property.name }
 }
 
 /**

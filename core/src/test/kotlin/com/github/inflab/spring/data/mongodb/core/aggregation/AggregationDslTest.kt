@@ -222,4 +222,28 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "lookup" - {
+        "should create lookup stage" {
+            // when
+            val aggregation = aggregation {
+                lookup {
+                    from("from")
+                    localField("localField")
+                    foreignField("foreignField")
+                    `as`("as")
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                ExtendedLookupOperation().apply {
+                    from("from")
+                    localField("localField")
+                    foreignField("foreignField")
+                    `as`("as")
+                },
+            ).toString()
+        }
+    }
 })
