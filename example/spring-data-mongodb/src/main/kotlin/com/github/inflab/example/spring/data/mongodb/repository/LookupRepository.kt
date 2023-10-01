@@ -84,8 +84,6 @@ class LookupRepository(
             }
         }
 
-        print(aggregation.toString())
-
         return mongoTemplate.aggregate(aggregation, ORDERS, OrderDto::class.java)
     }
 
