@@ -174,7 +174,7 @@ internal class ScoreSearchOptionDslTest : FreeSpec({
             // given
             val option = score {
                 function {
-                    expression = constant(3.0)
+                    constant(3.0)
                 }
             }
 
