@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.aggregation.VariableOperators.Let
 import org.springframework.data.mongodb.core.mapping.Document
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
+import kotlin.reflect.full.findAnnotation
 
 /**
  * A Kotlin DSL to configure $lookup stage using idiomatic Kotlin code.
@@ -39,7 +40,7 @@ class LookupStageDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/documents/#std-label-documents-lookup-example">Use a `$documents` Stage in a `$lookup` Stage</a>
      */
     fun from(from: KClass<*>) {
-        val annotation = from.annotations.firstNotNullOfOrNull { it as? Document }
+        val annotation = from.findAnnotation<Document>()
         operation.from(
             annotation?.collection?.ifEmpty { annotation.value.takeIf { it.isNotEmpty() } }
                 ?: from.simpleName,
