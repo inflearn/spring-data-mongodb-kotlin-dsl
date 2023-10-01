@@ -39,12 +39,11 @@ class LookupStageDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/documents/#std-label-documents-lookup-example">Use a `$documents` Stage in a `$lookup` Stage</a>
      */
     fun from(from: KClass<*>) {
-        val annotation = from.annotations.find { it is Document } as? Document?
-        if (annotation != null) {
-            operation.from(annotation.collection.ifEmpty { annotation.value }.ifEmpty { from.simpleName })
-        }
-
-        operation.from(from.simpleName)
+        val annotation = from.annotations.firstNotNullOfOrNull { it as? Document }
+        operation.from(
+            annotation?.collection?.ifEmpty { annotation.value.takeIf { it.isNotEmpty() } }
+                ?: from.simpleName,
+        )
     }
 
     /**
