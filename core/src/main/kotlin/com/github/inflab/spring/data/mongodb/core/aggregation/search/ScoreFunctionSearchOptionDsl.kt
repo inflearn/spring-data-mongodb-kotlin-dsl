@@ -38,7 +38,7 @@ class ScoreFunctionSearchOptionDsl {
             private val decay: Double?,
             private val offset: Double?,
             private val origin: Double,
-            private val path: Expression.Path,
+            private val path: Path,
             private val scale: Double,
         ) : Expression {
             override fun toDocument() = Document(
@@ -162,7 +162,4 @@ class ScoreFunctionSearchOptionDsl {
      * Array length must be greater than or equal to 2.
      */
     fun multiply(vararg expressions: Expression) = Expression.Multiply(expressions.toMutableList())
-
-    internal fun build(): Document =
-        checkNotNull(expression) { "Expression must not be null" }.toDocument()
 }

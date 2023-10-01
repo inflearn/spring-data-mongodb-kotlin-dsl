@@ -101,7 +101,7 @@ class ScoreSearchRepository(
                     query("men")
                     score {
                         function {
-                            expression = multiply(
+                            multiply(
                                 path(value = Movies::imdb..MovieImdb::rating, undefined = 2.0),
                                 score(),
                             )
@@ -136,7 +136,7 @@ class ScoreSearchRepository(
                     query("shop")
                     score {
                         function {
-                            expression = gauss(
+                            gauss(
                                 path = path(value = Movies::imdb..MovieImdb::rating, undefined = 4.6),
                                 origin = 9.5,
                                 scale = 5.0,
@@ -172,7 +172,7 @@ class ScoreSearchRepository(
                     query("men")
                     score {
                         function {
-                            expression = path(value = Movies::imdb..MovieImdb::rating, undefined = 4.6)
+                            path(value = Movies::imdb..MovieImdb::rating, undefined = 4.6)
                         }
                     }
                 }
@@ -201,7 +201,7 @@ class ScoreSearchRepository(
                     query("men")
                     score {
                         function {
-                            expression = log(
+                            log(
                                 path(value = Movies::imdb..MovieImdb::rating, undefined = 10.0),
                             )
                         }
