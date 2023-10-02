@@ -3,6 +3,7 @@ package com.github.inflab.example.spring.data.mongodb.repository.atlas
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 
 @AtlasTest(database = "sample_mflix")
 class NearSearchRepositoryTest(
@@ -40,6 +41,36 @@ class NearSearchRepositoryTest(
             "Regeneration",
             "The Cheat",
             "Hell's Hinges",
+        )
+    }
+
+    "findByGeo" {
+        // when
+        val result = nearSearchRepository.findByGeo()
+
+        // then
+        result.mappedResults.take(3).map { it.name } shouldBe listOf(
+            "Ribeira Charming Duplex",
+            "DB RIBEIRA - Grey Apartment",
+            "Ribeira 24 (4)",
+        )
+    }
+
+    "findByGeoWithCompound" {
+        // when
+        val result = nearSearchRepository.findByGeoWithCompound()
+
+        // then
+        result.mappedResults.take(3).map { it.propertyType } shouldBe listOf(
+            "Apartment",
+            "Apartment",
+            "Apartment",
+        )
+
+        result.mappedResults.take(3).map { it.address.location } shouldBe listOf(
+            GeoJsonPoint(114.15027, 22.28158),
+            GeoJsonPoint(114.15082, 22.28161),
+            GeoJsonPoint(114.15007, 22.28215),
         )
     }
 })
