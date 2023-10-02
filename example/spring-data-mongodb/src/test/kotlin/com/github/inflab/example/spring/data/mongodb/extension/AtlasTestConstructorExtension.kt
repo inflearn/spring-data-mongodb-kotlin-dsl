@@ -1,5 +1,6 @@
 package com.github.inflab.example.spring.data.mongodb.extension
 
+import com.github.inflab.example.spring.data.mongodb.annotation.Database
 import io.kotest.core.annotation.AutoScan
 import io.kotest.core.extensions.ConstructorExtension
 import io.kotest.core.spec.Spec
@@ -14,9 +15,12 @@ import kotlin.reflect.full.primaryConstructor
 internal object AtlasTestConstructorExtension : ConstructorExtension {
     private val ATLAS_DOMAIN by lazy {
         val property = YamlPropertySourceLoader().load("env", ClassPathResource("application.yml")).first()
-        val username = property.getProperty("spring.data.mongodb.username") ?: throw IllegalStateException("spring.data.mongodb.username is not set")
-        val password = property.getProperty("spring.data.mongodb.password") ?: throw IllegalStateException("spring.data.mongodb.password is not set")
-        val host = property.getProperty("spring.data.mongodb.host") ?: throw IllegalStateException("spring.data.mongodb.host is not set")
+        val username = property.getProperty("spring.data.mongodb.username")
+            ?: throw IllegalStateException("spring.data.mongodb.username is not set")
+        val password = property.getProperty("spring.data.mongodb.password")
+            ?: throw IllegalStateException("spring.data.mongodb.password is not set")
+        val host = property.getProperty("spring.data.mongodb.host")
+            ?: throw IllegalStateException("spring.data.mongodb.host is not set")
 
         "$username:$password@$host"
     }
@@ -29,8 +33,8 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
             return null
         }
 
-        val connectionString = "mongodb+srv://$ATLAS_DOMAIN/${atlasTest.database}?retryWrites=true&w=majority"
-        val mongoTemplate = MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
+        val connectionString = getConnectionString(atlasTest.database)
+        val mongoTemplate = getMongoTemplate(connectionString)
 
         val parameters = testConstructor.parameters.associateWith { parameter ->
             val parameterClass = parameter.type.classifier as KClass<*>
@@ -47,6 +51,11 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
                     "The parameter type of repository constructor must be MongoTemplate but ${repositoryParameterClass.qualifiedName} from ${parameterClass.qualifiedName}"
                 }
 
+                val database = repositoryParameter.annotations.find { it is Database } as Database?
+                if (database != null) {
+                    return@associateWith getMongoTemplate(getConnectionString(database.value))
+                }
+
                 mongoTemplate
             }
 
@@ -54,5 +63,13 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
         }
 
         return testConstructor.callBy(parameters)
+    }
+
+    private fun getConnectionString(databaseName: String): String {
+        return "mongodb+srv://$ATLAS_DOMAIN/$databaseName?retryWrites=true&w=majority"
+    }
+
+    private fun getMongoTemplate(connectionString: String): MongoTemplate {
+        return MongoTemplate(SimpleMongoClientDatabaseFactory(connectionString))
     }
 }

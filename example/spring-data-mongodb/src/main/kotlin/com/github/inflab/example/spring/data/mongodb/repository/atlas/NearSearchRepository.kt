@@ -1,15 +1,21 @@
 package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
+import com.github.inflab.example.spring.data.mongodb.annotation.Database
+import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviews
 import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviewsAddress
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint
+import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 @Repository
 class NearSearchRepository(
-    private val mongoTemplate: MongoTemplate,
+    @Database("sample_mflix") private val mflixMongoTemplate: MongoTemplate,
+    @Database("sample_airbnb") private val airbnbMongoTamplate: MongoTemplate,
 ) {
 
     data class RuntimeDto(
@@ -25,7 +31,14 @@ class NearSearchRepository(
     )
 
     data class GeoDto(
-        val title: String,
+        val name: String,
+        val address: ListingsAndReviewsAddress,
+        val score: Double,
+    )
+
+    data class GeoPropertyTypeDto(
+        @Field("property_type")
+        val propertyType: String,
         val address: ListingsAndReviewsAddress,
         val score: Double,
     )
@@ -51,7 +64,7 @@ class NearSearchRepository(
             }
         }
 
-        return mongoTemplate.aggregate(aggregation, "movies", RuntimeDto::class.java)
+        return mflixMongoTemplate.aggregate(aggregation, "movies", RuntimeDto::class.java)
     }
 
     fun findByDate(): AggregationResults<ReleasedDto> {
@@ -75,6 +88,62 @@ class NearSearchRepository(
             }
         }
 
-        return mongoTemplate.aggregate(aggregation, "movies", ReleasedDto::class.java)
+        return mflixMongoTemplate.aggregate(aggregation, "movies", ReleasedDto::class.java)
+    }
+
+    fun findByGeo(): AggregationResults<GeoDto> {
+        val aggregation = aggregation {
+            search {
+                near {
+                    path(ListingsAndReviews::address..ListingsAndReviewsAddress::location)
+                    origin(GeoJsonPoint(-8.61308, 41.1413))
+                    pivot(1000)
+                }
+            }
+
+            // TODO: add $limit stage
+
+            project {
+                excludeId()
+                +ListingsAndReviews::name
+                +ListingsAndReviews::address
+                searchScore()
+            }
+        }
+
+        return airbnbMongoTamplate.aggregate(aggregation, "listingsAndReviews", GeoDto::class.java)
+    }
+
+    fun findByGeoWithCompound(): AggregationResults<GeoPropertyTypeDto> {
+        val aggregation = aggregation {
+            search {
+                compound {
+                    must {
+                        text {
+                            query("Apartment")
+                            path(ListingsAndReviews::propertyType)
+                        }
+                    }
+                    should {
+                        near {
+                            origin(GeoJsonPoint(114.15027, 22.28158))
+                            pivot(1000)
+                            path(ListingsAndReviews::address..ListingsAndReviewsAddress::location)
+                        }
+                    }
+                }
+            }
+
+            // TODO: add $limit stage
+
+            project {
+                excludeId()
+                +ListingsAndReviews::propertyType
+                +ListingsAndReviews::address
+                searchScore()
+            }
+        }
+
+        return airbnbMongoTamplate.aggregate(aggregation, "listingsAndReviews", GeoPropertyTypeDto::class.java)
     }
 }
