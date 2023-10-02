@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.ben.manes.versions)
     alias(libs.plugins.version.catalog.update)
     alias(libs.plugins.kover)
-
-    `maven-publish`
 }
 
 allprojects {

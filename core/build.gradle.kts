@@ -1,7 +1,6 @@
-apply(plugin = "maven-publish")
-
 plugins {
     `java-library`
+    `maven-publish`
 }
 
 dependencies {
