@@ -125,4 +125,14 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/queryString">queryString</a>
      */
     fun queryString(configuration: QueryStringSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Supports querying and scoring numeric, date, and GeoJSON point values.
+     * You can use the near operator to find results that are near a number or a date.
+     * The near operator scores the Atlas Search results by proximity to the number or date.
+     *
+     * @param configuration The Configuration block for the [NearSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near">near</a>
+     */
+    fun near(configuration: NearSearchOperatorDsl.() -> Unit)
 }

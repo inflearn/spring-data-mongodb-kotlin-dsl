@@ -61,4 +61,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun queryString(configuration: QueryStringSearchOperatorDsl.() -> Unit) {
         operators.add(QueryStringSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun near(configuration: NearSearchOperatorDsl.() -> Unit) {
+        operators.add(NearSearchOperatorDsl().apply(configuration).build())
+    }
 }
