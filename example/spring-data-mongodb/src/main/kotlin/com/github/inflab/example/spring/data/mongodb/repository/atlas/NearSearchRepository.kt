@@ -43,6 +43,9 @@ class NearSearchRepository(
         val score: Double,
     )
 
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near/#number-example">Number Example</a>
+     */
     fun findByRuntime(): AggregationResults<RuntimeDto> {
         val aggregation = aggregation {
             search {
@@ -67,6 +70,9 @@ class NearSearchRepository(
         return mflixMongoTemplate.aggregate(aggregation, "movies", RuntimeDto::class.java)
     }
 
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near/#date-example">Date Example</a>
+     */
     fun findByDate(): AggregationResults<ReleasedDto> {
         val aggregation = aggregation {
             search {
@@ -91,6 +97,9 @@ class NearSearchRepository(
         return mflixMongoTemplate.aggregate(aggregation, "movies", ReleasedDto::class.java)
     }
 
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near/#basic-example">GeoJSON Point Basic Example</a>
+     */
     fun findByGeo(): AggregationResults<GeoDto> {
         val aggregation = aggregation {
             search {
@@ -114,6 +123,9 @@ class NearSearchRepository(
         return airbnbMongoTemplate.aggregate(aggregation, "listingsAndReviews", GeoDto::class.java)
     }
 
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near/#compound-example">GeoJSON Point Compound Example</a>
+     */
     fun findByGeoWithCompound(): AggregationResults<GeoPropertyTypeDto> {
         val aggregation = aggregation {
             search {
