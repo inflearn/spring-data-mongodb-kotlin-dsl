@@ -12,7 +12,7 @@ internal class SortStageDslTest : FreeSpec({
         "should add a field by string" {
             // given
             val stage = sort {
-                "field" by Ascending
+                "field" by asc
             }
 
             // when
@@ -35,8 +35,8 @@ internal class SortStageDslTest : FreeSpec({
             data class Child(val field: String)
             data class Parent(val child: Child, val parentField: String)
             val stage = sort {
-                Parent::child..Child::field by Ascending
-                Parent::parentField by Ascending
+                Parent::child..Child::field by asc
+                Parent::parentField by asc
             }
 
             // when
@@ -60,7 +60,7 @@ internal class SortStageDslTest : FreeSpec({
         "should add a field by string" {
             // given
             val stage = sort {
-                "field" by Descending
+                "field" by desc
             }
 
             // when
@@ -83,8 +83,8 @@ internal class SortStageDslTest : FreeSpec({
             data class Child(val field: String)
             data class Parent(val child: Child, val parentField: String)
             val stage = sort {
-                Parent::child..Child::field by Descending
-                Parent::parentField by Descending
+                Parent::child..Child::field by desc
+                Parent::parentField by desc
             }
 
             // when
@@ -108,7 +108,7 @@ internal class SortStageDslTest : FreeSpec({
         "should add a field by string" {
             // given
             val stage = sort {
-                "field" by TextScore
+                "field" by asc
             }
 
             // when
@@ -133,8 +133,8 @@ internal class SortStageDslTest : FreeSpec({
             data class Child(val field: String)
             data class Parent(val child: Child, val parentField: String)
             val stage = sort {
-                Parent::child..Child::field by TextScore
-                Parent::parentField by TextScore
+                Parent::child..Child::field by textScore
+                Parent::parentField by textScore
             }
 
             // when

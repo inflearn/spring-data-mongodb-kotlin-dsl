@@ -329,12 +329,12 @@ naming:
     active: false
     minimumFunctionNameLength: 3
   FunctionNaming:
-    active: false
+    active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
   FunctionParameterNaming:
-    active: false
+    active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
   InvalidPackageDeclaration:
@@ -374,7 +374,7 @@ naming:
     active: true
     minimumVariableNameLength: 1
   VariableNaming:
-    active: false
+    active: true
     variablePattern: '[a-z][A-Za-z0-9]*'
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'

@@ -19,27 +19,30 @@ class SortStageDsl {
      * Represents the sort order.
      */
     enum class Order {
-        Ascending,
-        Descending,
+        ASC,
+        DESC,
         TextScore,
     }
 
     /**
      * Sort ascending.
      */
-    val Ascending: Order = Order.Ascending
+    val asc: Order
+        get() = Order.ASC
 
     /**
      * Sort descending.
      */
-    val Descending: Order = Order.Descending
+    val desc: Order
+        get() = Order.DESC
 
     /**
      * Sort by the computed `textScore` metadata in descending order.
      *
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#std-label-sort-pipeline-metadata">Text Score Metadata Sort</a>
      */
-    val TextScore: Order = Order.TextScore
+    val textScore: Order
+        get() = Order.TextScore
 
     /**
      * Specifies the field to sort by.
@@ -48,8 +51,8 @@ class SortStageDsl {
      */
     infix fun String.by(order: Order): Boolean {
         when (order) {
-            Order.Ascending -> operation.ascending(this)
-            Order.Descending -> operation.descending(this)
+            Order.ASC -> operation.ascending(this)
+            Order.DESC -> operation.descending(this)
             Order.TextScore -> operation.textScore(this)
         }
         return true

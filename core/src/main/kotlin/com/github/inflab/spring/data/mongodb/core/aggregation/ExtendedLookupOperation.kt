@@ -39,8 +39,8 @@ class ExtendedLookupOperation : AggregationOperation {
         this.let = let
     }
 
-    fun `as`(`as`: String) {
-        document["as"] = `as`
+    fun setAs(value: String) {
+        document["as"] = value
     }
 
     @Deprecated("Deprecated in Java")

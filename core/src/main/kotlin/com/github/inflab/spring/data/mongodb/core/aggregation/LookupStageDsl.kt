@@ -119,8 +119,9 @@ class LookupStageDsl {
      *
      * @param `as` The name of the new array field to add to the joined documents.
      */
-    fun `as`(`as`: String) {
-        operation.`as`(`as`)
+    @Suppress("FunctionName")
+    fun `as`(value: String) {
+        operation.setAs(value)
     }
 
     internal fun get() = operation
