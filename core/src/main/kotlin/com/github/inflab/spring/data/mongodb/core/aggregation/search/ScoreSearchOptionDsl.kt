@@ -26,7 +26,7 @@ class ScoreSearchOptionDsl {
     }
 
     /**
-     * Specifies the name of the numeric field whose value to multiply the default base score by
+     * Specifies the name of the numeric field whose value to multiply the default base score by.
      *
      * @param path The name of the numeric field.
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.
@@ -38,7 +38,7 @@ class ScoreSearchOptionDsl {
     }
 
     /**
-     * Specifies the name of the numeric field whose value to multiply the default base score by
+     * Specifies the name of the numeric field whose value to multiply the default base score by.
      *
      * @param path [KProperty] of the numeric field.
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.

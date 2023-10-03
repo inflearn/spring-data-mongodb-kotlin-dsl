@@ -15,14 +15,12 @@ import kotlin.reflect.KProperty
 class QueryStringQueryOptionDsl {
     /**
      * Represents a query for queryString search operator.
+     *
+     * @property value The value to search.
+     * @property field Indexed field search.
      */
-    class Query(val value: String, val field: String?) {
-        override fun toString(): String {
-            return when (field) {
-                null -> value
-                else -> "$field:$value"
-            }
-        }
+    data class Query(val value: String, val field: String?) {
+        override fun toString(): String = if (field == null) value else "$field:$value"
     }
 
     /**
@@ -65,9 +63,7 @@ class QueryStringQueryOptionDsl {
      * @param value The value to search
      * @param field Indexed field to search
      */
-    fun wildcard(value: String, field: String? = null): Query {
-        return Query(value, field)
-    }
+    fun wildcard(value: String, field: String? = null): Query = Query(value, field)
 
     /**
      * Creates a wildcard query.
@@ -75,9 +71,7 @@ class QueryStringQueryOptionDsl {
      * @param value The value to search
      * @param field Indexed field to search
      */
-    fun wildcard(value: String, field: KProperty<String?>): Query {
-        return Query(value, field.toDotPath())
-    }
+    fun wildcard(value: String, field: KProperty<String?>): Query = Query(value, field.toDotPath())
 
     /**
      * Creates a regex query.
@@ -85,9 +79,7 @@ class QueryStringQueryOptionDsl {
      * @param pattern The pattern to search
      * @param field Indexed field to search
      */
-    fun regex(pattern: String, field: String? = null): Query {
-        return Query("/$pattern/", field)
-    }
+    fun regex(pattern: String, field: String? = null): Query = Query("/$pattern/", field)
 
     /**
      * Creates a regex query.
@@ -95,9 +87,7 @@ class QueryStringQueryOptionDsl {
      * @param pattern The pattern to search
      * @param field Indexed field to search
      */
-    fun regex(pattern: String, field: KProperty<String?>): Query {
-        return Query("/$pattern/", field.toDotPath())
-    }
+    fun regex(pattern: String, field: KProperty<String?>): Query = Query("/$pattern/", field.toDotPath())
 
     /**
      * Creates a range query.
@@ -172,9 +162,7 @@ class QueryStringQueryOptionDsl {
      * @param maxEdits Maximum number of single-character edits required to match the specified search term.
      * @param field indexed field to search
      */
-    fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query {
-        return Query("$value~$maxEdits", field)
-    }
+    fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query = Query("$value~$maxEdits", field)
 
     /**
      * Creates a fuzzy query.
@@ -183,9 +171,8 @@ class QueryStringQueryOptionDsl {
      * @param maxEdits Maximum number of single-character edits required to match the specified search term.
      * @param field indexed field to search
      */
-    fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query {
-        return Query("$value~$maxEdits", field.toDotPath())
-    }
+    fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query =
+        Query("$value~$maxEdits", field.toDotPath())
 
     /**
      * Creates a delimiters for subqueries.
@@ -193,9 +180,8 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query for subqueries.
      * @param field Indexed field to search
      */
-    fun sub(inputQuery: Query, field: String? = null): Query {
-        return Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
-    }
+    fun sub(inputQuery: Query, field: String? = null): Query =
+        Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
 
     /**
      * Creates a delimiters for subqueries.
@@ -203,9 +189,8 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query for subqueries.
      * @param field Indexed field to search
      */
-    fun sub(inputQuery: Query, field: KProperty<String?>): Query {
-        return Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
-    }
+    fun sub(inputQuery: Query, field: KProperty<String?>): Query =
+        Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
 
     /**
      * Creates an operator that indicates `NOT` boolean operator.
@@ -213,9 +198,7 @@ class QueryStringQueryOptionDsl {
      *
      * @param inputQuery The Query to apply.
      */
-    fun not(inputQuery: Query): Query {
-        return Query("NOT (${inputQuery.value})", inputQuery.field)
-    }
+    fun not(inputQuery: Query): Query = Query("NOT (${inputQuery.value})", inputQuery.field)
 
     /**
      * Creates an operator that indicates `AND` boolean operator.
@@ -223,9 +206,7 @@ class QueryStringQueryOptionDsl {
      *
      * @param inputQuery The Query to apply.
      */
-    infix fun Query.and(inputQuery: Query): Query {
-        return Query("$this AND $inputQuery", null)
-    }
+    infix fun Query.and(inputQuery: Query): Query = Query("$this AND $inputQuery", null)
 
     /**
      * Creates an operator that indicates OR boolean operator.
@@ -233,7 +214,5 @@ class QueryStringQueryOptionDsl {
      *
      * @param inputQuery The Query to apply.
      */
-    infix fun Query.or(inputQuery: Query): Query {
-        return Query("$this OR $inputQuery", null)
-    }
+    infix fun Query.or(inputQuery: Query): Query = Query("$this OR $inputQuery", null)
 }

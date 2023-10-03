@@ -1,4 +1,5 @@
 package com.github.inflab.spring.data.mongodb.core.mapping
+
 import org.springframework.data.mongodb.core.mapping.Field
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
@@ -21,13 +22,12 @@ private class KPropertyPath<T, U>(
  * @author Jake Son
  * @since 1.0
  */
-internal fun asString(property: KProperty<*>): String {
-    return when (property) {
-        is KPropertyPath<*, *> ->
-            "${asString(property.parent)}.${toFieldName(property.child)}"
-        else -> toFieldName(property)
+internal fun asString(property: KProperty<*>): String =
+    if (property is KPropertyPath<*, *>) {
+        "${asString(property.parent)}.${toFieldName(property.child)}"
+    } else {
+        toFieldName(property)
     }
-}
 
 /**
  * Get field name from [Field] annotation or property name.

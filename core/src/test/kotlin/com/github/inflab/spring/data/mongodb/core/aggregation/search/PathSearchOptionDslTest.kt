@@ -26,7 +26,7 @@ internal class PathSearchOptionDslTest : FreeSpec({
             // given
             data class Test(val name: String)
             val option = path {
-                +(Test::name)
+                +Test::name
             }
 
             // when
@@ -40,7 +40,7 @@ internal class PathSearchOptionDslTest : FreeSpec({
             // given
             data class Test(val names: List<String>)
             val option = path {
-                +(Test::names)
+                +Test::names
             }
 
             // when

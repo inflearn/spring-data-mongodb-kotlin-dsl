@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperationCon
  * @since 1.0
  * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sort">$sort (aggregation)</a>
  */
+@Suppress("UndocumentedPublicFunction")
 class ExtendedSortOperation : AggregationOperation {
     private val document: Document = Document()
 

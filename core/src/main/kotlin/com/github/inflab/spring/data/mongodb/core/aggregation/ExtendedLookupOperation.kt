@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.aggregation.VariableOperators
  * @since 1.0
  * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/">$lookup (aggregation)</a>
  */
+@Suppress("UndocumentedPublicFunction")
 class ExtendedLookupOperation : AggregationOperation {
     private val document: Document = Document()
     private var let: VariableOperators.Let? = null

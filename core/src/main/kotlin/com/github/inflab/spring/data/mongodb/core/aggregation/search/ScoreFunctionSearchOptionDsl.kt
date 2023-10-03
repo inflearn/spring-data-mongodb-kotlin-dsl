@@ -18,6 +18,9 @@ class ScoreFunctionSearchOptionDsl {
      * Represents an expression that can be used in a score function.
      */
     sealed interface Expression {
+        /**
+         * Converts this expression to a [Document].
+         */
         fun toDocument(): Document
 
         /**
@@ -74,6 +77,9 @@ class ScoreFunctionSearchOptionDsl {
         class Add(private val expressions: MutableList<Expression>) : Expression {
             override fun toDocument() = Document("add", expressions.map { it.toDocument() })
 
+            /**
+             * Appends an expression to add.
+             */
             fun append(expression: Expression) { expressions.add(expression) }
         }
 
@@ -83,6 +89,9 @@ class ScoreFunctionSearchOptionDsl {
         class Multiply(private val expressions: MutableList<Expression>) : Expression {
             override fun toDocument() = Document("multiply", expressions.map { it.toDocument() })
 
+            /**
+             * Appends an expression to multiply.
+             */
             fun append(expression: Expression) { expressions.add(expression) }
         }
 
