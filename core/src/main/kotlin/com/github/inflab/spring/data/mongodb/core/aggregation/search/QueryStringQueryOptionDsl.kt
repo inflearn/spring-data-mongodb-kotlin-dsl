@@ -13,6 +13,9 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class QueryStringQueryOptionDsl {
+    /**
+     * Represents a query for queryString search operator.
+     */
     class Query(val value: String, val field: String?) {
         override fun toString(): String {
             return when (field) {
@@ -105,7 +108,13 @@ class QueryStringQueryOptionDsl {
      * @param rightInclusion The right value is included in the range
      * @param field Indexed field to search
      */
-    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion: Boolean = true, field: String? = null): Query {
+    fun range(
+        left: String,
+        right: String,
+        leftInclusion: Boolean = true,
+        rightInclusion: Boolean = true,
+        field: String? = null,
+    ): Query {
         val leftBracket = if (leftInclusion) "[" else "{"
         val rightBracket = if (rightInclusion) "]" else "}"
 
@@ -132,7 +141,13 @@ class QueryStringQueryOptionDsl {
      * @param rightInclusion The right value is included in the range
      * @param field Indexed field to search
      */
-    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion: Boolean = true, field: KProperty<String?>): Query {
+    fun range(
+        left: String,
+        right: String,
+        leftInclusion: Boolean = true,
+        rightInclusion: Boolean = true,
+        field: KProperty<String?>,
+    ): Query {
         val leftBracket = if (leftInclusion) "[" else "{"
         val rightBracket = if (rightInclusion) "]" else "}"
 
@@ -176,6 +191,7 @@ class QueryStringQueryOptionDsl {
      * Creates a delimiters for subqueries.
      *
      * @param inputQuery The Query for subqueries.
+     * @param field Indexed field to search
      */
     fun sub(inputQuery: Query, field: String? = null): Query {
         return Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
@@ -185,6 +201,7 @@ class QueryStringQueryOptionDsl {
      * Creates a delimiters for subqueries.
      *
      * @param inputQuery The Query for subqueries.
+     * @param field Indexed field to search
      */
     fun sub(inputQuery: Query, field: KProperty<String?>): Query {
         return Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
