@@ -6,6 +6,7 @@ This project is a Kotlin library that provides a type-safe DSL for aggregations 
 
 - Type-safe DSL for building pipeline of [aggregation operations](https://www.mongodb.com/docs/manual/aggregation/)
 - Support for [Atlas Search](https://docs.atlas.mongodb.com/atlas-search)
+- Provide Kotlin Doc (KDoc) for all DSL functions and properties
 
 ## Requirements
 
