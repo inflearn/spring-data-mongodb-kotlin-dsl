@@ -8,7 +8,9 @@ import org.springframework.boot.env.YamlPropertySourceLoader
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
+import org.springframework.stereotype.Repository
 import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
 
 @AutoScan
@@ -26,7 +28,7 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
     }
 
     override fun <T : Spec> instantiate(clazz: KClass<T>): Spec? {
-        val atlasTest = clazz.annotations.find { it is AtlasTest } as AtlasTest? ?: return null
+        val atlasTest = clazz.findAnnotation<AtlasTest>() ?: return null
 
         val testConstructor = clazz.primaryConstructor
         if (testConstructor == null || testConstructor.parameters.isEmpty()) {
@@ -38,9 +40,11 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
 
         val parameters = testConstructor.parameters.associateWith { parameter ->
             val parameterClass = parameter.type.classifier as KClass<*>
-            check(parameterClass.annotations.any { it is org.springframework.stereotype.Repository }) {
+
+            checkNotNull(parameterClass.findAnnotation<Repository>()) {
                 "The parameter type of constructor must be annotated with @Repository but ${parameterClass.qualifiedName}"
             }
+
             val repositoryConstructor = checkNotNull(parameterClass.primaryConstructor) {
                 "The parameter type of constructor must have primary constructor but ${parameterClass.qualifiedName}"
             }
@@ -51,12 +55,9 @@ internal object AtlasTestConstructorExtension : ConstructorExtension {
                     "The parameter type of repository constructor must be MongoTemplate but ${repositoryParameterClass.qualifiedName} from ${parameterClass.qualifiedName}"
                 }
 
-                val database = repositoryParameter.annotations.find { it is Database } as Database?
-                if (database != null) {
-                    return@associateWith getMongoTemplate(getConnectionString(database.value))
-                }
-
-                mongoTemplate
+                repositoryParameter.findAnnotation<Database>()?.let {
+                    getMongoTemplate(getConnectionString(it.value))
+                } ?: mongoTemplate
             }
 
             repositoryConstructor.callBy(repositoryParameters)
