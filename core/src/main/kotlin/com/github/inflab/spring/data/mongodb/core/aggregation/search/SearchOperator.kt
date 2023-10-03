@@ -138,4 +138,12 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/near">near</a>
      */
     fun near(configuration: NearSearchOperatorDsl.() -> Unit)
+
+    /**
+     * Support to interpret the query field as a regular expression.
+     *
+     * @param configuration The configuration block for the [RegexSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/regex">regex</a>
+     */
+    fun regex(configuration: RegexSearchOperatorDsl.() -> Unit)
 }
