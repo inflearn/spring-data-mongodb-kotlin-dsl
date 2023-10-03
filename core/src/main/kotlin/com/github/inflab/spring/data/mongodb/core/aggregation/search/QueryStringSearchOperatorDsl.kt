@@ -54,8 +54,9 @@ class QueryStringSearchOperatorDsl {
      *
      * @param configuration The configuration block for the [QueryStringQueryOptionDsl].
      */
-    fun query(configuration: QueryStringQueryOptionDsl.() -> Unit) {
-        document["query"] = QueryStringQueryOptionDsl().apply(configuration).build()
+    fun query(configuration: QueryStringQueryOptionDsl.() -> QueryStringQueryOptionDsl.Query) {
+        val query = QueryStringQueryOptionDsl().configuration()
+        document["query"] = query.toString()
     }
 
     /**

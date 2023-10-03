@@ -11,8 +11,6 @@ import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
  */
 @AggregationMarker
 class QueryStringQueryOptionDsl {
-    var query: Query? = null
-
     class Query(val value: String, val field: String?) {
         override fun toString(): String {
             return when (field) {
@@ -45,6 +43,18 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a text query.
+     *
+     * @param value The value to search
+     * @param field Indexed field search
+     */
+    fun text(value: String, field: KProperty<String?>): Query {
+        val escaped = value.replace("*", "\\*").replace("?", "\\?")
+
+        return Query("\"$escaped\"", field.toDotPath())
+    }
+
+    /**
      * Creates a wildcard query.
      *
      * @param value The value to search
@@ -55,6 +65,16 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a wildcard query.
+     *
+     * @param value The value to search
+     * @param field Indexed field to search
+     */
+    fun wildcard(value: String, field: KProperty<String?>): Query {
+        return Query(value, field.toDotPath())
+    }
+
+    /**
      * Creates a regex query.
      *
      * @param pattern The pattern to search
@@ -62,6 +82,16 @@ class QueryStringQueryOptionDsl {
      */
     fun regex(pattern: String, field: String? = null): Query {
         return Query("/$pattern/", field)
+    }
+
+    /**
+     * Creates a regex query.
+     *
+     * @param pattern The pattern to search
+     * @param field Indexed field to search
+     */
+    fun regex(pattern: String, field: KProperty<String?>): Query {
+        return Query("/$pattern/", field.toDotPath())
     }
 
     /**
@@ -92,6 +122,33 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a range query.
+     *
+     * @param left The left value to search
+     * @param right The right value to search
+     * @param leftInclusion The left value is included in the range
+     * @param rightInclusion The right value is included in the range
+     * @param field Indexed field to search
+     */
+    fun range(left: String, right: String, leftInclusion: Boolean = true, rightInclusion: Boolean = true, field: KProperty<String?>): Query {
+        val leftBracket = if (leftInclusion) "[" else "{"
+        val rightBracket = if (rightInclusion) "]" else "}"
+
+        val leftExp = when (left) {
+            WILDCARD -> WILDCARD
+            QUESTION -> QUESTION
+            else -> "\"$left\""
+        }
+        val rightExp = when (right) {
+            WILDCARD -> WILDCARD
+            QUESTION -> QUESTION
+            else -> "\"$right\""
+        }
+
+        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field.toDotPath())
+    }
+
+    /**
      * Creates a fuzzy query.
      *
      * @param value The value to search
@@ -103,12 +160,32 @@ class QueryStringQueryOptionDsl {
     }
 
     /**
+     * Creates a fuzzy query.
+     *
+     * @param value The value to search
+     * @param maxEdits Maximum number of single-character edits required to match the specified search term.
+     * @param field indexed field to search
+     */
+    fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query {
+        return Query("$value~$maxEdits", field.toDotPath())
+    }
+
+    /**
      * Creates a delimiters for subqueries.
      *
      * @param query The Query for subqueries.
      */
-    fun sub(query: Query, field: String? = null): Query {
-        return Query("${field?.let { "$it:" }.orEmpty()}(${query.value})", query.field)
+    fun sub(inputQuery: Query, field: String? = null): Query {
+        return Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
+    }
+
+    /**
+     * Creates a delimiters for subqueries.
+     *
+     * @param inputQuery The Query for subqueries.
+     */
+    fun sub(inputQuery: Query, field: KProperty<String?>): Query {
+        return Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
     }
 
     /**
@@ -117,8 +194,8 @@ class QueryStringQueryOptionDsl {
      *
      * @param query The Query to apply.
      */
-    fun not(query: Query): Query {
-        return Query("NOT (${query.value})", query.field)
+    fun not(inputQuery: Query): Query {
+        return Query("NOT (${inputQuery.value})", inputQuery.field)
     }
 
     /**
@@ -127,8 +204,8 @@ class QueryStringQueryOptionDsl {
      *
      * @param query The Query to apply.
      */
-    infix fun Query.and(query: Query): Query {
-        return Query("$this AND $query", null)
+    infix fun Query.and(inputQuery: Query): Query {
+        return Query("$this AND $inputQuery", null)
     }
 
     /**
@@ -137,11 +214,7 @@ class QueryStringQueryOptionDsl {
      *
      * @param query The Query to apply.
      */
-    infix fun Query.or(query: Query): Query {
-        return Query("$this OR $query", null)
-    }
-
-    internal fun build(): String {
-        return checkNotNull(query) { "query must not be null" }.toString()
+    infix fun Query.or(inputQuery: Query): Query {
+        return Query("$this OR $inputQuery", null)
     }
 }
