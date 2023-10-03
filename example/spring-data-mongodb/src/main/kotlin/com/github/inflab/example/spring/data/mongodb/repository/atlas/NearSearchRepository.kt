@@ -3,9 +3,11 @@ package com.github.inflab.example.spring.data.mongodb.repository.atlas
 import com.github.inflab.example.spring.data.mongodb.annotation.Database
 import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviews
 import com.github.inflab.example.spring.data.mongodb.entity.airbnb.ListingsAndReviewsAddress
+import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import org.springframework.data.mongodb.core.mapping.Field
@@ -51,7 +53,7 @@ class NearSearchRepository(
             search {
                 index = "runtimes"
                 near {
-                    path("runtime")
+                    path(Movies::runtime)
                     origin(279)
                     pivot(2)
                 }
@@ -61,13 +63,13 @@ class NearSearchRepository(
 
             project {
                 excludeId()
-                +"title"
-                +"runtime"
+                +Movies::title
+                +Movies::runtime
                 searchScore()
             }
         }
 
-        return mflixMongoTemplate.aggregate(aggregation, "movies", RuntimeDto::class.java)
+        return mflixMongoTemplate.aggregate<Movies, RuntimeDto>(aggregation)
     }
 
     /**
@@ -78,7 +80,7 @@ class NearSearchRepository(
             search {
                 index = "releaseddate"
                 near {
-                    path("released")
+                    path(Movies::released)
                     origin(LocalDateTime.of(1915, 9, 13, 0, 0, 0))
                     pivot(7776000000)
                 }
@@ -88,13 +90,13 @@ class NearSearchRepository(
 
             project {
                 excludeId()
-                +"title"
-                +"released"
+                +Movies::title
+                +Movies::released
                 searchScore()
             }
         }
 
-        return mflixMongoTemplate.aggregate(aggregation, "movies", ReleasedDto::class.java)
+        return mflixMongoTemplate.aggregate<Movies, ReleasedDto>(aggregation)
     }
 
     /**
@@ -120,7 +122,7 @@ class NearSearchRepository(
             }
         }
 
-        return airbnbMongoTemplate.aggregate(aggregation, "listingsAndReviews", GeoDto::class.java)
+        return airbnbMongoTemplate.aggregate<ListingsAndReviews, GeoDto>(aggregation)
     }
 
     /**
@@ -156,6 +158,6 @@ class NearSearchRepository(
             }
         }
 
-        return airbnbMongoTemplate.aggregate(aggregation, "listingsAndReviews", GeoPropertyTypeDto::class.java)
+        return airbnbMongoTemplate.aggregate<ListingsAndReviews, GeoPropertyTypeDto>(aggregation)
     }
 }

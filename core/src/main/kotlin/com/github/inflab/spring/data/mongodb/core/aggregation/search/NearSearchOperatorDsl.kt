@@ -50,7 +50,7 @@ class NearSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     @JvmName("pathDate")
-    fun path(vararg path: KProperty<Temporal>) {
+    fun path(vararg path: KProperty<Temporal?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
@@ -62,7 +62,7 @@ class NearSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
     @JvmName("pathPoint")
-    fun path(vararg path: KProperty<GeoJsonPoint>) {
+    fun path(vararg path: KProperty<GeoJsonPoint?>) {
         document["path"] = path.map { it.toDotPath() }.firstOrAll()
     }
 
