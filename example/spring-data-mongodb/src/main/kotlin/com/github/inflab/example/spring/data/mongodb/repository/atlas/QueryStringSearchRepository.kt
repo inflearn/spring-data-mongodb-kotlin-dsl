@@ -2,7 +2,6 @@ package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
-import com.mongodb.client.model.Projections.excludeId
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -59,7 +58,7 @@ class QueryStringSearchRepository(
                 queryString {
                     defaultPath(Movies::plot)
                     query {
-                        range(left = "count", right = WILDCARD, leftInclusion = true, rightInclusion = true, PlotAndFullplotDto::title)
+                        range(left = "count", right = wildcard, leftInclusion = true, rightInclusion = true, PlotAndFullplotDto::title)
                     }
                 }
             }

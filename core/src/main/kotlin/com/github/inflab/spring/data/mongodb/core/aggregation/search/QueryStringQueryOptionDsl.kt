@@ -26,18 +26,20 @@ class QueryStringQueryOptionDsl {
     /**
      * Indicates 0 or more characters to match.
      */
-    val WILDCARD = "*"
+    val wildcard
+        get() = "*"
 
     /**
      * Indicates any single character to match.
      */
-    val QUESTION = "?"
+    val question
+        get() = "?"
 
     /**
      * Creates a text query.
      *
-     * @param value The value to search
-     * @param field Indexed field search
+     * @param value The value to search.
+     * @param field Indexed field search.
      */
     fun text(value: String, field: String? = null): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
@@ -48,8 +50,8 @@ class QueryStringQueryOptionDsl {
     /**
      * Creates a text query.
      *
-     * @param value The value to search
-     * @param field Indexed field search
+     * @param value The value to search.
+     * @param field Indexed field search.
      */
     fun text(value: String, field: KProperty<String?>): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
@@ -60,43 +62,43 @@ class QueryStringQueryOptionDsl {
     /**
      * Creates a wildcard query.
      *
-     * @param value The value to search
-     * @param field Indexed field to search
+     * @param value The value to search.
+     * @param field Indexed field to search.
      */
     fun wildcard(value: String, field: String? = null): Query = Query(value, field)
 
     /**
      * Creates a wildcard query.
      *
-     * @param value The value to search
-     * @param field Indexed field to search
+     * @param value The value to search.
+     * @param field Indexed field to search.
      */
     fun wildcard(value: String, field: KProperty<String?>): Query = Query(value, field.toDotPath())
 
     /**
      * Creates a regex query.
      *
-     * @param pattern The pattern to search
-     * @param field Indexed field to search
+     * @param pattern The pattern to search.
+     * @param field Indexed field to search.
      */
     fun regex(pattern: String, field: String? = null): Query = Query("/$pattern/", field)
 
     /**
      * Creates a regex query.
      *
-     * @param pattern The pattern to search
-     * @param field Indexed field to search
+     * @param pattern The pattern to search.
+     * @param field Indexed field to search.
      */
     fun regex(pattern: String, field: KProperty<String?>): Query = Query("/$pattern/", field.toDotPath())
 
     /**
      * Creates a range query.
      *
-     * @param left The left value to search
-     * @param right The right value to search
-     * @param leftInclusion The left value is included in the range
-     * @param rightInclusion The right value is included in the range
-     * @param field Indexed field to search
+     * @param left The left value to search.
+     * @param right The right value to search.
+     * @param leftInclusion The left value is included in the range.
+     * @param rightInclusion The right value is included in the range.
+     * @param field Indexed field to search.
      */
     fun range(
         left: String,
@@ -108,28 +110,17 @@ class QueryStringQueryOptionDsl {
         val leftBracket = if (leftInclusion) "[" else "{"
         val rightBracket = if (rightInclusion) "]" else "}"
 
-        val leftExp = when (left) {
-            WILDCARD -> WILDCARD
-            QUESTION -> QUESTION
-            else -> "\"$left\""
-        }
-        val rightExp = when (right) {
-            WILDCARD -> WILDCARD
-            QUESTION -> QUESTION
-            else -> "\"$right\""
-        }
-
-        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field)
+        return Query("$leftBracket$left TO $right$rightBracket", field)
     }
 
     /**
      * Creates a range query.
      *
-     * @param left The left value to search
-     * @param right The right value to search
-     * @param leftInclusion The left value is included in the range
-     * @param rightInclusion The right value is included in the range
-     * @param field Indexed field to search
+     * @param left The left value to search.
+     * @param right The right value to search.
+     * @param leftInclusion The left value is included in the range.
+     * @param rightInclusion The right value is included in the range.
+     * @param field Indexed field to search.
      */
     fun range(
         left: String,
@@ -137,39 +128,23 @@ class QueryStringQueryOptionDsl {
         leftInclusion: Boolean = true,
         rightInclusion: Boolean = true,
         field: KProperty<String?>,
-    ): Query {
-        val leftBracket = if (leftInclusion) "[" else "{"
-        val rightBracket = if (rightInclusion) "]" else "}"
-
-        val leftExp = when (left) {
-            WILDCARD -> WILDCARD
-            QUESTION -> QUESTION
-            else -> "\"$left\""
-        }
-        val rightExp = when (right) {
-            WILDCARD -> WILDCARD
-            QUESTION -> QUESTION
-            else -> "\"$right\""
-        }
-
-        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field.toDotPath())
-    }
+    ): Query = range(left, right, leftInclusion, rightInclusion, field.toDotPath())
 
     /**
      * Creates a fuzzy query.
      *
-     * @param value The value to search
+     * @param value The value to search.
      * @param maxEdits Maximum number of single-character edits required to match the specified search term.
-     * @param field indexed field to search
+     * @param field indexed field to search.
      */
     fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query = Query("$value~$maxEdits", field)
 
     /**
      * Creates a fuzzy query.
      *
-     * @param value The value to search
+     * @param value The value to search.
      * @param maxEdits Maximum number of single-character edits required to match the specified search term.
-     * @param field indexed field to search
+     * @param field indexed field to search.
      */
     fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query =
         Query("$value~$maxEdits", field.toDotPath())
@@ -178,7 +153,7 @@ class QueryStringQueryOptionDsl {
      * Creates a delimiters for subqueries.
      *
      * @param inputQuery The Query for subqueries.
-     * @param field Indexed field to search
+     * @param field Indexed field to search.
      */
     fun sub(inputQuery: Query, field: String? = null): Query =
         Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
@@ -187,7 +162,7 @@ class QueryStringQueryOptionDsl {
      * Creates a delimiters for subqueries.
      *
      * @param inputQuery The Query for subqueries.
-     * @param field Indexed field to search
+     * @param field Indexed field to search.
      */
     fun sub(inputQuery: Query, field: KProperty<String?>): Query =
         Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)

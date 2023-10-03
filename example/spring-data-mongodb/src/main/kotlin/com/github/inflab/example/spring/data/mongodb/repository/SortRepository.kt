@@ -18,8 +18,8 @@ class SortRepository(
     fun sortByBorough(): AggregationResults<Document> {
         val aggregation = aggregation {
             sort {
-                "borough" by Ascending
-                "_id" by Ascending
+                "borough" by asc
+                "_id" by asc
             }
         }
 
@@ -36,8 +36,8 @@ class SortRepository(
             )
 
             sort {
-                "score" by TextScore
-                "posts" by Descending
+                "score" by textScore
+                "posts" by desc
             }
         }
 

@@ -115,7 +115,7 @@ internal class AggregationDslTest : FreeSpec({
             // when
             val aggregation = aggregation {
                 sort {
-                    "fieldName" by Ascending
+                    "fieldName" by asc
                 }
             }
 
@@ -243,7 +243,7 @@ internal class AggregationDslTest : FreeSpec({
                     from("from")
                     localField("localField")
                     foreignField("foreignField")
-                    `as`("as")
+                    setAs("as")
                 },
             ).toString()
         }

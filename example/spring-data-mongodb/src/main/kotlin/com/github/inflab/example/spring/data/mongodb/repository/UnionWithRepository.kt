@@ -47,9 +47,9 @@ class UnionWithRepository(
             }
 
             sort {
-                "_id" by Ascending
-                "store" by Ascending
-                "item" by Ascending
+                "_id" by asc
+                "store" by asc
+                "item" by asc
             }
         }
 
@@ -71,7 +71,7 @@ class UnionWithRepository(
             stage(Aggregation.group("item").sum("quantity").`as`("total"))
 
             sort {
-                "total" by Descending
+                "total" by desc
             }
         }
 

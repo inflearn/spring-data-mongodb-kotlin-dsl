@@ -58,7 +58,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         "should add a wildcard" {
             // given, when
             val result = queryString {
-                wildcard("search$WILDCARD$QUESTION")
+                wildcard("search$wildcard$question")
             }
 
             // then
@@ -126,7 +126,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe """["left" TO "right"]"""
+            result shouldBe "[left TO right]"
         }
 
         "should add a exclusive range" {
@@ -136,7 +136,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe """{"left" TO "right"}"""
+            result shouldBe "{left TO right}"
         }
 
         "should add a half-open range" {
@@ -146,17 +146,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe """["left" TO "right"}"""
-        }
-
-        "should not add double quote if wildcard is given" {
-            // given, when
-            val result = queryString {
-                range(WILDCARD, WILDCARD)
-            }
-
-            // then
-            result shouldBe "[* TO *]"
+            result shouldBe "[left TO right}"
         }
     }
 
