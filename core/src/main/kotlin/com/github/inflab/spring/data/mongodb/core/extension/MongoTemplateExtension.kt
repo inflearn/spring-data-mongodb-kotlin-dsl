@@ -10,8 +10,9 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults
  * @author Jake Son
  * @since 1.0
  * @param T The type of the element in the aggregation result.
- * @param aggregation The [AggregationDsl] providing the aggregation pipeline.
+ * @param O The type of the input data for the aggregation.
  * @param collectionName The name of the input collection to use for the aggregation.
+ * @param aggregation The [AggregationDsl] providing the aggregation pipeline.
  * @return The [AggregationResults] of the aggregation.
  * @see [AggregationDsl]
  */

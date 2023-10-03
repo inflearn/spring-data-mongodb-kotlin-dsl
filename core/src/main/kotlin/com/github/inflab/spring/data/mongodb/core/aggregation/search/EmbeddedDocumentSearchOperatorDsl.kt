@@ -45,6 +45,7 @@ class EmbeddedDocumentSearchOperatorDsl {
      * Specifies the field to search.
      * It must be a parent for all operators and fields specified using the operator option.
      *
+     * @param T The type of the property.
      * @param path The indexed field in arrays of objects and documents.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/field-types/embedded-documents-type/#std-label-bson-data-types-embedded-documents">How to Index Fields in Arrays of Objects and Documents</a>
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>

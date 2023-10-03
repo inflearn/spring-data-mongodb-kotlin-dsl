@@ -48,7 +48,8 @@ class GeoShapeSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/master/reference/geojson/#std-label-geojson-polygon">Polygon</a>
      */
     fun geometry(polygon: GeoJsonPolygon) {
-        document["geometry"] = Document("type", "Polygon").append("coordinates", polygon.coordinates.map { it.coordinates.map { point -> listOf(point.x, point.y) } })
+        document["geometry"] = Document("type", "Polygon")
+            .append("coordinates", polygon.coordinates.map { it.coordinates.map { point -> listOf(point.x, point.y) } })
     }
 
     /**
@@ -58,7 +59,13 @@ class GeoShapeSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/master/reference/geojson/#std-label-geojson-multipolygon">MultiPolygon</a>
      */
     fun geometry(multiPolygon: GeoJsonMultiPolygon) {
-        document["geometry"] = Document("type", "MultiPolygon").append("coordinates", multiPolygon.coordinates.map { it.coordinates.map { line -> line.coordinates.map { point -> listOf(point.x, point.y) } } })
+        document["geometry"] = Document("type", "MultiPolygon")
+            .append(
+                "coordinates",
+                multiPolygon.coordinates.map {
+                    it.coordinates.map { line -> line.coordinates.map { point -> listOf(point.x, point.y) } }
+                },
+            )
     }
 
     /**
@@ -67,7 +74,8 @@ class GeoShapeSearchOperatorDsl {
      * @see <a href="https://www.mongodb.com/docs/master/reference/geojson/#std-label-geojson-linestring">LineString</a>
      */
     fun geometry(lintString: GeoJsonLineString) {
-        document["geometry"] = Document("type", "LineString").append("coordinates", lintString.coordinates.map { listOf(it.x, it.y) })
+        document["geometry"] = Document("type", "LineString")
+            .append("coordinates", lintString.coordinates.map { listOf(it.x, it.y) })
     }
 
     /**

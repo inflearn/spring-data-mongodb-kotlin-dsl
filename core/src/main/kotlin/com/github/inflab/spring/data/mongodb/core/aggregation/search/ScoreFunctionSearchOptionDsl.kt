@@ -14,17 +14,29 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class ScoreFunctionSearchOptionDsl {
+    /**
+     * Represents an expression that can be used in a score function.
+     */
     sealed interface Expression {
         fun toDocument(): Document
 
+        /**
+         * Represents the relevance score, which is the score Atlas Search assigns documents based on relevance, of the query.
+         */
         data object Score : Expression {
             override fun toDocument() = Document("score", "relevance")
         }
 
+        /**
+         * Represents a constant number in the function score.
+         */
         class Constant(private val value: Double) : Expression {
             override fun toDocument() = Document("constant", value)
         }
 
+        /**
+         * Represents an indexed numeric field value in the function score.
+         */
         class Path(private val value: String, private val undefined: Double? = null) : Expression {
             override fun toDocument() = Document(
                 "path",
@@ -34,6 +46,9 @@ class ScoreFunctionSearchOptionDsl {
             )
         }
 
+        /**
+         * Represents a decayed score based on the distance of a numeric field value from a specified origin point.
+         */
         class Gauss(
             private val decay: Double?,
             private val offset: Double?,
@@ -53,22 +68,34 @@ class ScoreFunctionSearchOptionDsl {
             )
         }
 
+        /**
+         * Represents an expression that adds the results of multiple expressions.
+         */
         class Add(private val expressions: MutableList<Expression>) : Expression {
             override fun toDocument() = Document("add", expressions.map { it.toDocument() })
 
             fun append(expression: Expression) { expressions.add(expression) }
         }
 
+        /**
+         * Represents an expression that multiplies the results of multiple expressions.
+         */
         class Multiply(private val expressions: MutableList<Expression>) : Expression {
             override fun toDocument() = Document("multiply", expressions.map { it.toDocument() })
 
             fun append(expression: Expression) { expressions.add(expression) }
         }
 
+        /**
+         * Represents an expression that calculates the log10 of given expression.
+         */
         class Log(private val expression: Expression) : Expression {
             override fun toDocument() = Document("log", expression.toDocument())
         }
 
+        /**
+         * Represents an expression that calculates the log10(x+1) of given expression.
+         */
         class Log1p(private val expression: Expression) : Expression {
             override fun toDocument() = Document("log1p", expression.toDocument())
         }

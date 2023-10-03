@@ -6,6 +6,13 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperationCon
 import org.springframework.data.mongodb.core.aggregation.AggregationPipeline
 import org.springframework.data.mongodb.core.aggregation.VariableOperators
 
+/**
+ * Encapsulates the aggregation framework `$lookup` operation.
+ *
+ * @author Jake Son
+ * @since 1.0
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/">$lookup (aggregation)</a>
+ */
 class ExtendedLookupOperation : AggregationOperation {
     private val document: Document = Document()
     private var let: VariableOperators.Let? = null
