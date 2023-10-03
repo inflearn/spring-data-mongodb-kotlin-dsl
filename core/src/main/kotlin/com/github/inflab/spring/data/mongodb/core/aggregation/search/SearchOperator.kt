@@ -158,4 +158,13 @@ interface SearchOperator {
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/autocomplete">autocomplete</a>
      */
     fun autocomplete(configuration: AutocompleteSearchOperationDsl.() -> Unit)
+
+    /**
+     * Performs a search for an array of number, date, boolean, or objectId values at the given path and returns documents where the value of the field equals any value in the specified array.
+     * If the specified field holds an array, then the in operator selects the documents whose field holds an array that contains at least one element that matches any value in the specified array.
+     *
+     * @param configuration The configuration block for the [InSearchOperatorDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/in">in</a>
+     */
+    fun inSearchOperator(configuration: InSearchOperatorDsl.() -> Unit)
 }

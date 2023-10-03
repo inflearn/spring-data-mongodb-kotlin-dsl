@@ -73,4 +73,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun autocomplete(configuration: AutocompleteSearchOperationDsl.() -> Unit) {
         operators.add(AutocompleteSearchOperationDsl().apply(configuration).build())
     }
+
+    override fun inSearchOperator(configuration: InSearchOperatorDsl.() -> Unit) {
+        operators.add(InSearchOperatorDsl().apply(configuration).build())
+    }
 }
