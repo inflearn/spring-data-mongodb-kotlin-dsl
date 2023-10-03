@@ -20,43 +20,43 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe "\"search\""
+            result shouldBe "(search)"
         }
 
         "should add a text with string field" {
-            // given, when 
+            // given, when
             val result = query {
                 text("search", "field")
             }
 
             // then
-            result shouldBe "field:\"search\""
+            result shouldBe "field:(search)"
         }
 
         "should add a text with property field" {
-            // given, when 
+            // given, when
             val result = query {
                 text("search", Sample::field)
             }
 
             // then
-            result shouldBe "field:\"search\""
+            result shouldBe "field:(search)"
         }
 
         "should escape special characters" {
-            // given, when 
+            // given, when
             val result = query {
                 text("c?u*t")
             }
 
             // then
-            result shouldBe "\"c\\?u\\*t\""
+            result shouldBe "(c\\?u\\*t)"
         }
     }
 
     "wildcard" - {
         "should add a wildcard" {
-            // given, when 
+            // given, when
             val result = query {
                 wildcard("search$WILDCARD$QUESTION")
             }
@@ -66,7 +66,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a wildcard with string field" {
-            // given, when 
+            // given, when
             val result = query {
                 wildcard("search", "field")
             }
@@ -76,7 +76,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a wildcard with property field" {
-            // given, when 
+            // given, when
             val result = query {
                 wildcard("search", Sample::field)
             }
@@ -88,7 +88,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "regex" - {
         "should add a regex" {
-            // given, when 
+            // given, when
             val result = query {
                 regex("search")
             }
@@ -98,7 +98,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a regex with string field" {
-            // given, when 
+            // given, when
             val result = query {
                 regex("search", "field")
             }
@@ -108,7 +108,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a regex with property field" {
-            // given, when 
+            // given, when
             val result = query {
                 regex("search", Sample::field)
             }
@@ -120,7 +120,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "range" - {
         "should add a inclusive range" {
-            // given, when 
+            // given, when
             val result = query {
                 range("left", "right", leftInclusion = true, rightInclusion = true)
             }
@@ -130,7 +130,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a exclusive range" {
-            // given, when 
+            // given, when
             val result = query {
                 range("left", "right", leftInclusion = false, rightInclusion = false)
             }
@@ -140,7 +140,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a half-open range" {
-            // given, when 
+            // given, when
             val result = query {
                 range("left", "right", leftInclusion = true, rightInclusion = false)
             }
@@ -150,7 +150,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should not add double quote if wildcard is given" {
-            // given, when 
+            // given, when
             val result = query {
                 range(WILDCARD, WILDCARD)
             }
@@ -162,7 +162,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "fuzzy" - {
         "should add a fuzzy" {
-            // given, when 
+            // given, when
             val result = query {
                 fuzzy("search", 2)
             }
@@ -172,7 +172,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a fuzzy with string field" {
-            // given, when 
+            // given, when
             val result = query {
                 fuzzy("search", 3, "field")
             }
@@ -182,7 +182,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add a fuzzy with property field" {
-            // given, when 
+            // given, when
             val result = query {
                 fuzzy("search", 3, Sample::field)
             }
@@ -194,7 +194,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "not" - {
         "should add NOT block" {
-            // given, when 
+            // given, when
             val result = query {
                 not(text("search"))
             }
@@ -206,7 +206,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "and" - {
         "should add AND block" {
-            // given, when 
+            // given, when
             val result = query {
                 text("search1") and text("search2")
             }
@@ -218,7 +218,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "or" - {
         "should add OR block" {
-            // given, when 
+            // given, when
             val result = query {
                 text("search1") or text("search2")
             }
@@ -230,7 +230,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
 
     "sub" - {
         "should add subquery block" {
-            // given, when 
+            // given, when
             val result = query {
                 sub(text("a") or text("b")) and text("c")
             }
@@ -240,7 +240,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add subquery block with string field" {
-            // given, when 
+            // given, when
             val result = query {
                 sub(text("a") or text("b"), "field")
             }
@@ -250,7 +250,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
         }
 
         "should add subquery block with property field" {
-            // given, when 
+            // given, when
             val result = query {
                 sub(text("a") or text("b"), Sample::field)
             }
