@@ -239,7 +239,7 @@ class AggregationDsl {
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/unset">$unset (aggregation)</a>
      */
     fun unset(pathConfiguration: PathSearchOptionDsl<Any>.() -> Unit) {
-        operations += UnsetOperation.unset(*PathSearchOptionDsl<Any>().apply(pathConfiguration).get().toTypedArray())
+        operations += UnsetOperation(PathSearchOptionDsl<Any>().apply(pathConfiguration).get() as Collection<Any>)
     }
 
     /**

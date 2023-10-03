@@ -174,7 +174,7 @@ internal class ProjectStageDslTest : FreeSpec({
         "should add a field with alias by property" {
             // given
             val stage = project {
-                (Parent::child..Child::field) alias "alias"
+                Parent::child..Child::field alias "alias"
                 Parent::parentField alias "alias2"
             }
 

@@ -126,7 +126,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe "[\"left\" TO \"right\"]"
+            result shouldBe """["left" TO "right"]"""
         }
 
         "should add a exclusive range" {
@@ -136,7 +136,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe "{\"left\" TO \"right\"}"
+            result shouldBe """{"left" TO "right"}"""
         }
 
         "should add a half-open range" {
@@ -146,7 +146,7 @@ internal class QueryStringQueryOptionDslTest : FreeSpec({
             }
 
             // then
-            result shouldBe "[\"left\" TO \"right\"}"
+            result shouldBe """["left" TO "right"}"""
         }
 
         "should not add double quote if wildcard is given" {

@@ -6,6 +6,4 @@ package com.github.inflab.spring.data.mongodb.core.extension
  * @author Jake Son
  * @since 1.0
  */
-internal fun List<String>.firstOrAll(): Any {
-    return if (size == 1) first() else this
-}
+internal fun List<String>.firstOrAll(): Any = if (size == 1) first() else this

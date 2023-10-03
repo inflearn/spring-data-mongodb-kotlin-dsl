@@ -10,6 +10,9 @@ import org.bson.Document
  *  @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/operators-and-collectors/#collectors">$search collectors</a>
  */
 interface SearchCollector {
+    /**
+     * A list of `$search` collectors.
+     */
     val collectors: MutableList<Document>
 
     /**
