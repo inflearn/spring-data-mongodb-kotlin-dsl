@@ -100,9 +100,12 @@ class NearSearchOperatorDsl {
 
     /**
      * Value to use to calculate scores of Atlas Search result documents. Score is calculated using the following formula:
+     *
+     * ```
      *               pivot
      * score = ------------------
      *          pivot + distance
+     * ```
      *
      * where distance is the difference between origin and the indexed field value.
      *
@@ -113,6 +116,8 @@ class NearSearchOperatorDsl {
      * - Number, pivot can be specified as an integer or floating point number.
      * - Date, pivot must be specified in milliseconds and can be specified as a 32 or 64 bit integer.
      * - GeoJSON point, pivot is measured in meters and must be specified as an integer or floating point number.
+     *
+     * @param pivot The value to use to calculate scores of Atlas Search result documents.
      */
     fun pivot(pivot: Number) {
         document["pivot"] = pivot
