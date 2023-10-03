@@ -13,8 +13,6 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class QueryStringQueryOptionDsl {
-    private lateinit var query: Query
-
     class Query(val value: String, val field: String?) {
         override fun toString(): String {
             return when (field) {
@@ -43,9 +41,7 @@ class QueryStringQueryOptionDsl {
     fun text(value: String, field: String? = null): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
 
-        query = Query("\"$escaped\"", field)
-
-        return query
+        return Query("\"$escaped\"", field)
     }
 
     /**
@@ -57,9 +53,7 @@ class QueryStringQueryOptionDsl {
     fun text(value: String, field: KProperty<String?>): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
 
-        query = Query("\"$escaped\"", field.toDotPath())
-
-        return query
+        return Query("\"$escaped\"", field.toDotPath())
     }
 
     /**
@@ -69,9 +63,7 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun wildcard(value: String, field: String? = null): Query {
-        query = Query(value, field)
-
-        return query
+        return Query(value, field)
     }
 
     /**
@@ -81,9 +73,7 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun wildcard(value: String, field: KProperty<String?>): Query {
-        query = Query(value, field.toDotPath())
-
-        return query
+        return Query(value, field.toDotPath())
     }
 
     /**
@@ -93,9 +83,7 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun regex(pattern: String, field: String? = null): Query {
-        query = Query("/$pattern/", field)
-
-        return query
+        return Query("/$pattern/", field)
     }
 
     /**
@@ -105,9 +93,7 @@ class QueryStringQueryOptionDsl {
      * @param field Indexed field to search
      */
     fun regex(pattern: String, field: KProperty<String?>): Query {
-        query = Query("/$pattern/", field.toDotPath())
-
-        return query
+        return Query("/$pattern/", field.toDotPath())
     }
 
     /**
@@ -134,9 +120,7 @@ class QueryStringQueryOptionDsl {
             else -> "\"$right\""
         }
 
-        query = Query("$leftBracket$leftExp TO $rightExp$rightBracket", field)
-
-        return query
+        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field)
     }
 
     /**
@@ -163,9 +147,7 @@ class QueryStringQueryOptionDsl {
             else -> "\"$right\""
         }
 
-        query = Query("$leftBracket$leftExp TO $rightExp$rightBracket", field.toDotPath())
-
-        return query
+        return Query("$leftBracket$leftExp TO $rightExp$rightBracket", field.toDotPath())
     }
 
     /**
@@ -176,9 +158,7 @@ class QueryStringQueryOptionDsl {
      * @param field indexed field to search
      */
     fun fuzzy(value: String, maxEdits: Int, field: String? = null): Query {
-        query = Query("$value~$maxEdits", field)
-
-        return query
+        return Query("$value~$maxEdits", field)
     }
 
     /**
@@ -189,9 +169,7 @@ class QueryStringQueryOptionDsl {
      * @param field indexed field to search
      */
     fun fuzzy(value: String, maxEdits: Int, field: KProperty<String?>): Query {
-        query = Query("$value~$maxEdits", field.toDotPath())
-
-        return query
+        return Query("$value~$maxEdits", field.toDotPath())
     }
 
     /**
@@ -200,9 +178,7 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query for subqueries.
      */
     fun sub(inputQuery: Query, field: String? = null): Query {
-        query = Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
-
-        return query
+        return Query("${field?.let { "$it:" }.orEmpty()}(${inputQuery.value})", inputQuery.field)
     }
 
     /**
@@ -211,9 +187,7 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query for subqueries.
      */
     fun sub(inputQuery: Query, field: KProperty<String?>): Query {
-        query = Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
-
-        return query
+        return Query("${field.toDotPath().let { "$it:" }}(${inputQuery.value})", inputQuery.field)
     }
 
     /**
@@ -223,9 +197,7 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query to apply.
      */
     fun not(inputQuery: Query): Query {
-        query = Query("NOT (${inputQuery.value})", inputQuery.field)
-
-        return query
+        return Query("NOT (${inputQuery.value})", inputQuery.field)
     }
 
     /**
@@ -235,9 +207,7 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query to apply.
      */
     infix fun Query.and(inputQuery: Query): Query {
-        query = Query("$this AND $inputQuery", null)
-
-        return query
+        return Query("$this AND $inputQuery", null)
     }
 
     /**
@@ -247,12 +217,6 @@ class QueryStringQueryOptionDsl {
      * @param inputQuery The Query to apply.
      */
     infix fun Query.or(inputQuery: Query): Query {
-        query = Query("$this OR $inputQuery", null)
-
-        return query
-    }
-
-    internal fun build(): String {
-        return checkNotNull(query) { "query must not be null" }.toString()
+        return Query("$this OR $inputQuery", null)
     }
 }
