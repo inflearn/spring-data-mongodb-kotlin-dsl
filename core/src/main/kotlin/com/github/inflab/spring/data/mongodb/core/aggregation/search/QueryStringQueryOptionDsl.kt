@@ -39,7 +39,7 @@ class QueryStringQueryOptionDsl {
     fun text(value: String, field: String? = null): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
 
-        return Query("\"$escaped\"", field)
+        return Query("($escaped)", field)
     }
 
     /**
@@ -51,7 +51,7 @@ class QueryStringQueryOptionDsl {
     fun text(value: String, field: KProperty<String?>): Query {
         val escaped = value.replace("*", "\\*").replace("?", "\\?")
 
-        return Query("\"$escaped\"", field.toDotPath())
+        return Query("($escaped)", field.toDotPath())
     }
 
     /**

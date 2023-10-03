@@ -69,7 +69,7 @@ internal class QueryStringSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "queryString": {
-                    "query": "\"search\""
+                    "query": "(search)"
                   }
                 }
                 """.trimIndent(),
