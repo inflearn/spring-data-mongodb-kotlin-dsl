@@ -15,6 +15,9 @@ import kotlin.reflect.KProperty
 class SortStageDsl {
     private val operation = ExtendedSortOperation()
 
+    /**
+     * Represents the sort order.
+     */
     enum class Order {
         Ascending,
         Descending,

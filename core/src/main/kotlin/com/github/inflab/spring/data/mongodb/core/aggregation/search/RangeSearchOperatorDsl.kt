@@ -105,6 +105,7 @@ class RangeSearchOperatorDsl {
      * The indexed field or fields to search.
      * See path construction for more information.
      *
+     * @param T The type of the field.
      * @param path The indexed field or fields to search.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
@@ -116,6 +117,7 @@ class RangeSearchOperatorDsl {
      * The indexed field or fields to search.
      * See path construction for more information.
      *
+     * @param T The type of the field.
      * @param path The indexed field or fields to search.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */

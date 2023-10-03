@@ -4,6 +4,13 @@ import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 import org.springframework.data.mongodb.core.aggregation.AggregationOperationContext
 
+/**
+ * Encapsulates the aggregation framework `$sort` operation.
+ *
+ * @author Jake Son
+ * @since 1.0
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sort">$sort (aggregation)</a>
+ */
 class ExtendedSortOperation : AggregationOperation {
     private val document: Document = Document()
 

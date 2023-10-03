@@ -84,7 +84,9 @@ class ScoreSearchOptionDsl {
      * @param scoreFunctionConfiguration [ScoreFunctionSearchOptionDsl] to configure the score function.
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/score/modify-score/#function">Score Function</a>
      */
-    fun function(scoreFunctionConfiguration: ScoreFunctionSearchOptionDsl.() -> ScoreFunctionSearchOptionDsl.Expression) {
+    fun function(
+        scoreFunctionConfiguration: ScoreFunctionSearchOptionDsl.() -> ScoreFunctionSearchOptionDsl.Expression,
+    ) {
         document["function"] = ScoreFunctionSearchOptionDsl().scoreFunctionConfiguration().toDocument()
     }
 

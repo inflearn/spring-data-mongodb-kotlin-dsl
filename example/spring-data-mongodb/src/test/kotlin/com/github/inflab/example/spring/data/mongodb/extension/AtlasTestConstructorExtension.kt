@@ -17,12 +17,9 @@ import kotlin.reflect.full.primaryConstructor
 internal object AtlasTestConstructorExtension : ConstructorExtension {
     private val ATLAS_DOMAIN by lazy {
         val property = YamlPropertySourceLoader().load("env", ClassPathResource("application.yml")).first()
-        val username = property.getProperty("spring.data.mongodb.username")
-            ?: throw IllegalStateException("spring.data.mongodb.username is not set")
-        val password = property.getProperty("spring.data.mongodb.password")
-            ?: throw IllegalStateException("spring.data.mongodb.password is not set")
-        val host = property.getProperty("spring.data.mongodb.host")
-            ?: throw IllegalStateException("spring.data.mongodb.host is not set")
+        val username = checkNotNull(property.getProperty("spring.data.mongodb.username")) { "spring.data.mongodb.username is not set" }
+        val password = checkNotNull(property.getProperty("spring.data.mongodb.password")) { "spring.data.mongodb.password is not set" }
+        val host = checkNotNull(property.getProperty("spring.data.mongodb.host")) { "spring.data.mongodb.host is not set" }
 
         "$username:$password@$host"
     }
