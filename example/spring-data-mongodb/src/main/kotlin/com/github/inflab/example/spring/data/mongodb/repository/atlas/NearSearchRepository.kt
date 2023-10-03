@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 @Repository
 class NearSearchRepository(
     @Database("sample_mflix") private val mflixMongoTemplate: MongoTemplate,
-    @Database("sample_airbnb") private val airbnbMongoTamplate: MongoTemplate,
+    @Database("sample_airbnb") private val airbnbMongoTemplate: MongoTemplate,
 ) {
 
     data class RuntimeDto(
@@ -111,7 +111,7 @@ class NearSearchRepository(
             }
         }
 
-        return airbnbMongoTamplate.aggregate(aggregation, "listingsAndReviews", GeoDto::class.java)
+        return airbnbMongoTemplate.aggregate(aggregation, "listingsAndReviews", GeoDto::class.java)
     }
 
     fun findByGeoWithCompound(): AggregationResults<GeoPropertyTypeDto> {
@@ -144,6 +144,6 @@ class NearSearchRepository(
             }
         }
 
-        return airbnbMongoTamplate.aggregate(aggregation, "listingsAndReviews", GeoPropertyTypeDto::class.java)
+        return airbnbMongoTemplate.aggregate(aggregation, "listingsAndReviews", GeoPropertyTypeDto::class.java)
     }
 }
