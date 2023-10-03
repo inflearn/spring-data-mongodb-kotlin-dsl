@@ -3,6 +3,8 @@ plugins {
     `maven-publish`
 }
 
+apply(plugin = "io.gitlab.arturbosch.detekt")
+
 dependencies {
     implementation(libs.spring.data.mongodb)
     implementation(kotlin("reflect"))

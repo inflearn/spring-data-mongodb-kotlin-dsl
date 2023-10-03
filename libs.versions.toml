@@ -1,7 +1,8 @@
 [versions]
 ben-manes-versions = "0.48.0"
+detekt = "1.23.1"
 kotest = "5.7.2"
-kotlin = "1.9.20-Beta2"
+kotlin = "1.9.0"
 kotlinter = "3.16.0"
 kover = "0.7.3"
 mockk = "1.13.7"
@@ -16,6 +17,7 @@ spring-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-d
 
 [plugins]
 ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "ben-manes-versions" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotiln-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
