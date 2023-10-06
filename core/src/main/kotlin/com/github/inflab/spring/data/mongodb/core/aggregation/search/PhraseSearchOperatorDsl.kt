@@ -39,6 +39,15 @@ class PhraseSearchOperatorDsl {
     }
 
     /**
+     * The string or strings to search for.
+     *
+     * @param query The string or strings to search for.
+     */
+    fun query(query: Iterable<String>) {
+        document["query"] = query.toList().firstOrAll()
+    }
+
+    /**
      * The indexed field or fields to search.
      * You can also specify a wildcard path to search.
      * See path construction for more information.

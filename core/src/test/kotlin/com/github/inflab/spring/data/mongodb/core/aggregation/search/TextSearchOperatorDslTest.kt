@@ -53,6 +53,30 @@ internal class TextSearchOperatorDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should build a query by iterable string" {
+            // given
+            val operator = text {
+                query(listOf("query1", "query2"))
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "text": {
+                    "query": [
+                      "query1",
+                      "query2"
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
     }
 
     "path" - {
