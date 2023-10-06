@@ -108,7 +108,7 @@ internal class SortStageDslTest : FreeSpec({
         "should add a field by string" {
             // given
             val stage = sort {
-                "field" by asc
+                "field" by textScore
             }
 
             // when

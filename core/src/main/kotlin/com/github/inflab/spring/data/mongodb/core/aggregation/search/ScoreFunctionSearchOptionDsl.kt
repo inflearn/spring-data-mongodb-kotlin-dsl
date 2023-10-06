@@ -33,14 +33,14 @@ class ScoreFunctionSearchOptionDsl {
         /**
          * Represents a constant number in the function score.
          */
-        class Constant(private val value: Double) : Expression {
+        class Constant(private val value: Number) : Expression {
             override fun toDocument() = Document("constant", value)
         }
 
         /**
          * Represents an indexed numeric field value in the function score.
          */
-        class Path(private val value: String, private val undefined: Double? = null) : Expression {
+        class Path(private val value: String, private val undefined: Number? = null) : Expression {
             override fun toDocument() = Document(
                 "path",
                 Document("value", value).apply {
@@ -53,11 +53,11 @@ class ScoreFunctionSearchOptionDsl {
          * Represents a decayed score based on the distance of a numeric field value from a specified origin point.
          */
         class Gauss(
-            private val decay: Double?,
-            private val offset: Double?,
-            private val origin: Double,
+            private val decay: Number?,
+            private val offset: Number?,
+            private val origin: Number,
             private val path: Path,
-            private val scale: Double,
+            private val scale: Number,
         ) : Expression {
             override fun toDocument() = Document(
                 "gauss",
@@ -127,7 +127,7 @@ class ScoreFunctionSearchOptionDsl {
      *
      * @param value Number that indicates a fixed value. Atlas Search supports negative values.
      */
-    fun constant(value: Double) = Expression.Constant(value)
+    fun constant(value: Number) = Expression.Constant(value)
 
     /**
      * Create an expression that incorporates an indexed numeric field value into a function score.
@@ -135,7 +135,7 @@ class ScoreFunctionSearchOptionDsl {
      * @param value Name of numeric field. Field can contain negative numeric values.
      * @param undefined Value to use if the numeric field specified using value is missing in the document. If omitted, defaults to 0.
      */
-    fun path(value: String, undefined: Double? = null) = Expression.Path(value, undefined)
+    fun path(value: String, undefined: Number? = null) = Expression.Path(value, undefined)
 
     /**
      * Create an expression that incorporates an indexed numeric field value into a function score.
@@ -143,7 +143,7 @@ class ScoreFunctionSearchOptionDsl {
      * @param value [KProperty] of numeric field. Field can contain negative numeric values.
      * @param undefined Value to use if the numeric field specified using value is missing in the document. If omitted, defaults to 0.
      */
-    fun path(value: KProperty<Number?>, undefined: Double? = null) = Expression.Path(value.toDotPath(), undefined)
+    fun path(value: KProperty<Number?>, undefined: Number? = null) = Expression.Path(value.toDotPath(), undefined)
 
     /**
      * Create an expression that allows you to decay, or reduce by multiplying, the final scores of the documents based on the distance of a numeric field value from a specified origin point.
@@ -159,11 +159,11 @@ class ScoreFunctionSearchOptionDsl {
      * @param scale Distance from origin plus or minus (±) offset at which scores must be multiplied.
      */
     fun gauss(
-        decay: Double? = null,
-        offset: Double? = null,
-        origin: Double,
+        decay: Number? = null,
+        offset: Number? = null,
+        origin: Number,
         path: Expression.Path,
-        scale: Double,
+        scale: Number,
     ) = Expression.Gauss(decay, offset, origin, path, scale)
 
     /**
