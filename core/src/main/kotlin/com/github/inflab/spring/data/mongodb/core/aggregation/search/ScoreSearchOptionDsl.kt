@@ -21,7 +21,7 @@ class ScoreSearchOptionDsl {
      *
      * @param value Value must be a positive number.
      */
-    fun boost(value: Double) {
+    fun boost(value: Number) {
         document["boost"] = Document("value", value)
     }
 
@@ -31,7 +31,7 @@ class ScoreSearchOptionDsl {
      * @param path The name of the numeric field.
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.
      */
-    fun boost(path: String, undefined: Double? = null) {
+    fun boost(path: String, undefined: Number? = null) {
         document["boost"] = Document("path", path).apply {
             undefined?.let { put("undefined", it) }
         }
@@ -43,7 +43,7 @@ class ScoreSearchOptionDsl {
      * @param path [KProperty] of the numeric field.
      * @param undefined Numeric value to substitute for path if the numeric field specified through path is not found in the documents. If omitted, defaults to 0.
      */
-    fun boost(path: KProperty<Number?>, undefined: Double? = null) {
+    fun boost(path: KProperty<Number?>, undefined: Number? = null) {
         boost(path.toDotPath(), undefined)
     }
 
@@ -52,7 +52,7 @@ class ScoreSearchOptionDsl {
      *
      * @param value Numeric value to replace the base score with.
      */
-    fun constant(value: Double) {
+    fun constant(value: Number) {
         document["constant"] = Document("value", value)
     }
 
