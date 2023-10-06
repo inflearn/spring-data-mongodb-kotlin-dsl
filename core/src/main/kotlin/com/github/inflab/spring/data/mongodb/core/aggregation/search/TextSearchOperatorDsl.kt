@@ -20,8 +20,20 @@ class TextSearchOperatorDsl {
     /**
      * The string or strings to search for.
      * If there are multiple terms in a string, Atlas Search also looks for a match for each term in the string separately.
+     *
+     * @param query The string or strings to search for.
      */
     fun query(vararg query: String) {
+        document["query"] = query.toList().firstOrAll()
+    }
+
+    /**
+     * The string or strings to search for.
+     * If there are multiple terms in a string, Atlas Search also looks for a match for each term in the string separately.
+     *
+     * @param query The string or strings to search for.
+     */
+    fun query(query: Iterable<String>) {
         document["query"] = query.toList().firstOrAll()
     }
 

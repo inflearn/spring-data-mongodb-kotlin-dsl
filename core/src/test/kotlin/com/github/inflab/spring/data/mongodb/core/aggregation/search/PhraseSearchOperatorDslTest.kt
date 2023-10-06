@@ -76,6 +76,30 @@ internal class PhraseSearchOperatorDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should build a query by iterable string" {
+            // given
+            val operator = phrase {
+                query(listOf("query1", "query2"))
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "phrase": {
+                    "query": [
+                      "query1",
+                      "query2"
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
     }
 
     "path" - {

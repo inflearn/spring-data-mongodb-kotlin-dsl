@@ -76,6 +76,30 @@ internal class WildcardSearchOperatorDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should build a query by iterable string" {
+            // given
+            val operator = wildcard {
+                query(listOf("query1", "query2"))
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "wildcard": {
+                    "query": [
+                      "query1",
+                      "query2"
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
     }
 
     "path" - {
