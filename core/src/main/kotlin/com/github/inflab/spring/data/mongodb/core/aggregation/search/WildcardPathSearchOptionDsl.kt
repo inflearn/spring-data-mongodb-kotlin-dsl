@@ -29,8 +29,8 @@ open class WildcardPathSearchOptionDsl<T> : PathSearchOptionDsl<T>() {
      *
      * @param value The wildcard path to search.
      */
-    fun wildcard(value: String) {
-        wildcardPath.add(value)
+    fun wildcard(value: String? = null) {
+        wildcardPath.add(value ?: "*")
     }
 
     /**
@@ -43,15 +43,7 @@ open class WildcardPathSearchOptionDsl<T> : PathSearchOptionDsl<T>() {
     /**
      * Appends a wildcard character to current path.
      */
-    fun KProperty<T?>.ofWildcard() {
-        wildcard("${this.toDotPath()}.*")
-    }
-
-    /**
-     * Appends a wildcard character to current path.
-     */
-    @JvmName("ofWildcardIterable")
-    fun KProperty<Iterable<T?>?>.ofWildcard() {
+    fun KProperty<*>.ofWildcard() {
         wildcard("${this.toDotPath()}.*")
     }
 

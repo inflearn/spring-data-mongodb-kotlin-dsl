@@ -10,6 +10,19 @@ internal class WildcardPathSearchOptionDslTest : FreeSpec({
         WildcardPathSearchOptionDsl<String>().apply(block)
 
     "wildcard" - {
+        "should add single wildcard character" {
+            // given
+            val option = path {
+                wildcard()
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe Document("wildcard", "*")
+        }
+
         "should add single string path" {
             // given
             val option = path {
