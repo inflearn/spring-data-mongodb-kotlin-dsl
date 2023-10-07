@@ -186,4 +186,31 @@ internal class SearchStageDslTest : FreeSpec({
             )
         }
     }
+
+    "sort" - {
+        "should build a sort option" {
+            // given
+            val stage = search {
+                sort {
+                    "title" by asc
+                }
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {
+                    "sort": {
+                      "title": 1
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

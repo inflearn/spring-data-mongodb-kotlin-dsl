@@ -25,4 +25,5 @@ data class Movies(
     val contries: List<String>,
     val type: String,
     val numMflixComments: Int,
+    val awards: MovieAwards,
 )
