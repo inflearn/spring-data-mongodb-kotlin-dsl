@@ -158,7 +158,7 @@ internal class SearchStageDslTest : FreeSpec({
         "should build a highlight option" {
             // given
             val stage = search {
-                highligth {
+                highlight {
                     path {
                         +"title"
                     }
