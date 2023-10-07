@@ -82,8 +82,8 @@ class TextSearchOperatorDsl {
      * @param configuration The configuration block for the [WildcardPathSearchOptionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    fun path(configuration: WildcardPathSearchOptionDsl<String>.() -> Unit) {
-        document["path"] = WildcardPathSearchOptionDsl<String>().apply(configuration).build()
+    fun path(configuration: MultiWildcardPathSearchOptionDsl<String>.() -> Unit) {
+        document["path"] = MultiWildcardPathSearchOptionDsl<String>().apply(configuration).build()
     }
 
     /**
