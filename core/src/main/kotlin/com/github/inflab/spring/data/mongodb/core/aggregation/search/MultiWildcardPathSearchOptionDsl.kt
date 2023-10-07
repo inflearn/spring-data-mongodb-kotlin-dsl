@@ -51,10 +51,10 @@ class MultiWildcardPathSearchOptionDsl<T> : WildcardPathSearchOptionDsl<T>() {
     override fun build(): Any? {
         val wildcardPath = super.build() ?: return multiPath.firstOrAll()
 
-        if (wildcardPath is List<*>) {
-            return (wildcardPath + multiPath).firstOrAll()
+        return if (wildcardPath is List<*>) {
+            (wildcardPath + multiPath).firstOrAll()
+        } else {
+            (listOf(wildcardPath) + multiPath).firstOrAll()
         }
-
-        return (listOf(wildcardPath) + multiPath).firstOrAll()
     }
 }

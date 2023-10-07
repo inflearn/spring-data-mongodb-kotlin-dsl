@@ -49,13 +49,12 @@ class SortStageDsl {
      *
      * @param order The order to sort by.
      */
-    infix fun String.by(order: Order): Boolean {
+    infix fun String.by(order: Order) {
         when (order) {
             Order.ASC -> operation.ascending(this)
             Order.DESC -> operation.descending(this)
             Order.TextScore -> operation.textScore(this)
         }
-        return true
     }
 
     /**
@@ -63,7 +62,7 @@ class SortStageDsl {
      *
      * @param order The order to sort by.
      */
-    infix fun KProperty<*>.by(order: Order): Boolean =
+    infix fun KProperty<*>.by(order: Order) =
         this.toDotPath() by order
 
     internal fun get() = operation

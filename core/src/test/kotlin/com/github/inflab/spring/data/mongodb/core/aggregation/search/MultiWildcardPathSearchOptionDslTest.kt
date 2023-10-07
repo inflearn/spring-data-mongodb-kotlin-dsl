@@ -99,7 +99,7 @@ internal class MultiWildcardPathSearchOptionDslTest : FreeSpec({
             data class Child(val name: String?)
             data class Parent(val child: Child?)
             val option = path {
-                (Parent::child..Child::name) multi "analyzer"
+                Parent::child..Child::name multi "analyzer"
             }
 
             // when
