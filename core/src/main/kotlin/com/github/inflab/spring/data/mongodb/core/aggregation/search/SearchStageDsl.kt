@@ -81,6 +81,17 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
         document["highlight"] = HighlightSearchOptionDsl().apply(configuration).get()
     }
 
+    /**
+     * Document that specifies the fields to sort the Atlas Search results by in ascending or descending order.
+     * You can sort by date, number (integer, float, and double values), and string values.
+     *
+     * @param configuration A configuration block to configure [SortSearchOptionDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/sort">Sort Atlas Search Results</a>
+     */
+    fun sort(configuration: SortSearchOptionDsl.() -> Unit) {
+        document["sort"] = SortSearchOptionDsl().apply(configuration).build()
+    }
+
     internal fun build(): SearchOperation {
         operators.forEach { document.putAll(it) }
         collectors.forEach { document.putAll(it) }
