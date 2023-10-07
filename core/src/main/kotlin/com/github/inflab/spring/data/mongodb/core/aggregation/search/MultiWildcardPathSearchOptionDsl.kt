@@ -55,6 +55,6 @@ class MultiWildcardPathSearchOptionDsl<T> : WildcardPathSearchOptionDsl<T>() {
             return (wildcardPath + multiPath).firstOrAll()
         }
 
-        return listOf(wildcardPath, multiPath).firstOrAll()
+        return (listOf(wildcardPath) + multiPath).firstOrAll()
     }
 }

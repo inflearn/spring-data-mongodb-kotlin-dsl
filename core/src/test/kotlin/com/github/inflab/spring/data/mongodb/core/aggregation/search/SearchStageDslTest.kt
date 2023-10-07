@@ -32,7 +32,7 @@ internal class SearchStageDslTest : FreeSpec({
 
     "returnStoredSource" - {
         listOf(true, false).forEach {
-            "should build a returnStoredSource stage with $it" {
+            "should build a returnStoredSource option with $it" {
                 // given
                 val stage = search {
                     returnStoredSource = it
@@ -57,7 +57,7 @@ internal class SearchStageDslTest : FreeSpec({
 
     "scoreDetails" - {
         listOf(true, false).forEach {
-            "should build a scoreDetails stage with $it" {
+            "should build a scoreDetails option with $it" {
                 // given
                 val stage = search {
                     scoreDetails = it
@@ -81,7 +81,7 @@ internal class SearchStageDslTest : FreeSpec({
     }
 
     "lowerBoundCount" - {
-        "should build a lowerBoundCount stage with given threshold" {
+        "should build a lowerBoundCount option with given threshold" {
             // given
             val stage = search {
                 lowerBoundCount(100)
@@ -105,7 +105,7 @@ internal class SearchStageDslTest : FreeSpec({
             )
         }
 
-        "should build a lowerBoundCount stage without threshold" {
+        "should build a lowerBoundCount option without threshold" {
             // given
             val stage = search {
                 lowerBoundCount()
@@ -130,7 +130,7 @@ internal class SearchStageDslTest : FreeSpec({
     }
 
     "totalCount" - {
-        "should build a totalCount stage" {
+        "should build a totalCount option" {
             // given
             val stage = search {
                 totalCount()
@@ -146,6 +146,39 @@ internal class SearchStageDslTest : FreeSpec({
                   "${"$"}search": {
                     "count": {
                       "type": "total"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "highlight" - {
+        "should build a highlight option" {
+            // given
+            val stage = search {
+                highligth {
+                    path {
+                        +"title"
+                    }
+                    maxNumPassages = 5
+                    maxCharsToExamine = 100
+                }
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {
+                    "highlight": {
+                      "path": "title",
+                      "maxNumPassages": 5,
+                      "maxCharsToExamine": 100
                     }
                   }
                 }
