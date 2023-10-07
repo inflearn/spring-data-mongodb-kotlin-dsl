@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
  * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
  */
 @AggregationMarker
-class PathSearchOptionDsl<T> {
+open class PathSearchOptionDsl<T> {
     private val path = mutableListOf<String>()
 
     /**
@@ -40,5 +40,5 @@ class PathSearchOptionDsl<T> {
 
     internal fun get() = path
 
-    internal fun build() = path.firstOrAll()
+    internal open fun build() = path.firstOrAll()
 }
