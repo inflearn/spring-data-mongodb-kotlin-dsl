@@ -10,6 +10,32 @@ internal class MultiWildcardPathSearchOptionDslTest : FreeSpec({
         MultiWildcardPathSearchOptionDsl<String>().apply(block)
 
     "multi" - {
+        "should add only single path" {
+            // given
+            val option = path {
+                +"path"
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe "path"
+        }
+
+        "should add only wildcard path" {
+            // given
+            val option = path {
+                "path".ofWildcard()
+            }
+
+            // when
+            val result = option.build()
+
+            // then
+            result shouldBe Document("wildcard", "path*")
+        }
+
         "should add single string path" {
             // given
             val option = path {

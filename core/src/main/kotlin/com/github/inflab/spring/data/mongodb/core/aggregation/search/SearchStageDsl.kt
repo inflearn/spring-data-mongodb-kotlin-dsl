@@ -71,6 +71,16 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
         document["count"] = Document("type", "total")
     }
 
+    /**
+     * Document that specifies the highlighting options for displaying search terms in their original context.
+     *
+     * @param configuration A configuration block to configure [HighlightSearchOptionDsl].
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/highlighting/#std-label-fts-highlighting">Highlighting</a>
+     */
+    fun highligth(configuration: HighlightSearchOptionDsl.() -> Unit) {
+        document["highlight"] = HighlightSearchOptionDsl().apply(configuration).get()
+    }
+
     internal fun build(): SearchOperation {
         operators.forEach { document.putAll(it) }
         collectors.forEach { document.putAll(it) }
