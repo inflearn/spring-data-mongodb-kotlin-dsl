@@ -213,4 +213,29 @@ internal class SearchStageDslTest : FreeSpec({
             )
         }
     }
+
+    "tracking" - {
+        "should build a tracking option" {
+            // given
+            val stage = search {
+                tracking = "text"
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {
+                    "tracking": {
+                      "searchTerms": "text"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
