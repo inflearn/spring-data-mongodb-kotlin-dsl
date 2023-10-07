@@ -182,6 +182,7 @@ internal class TextSearchOperatorDslTest : FreeSpec({
                     +"path0"
                     +TestCollection::path1
                     +TestCollection::path2
+                    "path3".ofWildcard()
                 }
             }
 
@@ -196,7 +197,10 @@ internal class TextSearchOperatorDslTest : FreeSpec({
                     "path": [
                       "path0",
                       "path1",
-                      "path2"
+                      "path2",
+                      {
+                        "wildcard": "path3*"
+                      }
                     ]
                   }
                 }

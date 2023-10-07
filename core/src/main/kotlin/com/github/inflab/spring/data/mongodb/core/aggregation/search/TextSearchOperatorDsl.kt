@@ -79,11 +79,11 @@ class TextSearchOperatorDsl {
      * You can also specify a wildcard path to search.
      * See path construction for more information.
      *
-     * @param configuration The configuration block for the [PathSearchOptionDsl].
+     * @param configuration The configuration block for the [WildcardPathSearchOptionDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
      */
-    fun path(configuration: PathSearchOptionDsl<String>.() -> Unit) {
-        document["path"] = PathSearchOptionDsl<String>().apply(configuration).build()
+    fun path(configuration: WildcardPathSearchOptionDsl<String>.() -> Unit) {
+        document["path"] = WildcardPathSearchOptionDsl<String>().apply(configuration).build()
     }
 
     /**
