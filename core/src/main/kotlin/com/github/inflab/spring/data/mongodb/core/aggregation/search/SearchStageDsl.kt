@@ -49,6 +49,17 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
         }
 
     /**
+     * Document that specifies the tracking option to retrieve analytics information on the search terms.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/tracking">Track Search Terms</a>
+     */
+    var tracking: String? = null
+        set(value) {
+            value?.let { document["tracking"] = Document("searchTerms", value) }
+            field = value
+        }
+
+    /**
      * Configures an option to include a lower bound count of the number of documents that match the query.
      *
      * @param threshold Number of documents to include in the exact count.
