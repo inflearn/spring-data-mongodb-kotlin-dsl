@@ -228,8 +228,6 @@ class SortSearchRepository(
             )
         }
 
-        print(aggregation.toString())
-
         return mongoTemplate.aggregate<Movies, SortByFacetDto>(aggregation)
     }
 
