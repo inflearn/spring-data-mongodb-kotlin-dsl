@@ -3,6 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithm
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.AggregationExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
+import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import java.time.temporal.Temporal
 import kotlin.reflect.KProperty
@@ -18,6 +19,8 @@ import kotlin.reflect.KProperty
 class AddExpressionDsl {
     /**
      * Represents all operands inside `$add` as a list.
+     *
+     * @property values The list that contains all operands.
      */
     @JvmInline
     value class Operands(val values: MutableList<Any>)
@@ -56,7 +59,7 @@ class AddExpressionDsl {
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
     fun of(configuration: AggregationExpressionDsl.() -> AggregationExpression) =
-        Operands(mutableListOf(AggregationExpressionDsl().configuration().toDocument()))
+        Operands(mutableListOf(AggregationExpressionDsl().configuration()))
 
     /**
      * Adds [value] to the list of operands.
@@ -101,7 +104,16 @@ class AddExpressionDsl {
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
     infix fun Operands.and(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
-        values.add(AggregationExpressionDsl().configuration().toDocument())
+        values.add(AggregationExpressionDsl().configuration())
         return this
+    }
+
+    internal fun build(configuration: AddExpressionDsl.() -> Operands) = AggregationExpression { context ->
+        Document(
+            "\$add",
+            configuration().values.map {
+                if (it is AggregationExpression) it.toDocument(context) else it
+            },
+        )
     }
 }

@@ -2,7 +2,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
-import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
 
@@ -50,7 +49,5 @@ class AggregationExpressionDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/add/#mongodb-expression-exp.-add">$add</a>
      */
     fun add(configuration: AddExpressionDsl.() -> AddExpressionDsl.Operands) =
-        AggregationExpression {
-            Document("\$add", AddExpressionDsl().configuration().values)
-        }
+        AddExpressionDsl().build(configuration)
 }
