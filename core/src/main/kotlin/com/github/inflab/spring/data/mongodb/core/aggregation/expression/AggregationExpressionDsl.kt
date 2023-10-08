@@ -37,7 +37,7 @@ class AggregationExpressionDsl {
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/abs/#mongodb-expression-exp.-abs">$abs</a>
      */
-    fun abs(configuration: AggregationExpressionDsl.() -> AggregationExpression) =
+    fun abs(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
         ArithmeticOperators.Abs.absoluteValueOf(AggregationExpressionDsl().configuration())
 
     /**
