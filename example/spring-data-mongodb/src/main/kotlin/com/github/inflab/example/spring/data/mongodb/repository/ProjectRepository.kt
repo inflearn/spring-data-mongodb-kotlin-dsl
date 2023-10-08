@@ -29,9 +29,11 @@ class ProjectRepository(
                 +"title"
                 "author.first" alias "author.first"
                 "author.last" alias "author.last"
-                "author.middle" expression ConditionalOperators.`when`(
-                    ComparisonOperators.valueOf("author.middle").equalToValue(""),
-                ).thenValueOf(REMOVE).otherwiseValueOf("author.middle")
+                "author.middle" expression {
+                    ConditionalOperators.`when`(
+                        ComparisonOperators.valueOf("author.middle").equalToValue(""),
+                    ).thenValueOf(REMOVE).otherwiseValueOf("author.middle")
+                }
             }
         }
 

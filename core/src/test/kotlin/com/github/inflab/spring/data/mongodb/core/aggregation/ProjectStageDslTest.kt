@@ -324,7 +324,9 @@ internal class ProjectStageDslTest : FreeSpec({
         "should add a field with string" {
             // given
             val stage = project {
-                "field" expression ArithmeticOperators.valueOf("target").multiplyBy(3)
+                "field" expression {
+                    ArithmeticOperators.valueOf("target").multiplyBy(3)
+                }
             }
 
             // when
@@ -350,7 +352,9 @@ internal class ProjectStageDslTest : FreeSpec({
         "should add a field with property" {
             // given
             val stage = project {
-                Child::field expression StringOperators.valueOf("target").substring(0, 3)
+                Child::field expression {
+                    StringOperators.valueOf("target").substring(0, 3)
+                }
             }
 
             // when

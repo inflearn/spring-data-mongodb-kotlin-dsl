@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators.ArrayElemAt
 import org.springframework.data.mongodb.core.aggregation.ReplaceWithOperation
 import org.springframework.data.mongodb.core.aggregation.SetOperation
+import org.springframework.data.mongodb.core.aggregation.SystemVariable
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
@@ -214,7 +215,7 @@ class SortSearchRepository(
                     )
                     .`as`("docs")
                     .and(
-                        ReplaceWithOperation.replaceWithValueOf("\$\$SEARCH_META"),
+                        ReplaceWithOperation.replaceWithValueOf(SystemVariable.SEARCH_META),
                         Aggregation.limit(1),
                     )
                     .`as`("meta"),
@@ -226,6 +227,8 @@ class SortSearchRepository(
                     .toValueOf(ArrayElemAt.arrayOf("\$meta").elementAt(0)),
             )
         }
+
+        print(aggregation.toString())
 
         return mongoTemplate.aggregate<Movies, SortByFacetDto>(aggregation)
     }

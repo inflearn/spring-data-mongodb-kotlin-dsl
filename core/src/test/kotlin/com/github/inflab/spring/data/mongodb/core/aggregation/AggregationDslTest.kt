@@ -156,7 +156,7 @@ internal class AggregationDslTest : FreeSpec({
             // when
             val expression = StringOperators.valueOf("fieldName").ltrim()
             val aggregation = aggregation {
-                sortByCount(expression)
+                sortByCount { expression }
             }
 
             // then
@@ -197,7 +197,7 @@ internal class AggregationDslTest : FreeSpec({
             // when
             val expression = StringOperators.valueOf("fieldName").ltrim()
             val aggregation = aggregation {
-                match(expression)
+                match { expression }
             }
 
             // then
