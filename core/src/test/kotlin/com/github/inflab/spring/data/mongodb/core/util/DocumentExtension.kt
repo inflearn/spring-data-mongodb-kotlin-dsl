@@ -5,6 +5,7 @@ import org.bson.Document
 import org.bson.json.JsonWriterSettings
 import org.intellij.lang.annotations.Language
 import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 
 internal val jsonWriterSettings = JsonWriterSettings.builder().indent(true).build()
@@ -15,4 +16,8 @@ fun Document.shouldBeJson(@Language("JSON") json: String) {
 
 fun AggregationOperation.shouldBeJson(@Language("JSON") json: String) {
     toPipelineStages(Aggregation.DEFAULT_CONTEXT).first().shouldBeJson(json)
+}
+
+fun AggregationExpression.shouldBeJson(@Language("JSON") json: String) {
+    toDocument(Aggregation.DEFAULT_CONTEXT).shouldBeJson(json)
 }
