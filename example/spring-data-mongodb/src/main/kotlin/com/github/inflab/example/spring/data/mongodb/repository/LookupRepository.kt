@@ -76,9 +76,9 @@ class LookupRepository(
                     ),
                 )
                 pipeline {
-                    match(
-                        Expr.valueOf(In.arrayOf("\$beverages").containsValue("\$\$orders_drink")),
-                    )
+                    match {
+                        Expr.valueOf(In.arrayOf("\$beverages").containsValue("\$\$orders_drink"))
+                    }
                 }
                 `as`("matches")
             }

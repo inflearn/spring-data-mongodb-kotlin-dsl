@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.AggregationExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.PathSearchOptionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchMetaStageDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.search.SearchStageDsl
@@ -170,12 +171,12 @@ class AggregationDsl {
      * Each output document contains two fields: an `_id` field containing the distinct grouping value, and a `count` field containing the number of documents belonging to that grouping or category.
      * The documents are sorted by `count` in descending order.
      *
-     * @param expression Expression to group by. You can specify any expression except for a document literal.
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/#expressions">Expressions</a>
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/sortByCount">$sortByCount (aggregation)</a>
      */
-    fun sortByCount(expression: AggregationExpression) {
-        operations += Aggregation.sortByCount(expression)
+    fun sortByCount(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+        operations += Aggregation.sortByCount(AggregationExpressionDsl().configuration())
     }
 
     /**
@@ -201,11 +202,11 @@ class AggregationDsl {
     /**
      * Creates a new $match stage using the given [AggregationExpression].
      *
-     * @param expression The [AggregationExpression] to match documents against.
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
      * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/match/">$match (aggregation)</a>
      */
-    fun match(expression: AggregationExpression) {
-        operations += Aggregation.match(expression)
+    fun match(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+        operations += Aggregation.match(AggregationExpressionDsl().configuration())
     }
 
     /**

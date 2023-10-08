@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.AggregationExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.Aggregation
@@ -49,19 +50,19 @@ class ProjectStageDsl {
     /**
      * Specifies the expression of a field.
      *
-     * @param expression The expression for the field.
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    infix fun String.expression(expression: AggregationExpression) {
-        operation = operation.and(expression).`as`(this)
+    infix fun String.expression(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+        operation = operation.and(AggregationExpressionDsl().configuration()).`as`(this)
     }
 
     /**
      * Specifies the expression of a field.
      *
-     * @param expression The expression for the field.
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    infix fun KProperty<*>.expression(expression: AggregationExpression) {
-        operation = operation.and(expression).`as`(this.toDotPath())
+    infix fun KProperty<*>.expression(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+        operation = operation.and(AggregationExpressionDsl().configuration()).`as`(this.toDotPath())
     }
 
     /**
