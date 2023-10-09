@@ -1,6 +1,7 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
@@ -93,4 +94,14 @@ class AggregationExpressionDsl {
      */
     fun ceil(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
         ArithmeticOperators.Ceil.ceilValueOf(AggregationExpressionDsl().configuration())
+
+    /**
+     * Returns the result of dividing the first number by the second.
+     * Accepts two argument expressions.
+     *
+     * @param configuration The configuration block for the [DivideExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/divide/#mongodb-expression-exp.-divide">$divide</a>
+     */
+    fun divide(configuration: DivideExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        DivideExpressionDsl().configuration()
 }
