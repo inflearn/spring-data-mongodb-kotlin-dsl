@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 
 @AtlasTest(database = "sample_mflix")
-class NearSearchRepositoryTest(
+internal class NearSearchRepositoryTest(
     private val nearSearchRepository: NearSearchRepository,
 ) : FreeSpec({
 
