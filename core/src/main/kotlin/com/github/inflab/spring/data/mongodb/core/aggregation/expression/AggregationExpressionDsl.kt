@@ -32,7 +32,8 @@ class AggregationExpressionDsl {
      * @param property The property of the field.
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/abs/#mongodb-expression-exp.-abs">$abs</a>
      */
-    fun abs(property: KProperty<Number?>): AggregationExpression = ArithmeticOperators.Abs.absoluteValueOf(property.toDotPath())
+    fun abs(property: KProperty<Number?>): AggregationExpression =
+        ArithmeticOperators.Abs.absoluteValueOf(property.toDotPath())
 
     /**
      * Returns the absolute value of a number.
@@ -76,7 +77,8 @@ class AggregationExpressionDsl {
      * @param property The property of the field.
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ceil/#mongodb-expression-exp.-ceil">$ceil</a>
      */
-    fun ceil(property: KProperty<Number?>): AggregationExpression = ArithmeticOperators.Ceil.ceilValueOf(property.toDotPath())
+    fun ceil(property: KProperty<Number?>): AggregationExpression =
+        ArithmeticOperators.Ceil.ceilValueOf(property.toDotPath())
 
     /**
      * Returns the smallest integer greater than or equal to the specified number.

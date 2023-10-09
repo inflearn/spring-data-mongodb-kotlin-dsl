@@ -16,6 +16,11 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class DivideExpressionDsl {
+    /**
+     * Represents a dividend inside `$divide`.
+     *
+     * @property value The dividend.
+     */
     @JvmInline
     value class Dividend(val value: Divide)
 
