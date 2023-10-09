@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDateTime
 
-class AddExpressionRepositoryTest : FreeSpec({
+internal class AddExpressionRepositoryTest : FreeSpec({
     val mongoTemplate = makeMongoTemplate()
     val addExpressionRepository = AddExpressionRepository(mongoTemplate)
 

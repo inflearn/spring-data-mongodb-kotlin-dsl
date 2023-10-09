@@ -33,7 +33,7 @@ class AddExpressionRepository(
     fun addNumbers(): AggregationResults<AddNumberDto> {
         val aggregation = aggregation {
             project {
-                +"item"
+                +Sales::item
                 "total" expression {
                     add {
                         of(Sales::price) and Sales::fee
@@ -53,7 +53,7 @@ class AddExpressionRepository(
     fun addDate(): AggregationResults<AddDateDto> {
         val aggregation = aggregation {
             project {
-                +"item"
+                +Sales::item
                 "billing_date" expression {
                     add {
                         of(Sales::date) and (3.0 * 24 * 60 * 60000)

@@ -4,7 +4,7 @@ import com.github.inflab.example.spring.data.mongodb.extension.makeMongoTemplate
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class AbsExpressionRepositoryTest : FreeSpec({
+internal class AbsExpressionRepositoryTest : FreeSpec({
     val mongoTemplate = makeMongoTemplate()
     val absExpressionRepository = AbsExpressionRepository(mongoTemplate)
 
