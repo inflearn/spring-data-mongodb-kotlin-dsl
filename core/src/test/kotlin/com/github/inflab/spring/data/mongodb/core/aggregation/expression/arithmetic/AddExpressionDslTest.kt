@@ -32,7 +32,7 @@ internal class AddExpressionDslTest : FreeSpec({
 
         "should add an operand by property" {
             // given
-            data class Test(val field: String)
+            data class Test(val field: Long?)
 
             // when
             val expression = add { of(Test::field) }
@@ -136,7 +136,7 @@ internal class AddExpressionDslTest : FreeSpec({
 
         "should add an operand by property" {
             // given
-            data class Test(val field: String)
+            data class Test(val field: Int?)
 
             // when
             val expression = add { of(Test::field) and Test::field }

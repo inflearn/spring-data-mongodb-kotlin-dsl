@@ -47,11 +47,19 @@ class AddExpressionDsl {
     fun of(field: String) = Operands(mutableListOf("$$field"))
 
     /**
-     * Creates a [Operands] with the given [field].
+     * Creates a [Operands] with the given [property].
      *
-     * @param field The name of the field.
+     * @param property The name of the field.
      */
-    fun of(field: KProperty<*>) = of(field.toDotPath())
+    fun of(property: KProperty<Number?>) = of(property.toDotPath())
+
+    /**
+     * Creates a [Operands] with the given [property].
+     *
+     * @param property The name of the field.
+     */
+    @JvmName("ofTemporal")
+    fun of(property: KProperty<Temporal?>) = of(property.toDotPath())
 
     /**
      * Creates a [Operands] with the given [AggregationExpression].
@@ -92,11 +100,19 @@ class AddExpressionDsl {
     }
 
     /**
-     * Adds [field] to the list of operands.
+     * Adds [property] to the list of operands.
      *
-     * @param field The name of the field.
+     * @param property The name of the field.
      */
-    infix fun Operands.and(field: KProperty<*>): Operands = and(field.toDotPath())
+    infix fun Operands.and(property: KProperty<Number?>): Operands = and(property.toDotPath())
+
+    /**
+     * Adds [property] to the list of operands.
+     *
+     * @param property The name of the field.
+     */
+    @JvmName("andTemporal")
+    infix fun Operands.and(property: KProperty<Temporal?>): Operands = and(property.toDotPath())
 
     /**
      * Adds [AggregationExpression] to the list of operands.

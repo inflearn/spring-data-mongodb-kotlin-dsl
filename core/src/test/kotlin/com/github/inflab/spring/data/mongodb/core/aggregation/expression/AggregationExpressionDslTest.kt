@@ -178,4 +178,30 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "divide" - {
+        "should build an expression" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression {
+                divide {
+                    of(field) by 123
+                }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}divide": [
+                    "$$field",
+                    123
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
