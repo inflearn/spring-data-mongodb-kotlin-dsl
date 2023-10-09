@@ -9,7 +9,7 @@ internal class DivideExpressionRepositoryTest : FreeSpec({
     val divideExpressionRepository = DivideExpressionRepository(mongoTemplate)
 
     beforeSpec {
-        val sales = listOf(
+        val plannings = listOf(
             DivideExpressionRepository.ConferencePlanning(
                 id = 1,
                 city = "New York",
@@ -23,7 +23,7 @@ internal class DivideExpressionRepositoryTest : FreeSpec({
                 takes = 4,
             ),
         )
-        mongoTemplate.insertAll(sales)
+        mongoTemplate.insertAll(plannings)
     }
 
     "divide" {

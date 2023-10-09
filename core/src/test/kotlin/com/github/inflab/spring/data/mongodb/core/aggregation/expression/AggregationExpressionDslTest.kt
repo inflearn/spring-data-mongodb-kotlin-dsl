@@ -204,4 +204,103 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "exp" - {
+        "should build an expression by string" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression { exp(field) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}exp": "$$field"
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build an expression by property" {
+            // given
+            data class Sample(val field: Number?)
+
+            // when
+            val result = expression { exp(Sample::field) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}exp": "${'$'}field"
+                }
+                """.trimIndent(),
+            )
+        }
+        "should build an expression by number" {
+            // given
+            val number = 100
+
+            // when
+            val result = expression { exp(number) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}exp": $number
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build an expression by expression" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression {
+                exp { exp(field) }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}exp": {
+                    "${'$'}exp": "$$field"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "subtract" - {
+        "should build an expression" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression {
+                subtract {
+                    of(field) - 123
+                }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}subtract": [
+                    "$$field",
+                    123
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

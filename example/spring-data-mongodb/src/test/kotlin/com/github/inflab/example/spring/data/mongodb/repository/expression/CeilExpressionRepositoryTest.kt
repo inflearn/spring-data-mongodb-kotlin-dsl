@@ -9,13 +9,13 @@ internal class CeilExpressionRepositoryTest : FreeSpec({
     val ceilExpressionRepository = CeilExpressionRepository(mongoTemplate)
 
     beforeSpec {
-        val changes = listOf(
+        val samples = listOf(
             CeilExpressionRepository.Samples(id = 1, value = 9.25),
             CeilExpressionRepository.Samples(id = 2, value = 8.73),
             CeilExpressionRepository.Samples(id = 3, value = 4.32),
             CeilExpressionRepository.Samples(id = 4, value = -5.34),
         )
-        mongoTemplate.insertAll(changes)
+        mongoTemplate.insertAll(samples)
     }
 
     "ceilValue" {
