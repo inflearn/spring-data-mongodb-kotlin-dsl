@@ -69,4 +69,8 @@ class SearchOperatorDsl : SearchOperator {
     override fun regex(configuration: RegexSearchOperatorDsl.() -> Unit) {
         operators.add(RegexSearchOperatorDsl().apply(configuration).build())
     }
+
+    override fun autocomplete(configuration: AutocompleteSearchOperationDsl.() -> Unit) {
+        operators.add(AutocompleteSearchOperationDsl().apply(configuration).build())
+    }
 }
