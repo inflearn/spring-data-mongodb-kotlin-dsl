@@ -2,8 +2,10 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
+import kotlin.reflect.KProperty
 
 /**
  * A Kotlin DSL to configure [AggregationExpression] using idiomatic Kotlin code.
@@ -22,6 +24,14 @@ class AggregationExpressionDsl {
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/abs/#mongodb-expression-exp.-abs">$abs</a>
      */
     fun abs(field: String): AggregationExpression = ArithmeticOperators.Abs.absoluteValueOf(field)
+
+    /**
+     * Returns the absolute value of a number.
+     *
+     * @param property The property of the field.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/abs/#mongodb-expression-exp.-abs">$abs</a>
+     */
+    fun abs(property: KProperty<Number?>): AggregationExpression = ArithmeticOperators.Abs.absoluteValueOf(property.toDotPath())
 
     /**
      * Returns the absolute value of a number.
@@ -50,4 +60,37 @@ class AggregationExpressionDsl {
      */
     fun add(configuration: AddExpressionDsl.() -> AddExpressionDsl.Operands) =
         AddExpressionDsl().build(configuration)
+
+    /**
+     * Returns the smallest integer greater than or equal to the specified number.
+     *
+     * @param field The name of the field.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ceil/#mongodb-expression-exp.-ceil">$ceil</a>
+     */
+    fun ceil(field: String): AggregationExpression = ArithmeticOperators.Ceil.ceilValueOf(field)
+
+    /**
+     * Returns the smallest integer greater than or equal to the specified number.
+     *
+     * @param property The property of the field.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ceil/#mongodb-expression-exp.-ceil">$ceil</a>
+     */
+    fun ceil(property: KProperty<Number?>): AggregationExpression = ArithmeticOperators.Ceil.ceilValueOf(property.toDotPath())
+
+    /**
+     * Returns the smallest integer greater than or equal to the specified number.
+     *
+     * @param value The number.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ceil/#mongodb-expression-exp.-ceil">$ceil</a>
+     */
+    fun ceil(value: Number): AggregationExpression = ArithmeticOperators.Ceil.ceilValueOf(value)
+
+    /**
+     * Returns the smallest integer greater than or equal to the specified number.
+     *
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ceil/#mongodb-expression-exp.-ceil">$ceil</a>
+     */
+    fun ceil(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        ArithmeticOperators.Ceil.ceilValueOf(AggregationExpressionDsl().configuration())
 }

@@ -26,6 +26,23 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
 
+        "should build an expression by property" {
+            // given
+            data class Sample(val field: Number?)
+
+            // when
+            val result = expression { abs(Sample::field) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}abs": "${'$'}field"
+                }
+                """.trimIndent(),
+            )
+        }
+
         "should build an expression by number" {
             // given
             val number = 100
@@ -83,6 +100,79 @@ internal class AggregationExpressionDslTest : FreeSpec({
                     "$$field",
                     "$$field"
                   ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "ceil" - {
+        "should build an expression by string" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression { ceil(field) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}ceil": "$$field"
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build an expression by property" {
+            // given
+            data class Sample(val field: Number?)
+
+            // when
+            val result = expression { ceil(Sample::field) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}ceil": "${'$'}field"
+                }
+                """.trimIndent(),
+            )
+        }
+        "should build an expression by number" {
+            // given
+            val number = 100
+
+            // when
+            val result = expression { ceil(number) }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}ceil": $number
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build an expression by expression" {
+            // given
+            val field = "field"
+
+            // when
+            val result = expression {
+                ceil { ceil(field) }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}ceil": {
+                    "${'$'}ceil": "$$field"
+                  }
                 }
                 """.trimIndent(),
             )
