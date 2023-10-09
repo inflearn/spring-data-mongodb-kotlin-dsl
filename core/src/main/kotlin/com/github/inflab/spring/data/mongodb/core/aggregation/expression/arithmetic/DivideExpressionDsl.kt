@@ -43,7 +43,7 @@ class DivideExpressionDsl {
      *
      * @param property The property of the field.
      */
-    fun of(property: KProperty<*>) = of(property.toDotPath())
+    fun of(property: KProperty<Number?>) = of(property.toDotPath())
 
     /**
      * Creates a new [Dividend].
@@ -72,7 +72,7 @@ class DivideExpressionDsl {
      *
      * @param property The property of the field.
      */
-    infix fun Dividend.by(property: KProperty<*>): Divide = this.value.divideBy(property.toDotPath())
+    infix fun Dividend.by(property: KProperty<Number?>): Divide = this.value.divideBy(property.toDotPath())
 
     /**
      * Divide by the result of the given [AggregationExpression].

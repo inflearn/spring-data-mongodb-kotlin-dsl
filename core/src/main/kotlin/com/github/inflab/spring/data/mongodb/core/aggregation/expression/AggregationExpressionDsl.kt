@@ -2,6 +2,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
@@ -106,4 +107,52 @@ class AggregationExpressionDsl {
      */
     fun divide(configuration: DivideExpressionDsl.() -> AggregationExpression): AggregationExpression =
         DivideExpressionDsl().configuration()
+
+    /**
+     * Raises Euler's number (i.e. `e`) to the specified exponent and returns the result.
+     *
+     * @param field The name of the field.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/exp/#-exp--aggregation-">$exp</a>
+     */
+    fun exp(field: String): AggregationExpression = ArithmeticOperators.Exp.expValueOf(field)
+
+    /**
+     * Raises Euler's number (i.e. `e`) to the specified exponent and returns the result.
+     *
+     * @param property The property of the field.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/exp/#-exp--aggregation-">$exp</a>
+     */
+    fun exp(property: KProperty<Number?>): AggregationExpression =
+        ArithmeticOperators.Exp.expValueOf(property.toDotPath())
+
+    /**
+     * Raises Euler's number (i.e. `e`) to the specified exponent and returns the result.
+     *
+     * @param value The number.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/exp/#-exp--aggregation-">$exp</a>
+     */
+    fun exp(value: Number): AggregationExpression = ArithmeticOperators.Exp.expValueOf(value)
+
+    /**
+     * Raises Euler's number (i.e. `e`) to the specified exponent and returns the result.
+     *
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/exp/#-exp--aggregation-">$exp</a>
+     */
+    fun exp(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        ArithmeticOperators.Exp.expValueOf(AggregationExpressionDsl().configuration())
+
+    /**
+     * Returns the result of subtracting the second value from the first.
+     * If the two values are numbers, return the difference.
+     * If the two values are dates, return the difference in milliseconds.
+     * If the two values are a date and a number in milliseconds, return the resulting date.
+     * Accepts two argument expressions.
+     * If the two values are a date and a number, specify the date argument first as it is not meaningful to subtract a date from a number.
+     *
+     * @param configuration The configuration block for the [SubtractExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/subtract/#mongodb-expression-exp.-subtract">$subtract</a>
+     */
+    fun subtract(configuration: SubtractExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        SubtractExpressionDsl().configuration()
 }
