@@ -17,14 +17,14 @@ internal class RangeSearchRepositoryTest(
         val result = rangeSearchRepository.findRuntimeBetween()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Dots",
             "Sisyphus",
             "The Fly",
             "Andrè and Wally B.",
             "Luxo Jr.",
         )
-        result.mappedResults.take(5).map { it.runtime } shouldBe listOf(3, 3, 3, 2, 2)
+        result.mappedResults.map { it.runtime } shouldBe listOf(3, 3, 3, 2, 2)
     }
 
     "findReleasedBetween" {
@@ -35,7 +35,7 @@ internal class RangeSearchRepositoryTest(
         val result = rangeSearchRepository.findReleasedBetween()
 
         // then
-        result.mappedResults.take(5).map { it.released }.forAll {
+        result.mappedResults.map { it.released }.forAll {
             it.shouldBeBetween(start, end)
         }
     }

@@ -14,14 +14,14 @@ internal class MoreLikeThisSearchRepositoryTest(
         val result = moreLikeThisSearchRepository.findTitleAndGenres()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Godfather",
             "The Godfather",
             "The Godfather: Part II",
             "The Godfather: Part III",
             "The Defender",
         )
-        result.mappedResults.take(5).map { it.genres } shouldBe listOf(
+        result.mappedResults.map { it.genres } shouldBe listOf(
             listOf("Comedy", "Drama", "Romance"),
             listOf("Crime", "Drama"),
             listOf("Crime", "Drama"),
@@ -35,7 +35,7 @@ internal class MoreLikeThisSearchRepositoryTest(
         val result = moreLikeThisSearchRepository.findByMovie()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Godfather",
             "The Godfather: Part II",
             "The Godfather: Part III",
@@ -43,7 +43,7 @@ internal class MoreLikeThisSearchRepositoryTest(
             "The Bandit",
 
         )
-        result.mappedResults.take(5).map { it.genres } shouldBe listOf(
+        result.mappedResults.map { it.genres } shouldBe listOf(
             listOf("Comedy", "Drama", "Romance"),
             listOf("Crime", "Drama"),
             listOf("Crime", "Drama"),
@@ -57,7 +57,7 @@ internal class MoreLikeThisSearchRepositoryTest(
         val result = moreLikeThisSearchRepository.findByMovies()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Alice in Wonderland",
             "Alice in Wonderland",
             "Alice in Wonderland",
@@ -65,7 +65,7 @@ internal class MoreLikeThisSearchRepositoryTest(
             "Alex in Wonderland",
 
         )
-        result.mappedResults.take(5).map { it.genres } shouldBe listOf(
+        result.mappedResults.map { it.genres } shouldBe listOf(
             listOf("Adventure", "Family", "Fantasy"),
             listOf("Adventure", "Family", "Fantasy"),
             listOf("Adventure", "Comedy", "Family"),

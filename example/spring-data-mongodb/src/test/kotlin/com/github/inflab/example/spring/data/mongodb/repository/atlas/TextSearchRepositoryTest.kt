@@ -28,7 +28,7 @@ internal class TextSearchRepositoryTest(
         val result = textSearchRepository.findTitleWithNawYarkByFuzzy()
 
         // then
-        result.mappedResults.take(8).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Longest Yard",
             "The Longest Yard",
             "Stomp the Yard",

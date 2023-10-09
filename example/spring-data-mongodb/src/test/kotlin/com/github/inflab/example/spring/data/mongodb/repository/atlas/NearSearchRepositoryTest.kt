@@ -15,7 +15,7 @@ class NearSearchRepositoryTest(
         val result = nearSearchRepository.findByRuntime()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Kingdom",
             "The Jinx: The Life and Deaths of Robert Durst",
             "Shoah",
@@ -23,7 +23,7 @@ class NearSearchRepositoryTest(
             "Tokyo Trial",
         )
 
-        result.mappedResults.take(5).map { it.runtime } shouldBe listOf(
+        result.mappedResults.map { it.runtime } shouldBe listOf(
             279,
             279,
             280,
@@ -37,7 +37,7 @@ class NearSearchRepositoryTest(
         val result = nearSearchRepository.findByDate()
 
         // then
-        result.mappedResults.take(3).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Regeneration",
             "The Cheat",
             "Hell's Hinges",
@@ -49,7 +49,7 @@ class NearSearchRepositoryTest(
         val result = nearSearchRepository.findByGeo()
 
         // then
-        result.mappedResults.take(3).map { it.name } shouldBe listOf(
+        result.mappedResults.map { it.name } shouldBe listOf(
             "Ribeira Charming Duplex",
             "DB RIBEIRA - Grey Apartment",
             "Ribeira 24 (4)",
@@ -61,13 +61,13 @@ class NearSearchRepositoryTest(
         val result = nearSearchRepository.findByGeoWithCompound()
 
         // then
-        result.mappedResults.take(3).map { it.propertyType } shouldBe listOf(
+        result.mappedResults.map { it.propertyType } shouldBe listOf(
             "Apartment",
             "Apartment",
             "Apartment",
         )
 
-        result.mappedResults.take(3).map { it.address.location } shouldBe listOf(
+        result.mappedResults.map { it.address.location } shouldBe listOf(
             GeoJsonPoint(114.15027, 22.28158),
             GeoJsonPoint(114.15082, 22.28161),
             GeoJsonPoint(114.15007, 22.28215),

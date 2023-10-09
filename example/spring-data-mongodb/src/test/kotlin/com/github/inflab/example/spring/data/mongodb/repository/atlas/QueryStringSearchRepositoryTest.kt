@@ -15,12 +15,12 @@ internal class QueryStringSearchRepositoryTest(
         val result = queryStringSearchRepository.findFullplotWithPlot()
 
         // then
-        result.mappedResults.take(3).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Star Trek: Generations",
             "Star Trek V: The Final Frontier",
             "Star Trek: The Motion Picture",
         )
-        result.mappedResults.take(3).map { it.score }.shouldBeMonotonicallyDecreasing()
+        result.mappedResults.map { it.score }.shouldBeMonotonicallyDecreasing()
     }
 
     "findPoltWithTitleRange" {
@@ -28,7 +28,7 @@ internal class QueryStringSearchRepositoryTest(
         val result = queryStringSearchRepository.findPoltWithTitleRange()
 
         // then
-        result.mappedResults.take(10).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Great Train Robbery",
             "A Corner in Wheat",
             "Winsor McCay, the Famous Cartoonist of the N.Y. Herald and His Moving Comics",
@@ -47,7 +47,7 @@ internal class QueryStringSearchRepositoryTest(
         val result = queryStringSearchRepository.findTitleByFuzzy()
 
         // then
-        result.mappedResults.take(10).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Catch-22",
             "Catch That Girl",
             "Catch That Kid",
@@ -66,7 +66,7 @@ internal class QueryStringSearchRepositoryTest(
         val result = queryStringSearchRepository.findTitleByWildcard()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Diary of a Country Priest",
             "Cry, the Beloved Country",
             "Raintree County",
@@ -80,7 +80,7 @@ internal class QueryStringSearchRepositoryTest(
         val result = queryStringSearchRepository.findTitleByRegex()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Italian",
             "Marriage Italian Style",
             "Jealousy, Italian Style",

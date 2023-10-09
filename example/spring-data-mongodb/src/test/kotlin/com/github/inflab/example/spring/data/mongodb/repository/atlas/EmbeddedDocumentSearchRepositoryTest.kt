@@ -16,7 +16,7 @@ internal class EmbeddedDocumentSearchRepositoryTest(
         val result = embeddedDocumentSearchRepository.findItemsByMean()
 
         // then
-        result.mappedResults.take(5).flatMap { it.items } shouldBe listOf(
+        result.mappedResults.flatMap { it.items } shouldBe listOf(
             EmbeddedDocumentSearchRepository.Item("backpack", listOf("school", "travel", "kids")),
             EmbeddedDocumentSearchRepository.Item("envelopes", listOf("stationary", "office", "general")),
             EmbeddedDocumentSearchRepository.Item("printer paper", listOf("office", "stationary")),
@@ -25,7 +25,7 @@ internal class EmbeddedDocumentSearchRepositoryTest(
             EmbeddedDocumentSearchRepository.Item("backpack", listOf("school", "travel", "kids")),
             EmbeddedDocumentSearchRepository.Item("backpack", listOf("school", "travel", "kids")),
         )
-        result.mappedResults.take(5).map { it.score }.shouldBeMonotonicallyDecreasing()
+        result.mappedResults.map { it.score }.shouldBeMonotonicallyDecreasing()
     }
 
     "findItemsByFacet" {

@@ -16,7 +16,7 @@ internal class PhraseSearchRepositoryTest(
         val result = phraseSearchRepository.findTitleWithNewYork()
 
         // then
-        result.mappedResults.take(10).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "New York, New York",
             "New York",
             "New York Stories",
@@ -36,7 +36,7 @@ internal class PhraseSearchRepositoryTest(
         val result = phraseSearchRepository.findTitleWithManAndMoon()
 
         // then
-        result.mappedResults.take(10).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Man in the Moon",
             "Shoot the Moon",
             "Kick the Moon",

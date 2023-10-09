@@ -17,14 +17,14 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleAndPlotWithBoost()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Kites Over Helsinki",
             "Helsinki-Naples All Night Long",
             "Drifting Clouds",
             "Sairaan kaunis maailma",
             "Bad Luck Love",
         )
-        result.mappedResults.take(5).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeBetween(3.0, 25.0, 0.0)
         }
     }
@@ -34,14 +34,14 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleAndPlotWithConstant()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Tower Block",
             "Tower Heist",
             "Tokyo Tower",
             "The Leaning Tower",
             "Ivory Tower",
         )
-        result.mappedResults.take(5).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeBetween(5.0, 9.0, 0.0)
         }
     }
@@ -51,14 +51,14 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleWithArithmetic()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "Men...",
             "X-Men",
             "X-Men",
             "Matchstick Men",
             "The Men",
         )
-        result.mappedResults.take(5).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeGreaterThan(20.0)
         }
     }
@@ -68,7 +68,7 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleWithGauss()
 
         // then
-        result.mappedResults.take(10).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Shop Around the Corner",
             "Exit Through the Gift Shop",
             "Little Shop of Horrors",
@@ -76,7 +76,7 @@ internal class ScoreSearchRepositoryTest(
             "A Woman, a Gun and a Noodle Shop",
             "Beauty Shop",
         )
-        result.mappedResults.take(10).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeBetween(0.5, 1.0, 0.0)
         }
     }
@@ -86,14 +86,14 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleWithPath()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Men Who Built America",
             "No Country for Old Men",
             "X-Men: Days of Future Past",
             "The Best of Men",
             "All the President's Men",
         )
-        result.mappedResults.take(5).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeBetween(8.0, 9.0, 0.0)
         }
     }
@@ -103,14 +103,14 @@ internal class ScoreSearchRepositoryTest(
         val result = scoreSearchRepository.findTitleWithLog()
 
         // then
-        result.mappedResults.take(5).map { it.title } shouldBe listOf(
+        result.mappedResults.map { it.title } shouldBe listOf(
             "The Men Who Built America",
             "No Country for Old Men",
             "X-Men: Days of Future Past",
             "The Best of Men",
             "All the President's Men",
         )
-        result.mappedResults.take(5).map { it.score }.forAll {
+        result.mappedResults.map { it.score }.forAll {
             it.shouldBeBetween(0.0, 1.0, 0.0)
         }
     }
