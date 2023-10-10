@@ -64,10 +64,9 @@ class AutocompleteSearchOperationDsl {
      * @param maxEdits Maximum number of single-character edits required to match the specified search term.
      * Value can be 1 or 2.
      * The default value is 2.
-     * Uses [Damerau-Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance).
      * @param prefixLength Number of characters at the beginning of each term in the result that must exactly match.
      * The default value is 0.
-     * @param maxExpansions The maximum number of variations to generate and search for.
+     * @param maxExpansions Maximum number of variations to generate and search for.
      * This limit applies on a per-token basis.
      * The default value is 50.
      */

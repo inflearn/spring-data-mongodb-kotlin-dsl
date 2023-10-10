@@ -1,7 +1,7 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 /**
- * Order in which to search for tokens. Value can be one of the following
+ * Order in which to search for tokens.
  * Default value is ANY
  *
  * @author username1103
