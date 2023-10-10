@@ -227,7 +227,7 @@ class AutocompleteSearchOperationDslTest : FreeSpec({
         "should build a tokenOrder" {
             // given
             val operation = autocomplete {
-                tokenOrder(TokenOrder.ANY)
+                tokenOrder(AutocompleteTokenOrder.ANY)
             }
 
             // when
