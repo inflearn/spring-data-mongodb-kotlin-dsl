@@ -103,5 +103,5 @@ class AutocompleteSearchOperationDsl {
         document["tokenOrder"] = tokenOrder.name.lowercase()
     }
 
-    fun build(): Document = Document("autocomplete", document)
+    internal fun build(): Document = Document("autocomplete", document)
 }
