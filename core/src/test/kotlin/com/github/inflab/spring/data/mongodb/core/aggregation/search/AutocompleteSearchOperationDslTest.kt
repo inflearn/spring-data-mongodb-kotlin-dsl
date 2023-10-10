@@ -224,25 +224,27 @@ internal class AutocompleteSearchOperationDslTest : FreeSpec({
     }
 
     "tokenOrder" - {
-        "should build a tokenOrder" {
-            // given
-            val operation = autocomplete {
-                tokenOrder(AutocompleteTokenOrder.ANY)
-            }
-
-            // when
-            val result = operation.build()
-
-            // then
-            result.shouldBeJson(
-                """
-                {
-                  "autocomplete": {
-                    "tokenOrder": "any"
-                  }
+        AutocompleteTokenOrder.entries.forEach {
+            "should build a tokenOrder by ${it.name}" {
+                // given
+                val operation = autocomplete {
+                    tokenOrder(it)
                 }
-                """.trimIndent(),
-            )
+
+                // when
+                val result = operation.build()
+
+                // then
+                result.shouldBeJson(
+                    """
+                    {
+                      "autocomplete": {
+                        "tokenOrder": "${it.name.lowercase()}"
+                      }
+                    }
+                    """.trimIndent(),
+                )
+            }
         }
     }
 })
