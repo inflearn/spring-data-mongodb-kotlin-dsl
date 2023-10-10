@@ -2,7 +2,7 @@ package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
-import com.github.inflab.spring.data.mongodb.core.aggregation.search.TokenOrder
+import com.github.inflab.spring.data.mongodb.core.aggregation.search.AutocompleteTokenOrder
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -77,13 +77,13 @@ class AutocompleteSearchRepository(
     /**
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/autocomplete/#token-order-example">Token Order Example</a>
      */
-    fun findByTitleWithTokenOrder(tokenOrder: TokenOrder): AggregationResults<TitleDto> {
+    fun findByTitleWithTokenOrder(autocompleteTokenOrder: AutocompleteTokenOrder): AggregationResults<TitleDto> {
         val aggregation = aggregation {
             search {
                 autocomplete {
                     path(Movies::title)
                     query("men with")
-                    tokenOrder(tokenOrder)
+                    tokenOrder(autocompleteTokenOrder)
                 }
             }
 

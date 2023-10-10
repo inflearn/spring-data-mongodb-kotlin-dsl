@@ -95,12 +95,12 @@ class AutocompleteSearchOperationDsl {
 
     /**
      * Order in which to search for tokens.
-     * The default value is [TokenOrder.ANY]
+     * The default value is [AutocompleteTokenOrder.ANY]
      *
-     * @param tokenOrder Order in which to search for tokens. [TokenOrder]
+     * @param autocompleteTokenOrder Order in which to search for tokens. [AutocompleteTokenOrder]
      */
-    fun tokenOrder(tokenOrder: TokenOrder) {
-        document["tokenOrder"] = tokenOrder.name.lowercase()
+    fun tokenOrder(autocompleteTokenOrder: AutocompleteTokenOrder) {
+        document["tokenOrder"] = autocompleteTokenOrder.name.lowercase()
     }
 
     internal fun build(): Document = Document("autocomplete", document)

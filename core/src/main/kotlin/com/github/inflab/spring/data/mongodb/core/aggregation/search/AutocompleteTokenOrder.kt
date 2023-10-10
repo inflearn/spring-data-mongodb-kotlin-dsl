@@ -4,7 +4,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
  * Order in which to search for tokens. Value can be one of the following
  * Default value is ANY
  */
-enum class TokenOrder {
+enum class AutocompleteTokenOrder {
 
     /**
      * Indicates tokens in the query can appear in any order in the documents.

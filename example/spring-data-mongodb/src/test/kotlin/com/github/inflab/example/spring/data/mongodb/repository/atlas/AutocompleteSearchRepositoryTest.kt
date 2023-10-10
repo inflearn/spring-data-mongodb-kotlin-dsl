@@ -1,7 +1,7 @@
 package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
 import com.github.inflab.example.spring.data.mongodb.extension.AtlasTest
-import com.github.inflab.spring.data.mongodb.core.aggregation.search.TokenOrder
+import com.github.inflab.spring.data.mongodb.core.aggregation.search.AutocompleteTokenOrder
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -50,7 +50,7 @@ internal class AutocompleteSearchRepositoryTest(
 
     "findByTitleWithTokenOrder" {
         // when
-        val result = autocompleteSearchRepository.findByTitleWithTokenOrder(TokenOrder.ANY)
+        val result = autocompleteSearchRepository.findByTitleWithTokenOrder(AutocompleteTokenOrder.ANY)
 
         // then
         result.mappedResults.map { it.title } shouldBe listOf(
