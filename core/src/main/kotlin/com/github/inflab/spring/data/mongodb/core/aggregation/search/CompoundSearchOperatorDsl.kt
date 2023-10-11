@@ -13,6 +13,7 @@ import org.bson.Document
 @AggregationMarker
 class CompoundSearchOperatorDsl {
     private val document = Document()
+    private var hasClause = false
 
     /**
      * Specify a minimum number of should clauses that must match to include a document in the results.
@@ -40,7 +41,11 @@ class CompoundSearchOperatorDsl {
      * Maps to the `AND` boolean operator.
      */
     fun must(mustConfiguration: SearchOperatorDsl.() -> Unit) {
-        document["must"] = SearchOperatorDsl().apply(mustConfiguration).operators
+        val operators = SearchOperatorDsl().apply(mustConfiguration).operators
+        if (operators.isNotEmpty()) {
+            document["must"] = operators
+            hasClause = true
+        }
     }
 
     /**
@@ -49,7 +54,11 @@ class CompoundSearchOperatorDsl {
      * Maps to the `AND NOT` boolean operator.
      */
     fun mustNot(mustNotConfiguration: SearchOperatorDsl.() -> Unit) {
-        document["mustNot"] = SearchOperatorDsl().apply(mustNotConfiguration).operators
+        val operators = SearchOperatorDsl().apply(mustNotConfiguration).operators
+        if (operators.isNotEmpty()) {
+            document["mustNot"] = operators
+            hasClause = true
+        }
     }
 
     /**
@@ -59,7 +68,11 @@ class CompoundSearchOperatorDsl {
      * Maps to the `OR` boolean operator.
      */
     fun should(shouldConfiguration: SearchOperatorDsl.() -> Unit) {
-        document["should"] = SearchOperatorDsl().apply(shouldConfiguration).operators
+        val operators = SearchOperatorDsl().apply(shouldConfiguration).operators
+        if (operators.isNotEmpty()) {
+            document["should"] = operators
+            hasClause = true
+        }
     }
 
     /**
@@ -67,11 +80,21 @@ class CompoundSearchOperatorDsl {
      * `filter` clauses do not contribute to a returned document's score.
      */
     fun filter(filterConfiguration: SearchOperatorDsl.() -> Unit) {
-        document["filter"] = SearchOperatorDsl().apply(filterConfiguration).operators
+        val operators = SearchOperatorDsl().apply(filterConfiguration).operators
+        if (operators.isNotEmpty()) {
+            document["filter"] = operators
+            hasClause = true
+        }
     }
 
-    internal fun build(): Document {
-        minimumShouldMatch?.let { document.put("minimumShouldMatch", it) }
+    internal fun build(): Document? {
+        if (!hasClause) {
+            return null
+        }
+
+        if (document["should"] != null && minimumShouldMatch != null) {
+            document["minimumShouldMatch"] = minimumShouldMatch
+        }
 
         return Document("compound", document)
     }
