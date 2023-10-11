@@ -23,7 +23,7 @@ class SearchOperatorDsl : SearchOperator {
     }
 
     override fun compound(configuration: CompoundSearchOperatorDsl.() -> Unit) {
-        operators.add(CompoundSearchOperatorDsl().apply(configuration).build())
+        CompoundSearchOperatorDsl().apply(configuration).build()?.let { operators.add(it) }
     }
 
     override fun phrase(configuration: PhraseSearchOperatorDsl.() -> Unit) {
