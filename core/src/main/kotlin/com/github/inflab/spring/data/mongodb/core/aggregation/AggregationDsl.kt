@@ -258,6 +258,16 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
+     *
+     * @param elementsToSkip Must not be less than zero.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/">$skip (aggregation)</a>
+     */
+    fun skip(elementsToSkip: Long) {
+        operations += Aggregation.skip(elementsToSkip)
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
