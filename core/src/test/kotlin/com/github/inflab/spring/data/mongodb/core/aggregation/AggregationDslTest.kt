@@ -285,4 +285,18 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "skip" - {
+        "should create skip stage" {
+            // when
+            val aggregation = aggregation {
+                skip(10L)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.skip(10L),
+            ).toString()
+        }
+    }
 })

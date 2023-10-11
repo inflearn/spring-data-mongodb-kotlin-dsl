@@ -2,7 +2,9 @@ package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.bson.Document
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.query.TextCriteria
 import org.springframework.stereotype.Repository
@@ -30,6 +32,13 @@ class SortRepository(
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#text-score-metadata-sort">Text Score Metadata Sort</a>
      */
     fun sortByScore(): AggregationResults<Document> {
+        Aggregation.newAggregation(
+            Aggregation.match(TextCriteria.forDefaultLanguage().matching("operating")),
+            Aggregation.sort(
+                Sort.by("score").ascending().and(Sort.by("posts").descending()),
+            ),
+        )
+
         val aggregation = aggregation {
             match(
                 TextCriteria.forDefaultLanguage().matching("operating"),
