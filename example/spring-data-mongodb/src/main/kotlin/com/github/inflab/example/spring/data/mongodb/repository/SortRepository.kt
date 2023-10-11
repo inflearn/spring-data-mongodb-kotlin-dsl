@@ -32,13 +32,6 @@ class SortRepository(
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#text-score-metadata-sort">Text Score Metadata Sort</a>
      */
     fun sortByScore(): AggregationResults<Document> {
-        Aggregation.newAggregation(
-            Aggregation.match(TextCriteria.forDefaultLanguage().matching("operating")),
-            Aggregation.sort(
-                Sort.by("score").ascending().and(Sort.by("posts").descending()),
-            ),
-        )
-
         val aggregation = aggregation {
             match(
                 TextCriteria.forDefaultLanguage().matching("operating"),
