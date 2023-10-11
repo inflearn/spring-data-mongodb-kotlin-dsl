@@ -31,7 +31,7 @@ class InSearchRepository(
                             path("_id")
                             value(
                                 ObjectId("5ca4bbcea2dd94ee58162a72"),
-                                ObjectId("5ca4bbcea2dd94ee58162a91")
+                                ObjectId("5ca4bbcea2dd94ee58162a91"),
                             )
                         }
                     }
