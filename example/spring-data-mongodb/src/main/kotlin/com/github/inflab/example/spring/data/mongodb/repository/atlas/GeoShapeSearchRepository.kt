@@ -8,7 +8,6 @@ import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.geo.Point
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
-import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.geo.GeoJsonMultiPolygon
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon
@@ -41,8 +40,7 @@ class GeoShapeSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(3))
+            limit(3)
 
             project {
                 excludeId()
@@ -89,8 +87,7 @@ class GeoShapeSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(3))
+            limit(3)
 
             project {
                 excludeId()
@@ -127,8 +124,7 @@ class GeoShapeSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(3))
+            limit(3)
 
             project {
                 excludeId()

@@ -38,8 +38,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()
@@ -69,8 +68,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()
@@ -99,8 +97,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()
@@ -145,8 +142,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(10))
+            limit(10)
 
             project {
                 excludeId()
@@ -246,8 +242,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()
@@ -275,8 +270,7 @@ class SortSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()

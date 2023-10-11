@@ -4,7 +4,6 @@ import com.github.inflab.example.spring.data.mongodb.entity.mflix.Movies
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
-import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.stereotype.Repository
 
@@ -46,8 +45,7 @@ class WildcardSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
-            stage(Aggregation.limit(5))
+            limit(5)
 
             project {
                 excludeId()

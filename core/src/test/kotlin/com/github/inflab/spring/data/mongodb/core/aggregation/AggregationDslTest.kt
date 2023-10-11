@@ -299,4 +299,18 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "limit" - {
+        "should create limit stage" {
+            // when
+            val aggregation = aggregation {
+                limit(10L)
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.limit(10L),
+            ).toString()
+        }
+    }
 })
