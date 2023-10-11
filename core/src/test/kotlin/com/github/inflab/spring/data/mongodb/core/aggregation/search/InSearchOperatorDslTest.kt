@@ -7,13 +7,13 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class InSearchOperatorDslTest : FreeSpec({
-    fun inSearchOperator(block: InSearchOperatorDsl.() -> Unit): InSearchOperatorDsl =
+    fun `in`(block: InSearchOperatorDsl.() -> Unit): InSearchOperatorDsl =
         InSearchOperatorDsl().apply(block)
 
     "path" - {
         "should build a path by strings" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 path("path")
             }
 
@@ -37,7 +37,7 @@ class InSearchOperatorDslTest : FreeSpec({
         listOf(true, false).forEach {
             "should build a value by boolean $it" {
                 // given
-                val operator = inSearchOperator {
+                val operator = `in` {
                     value(it)
                 }
 
@@ -59,7 +59,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by multiple booleans " {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(true, false)
             }
 
@@ -83,7 +83,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by LocalDateTime" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(LocalDateTime.of(2023, 10, 3, 17, 37, 26))
             }
 
@@ -106,7 +106,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by multiple LocalDateTimes" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(
                     LocalDateTime.of(2023, 10, 3, 17, 37, 26),
                     LocalDateTime.of(2023, 10, 31, 2, 15, 7),
@@ -137,7 +137,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by LocalDate" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(LocalDate.of(2023, 10, 3))
             }
 
@@ -160,7 +160,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by multiple LocalDates" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(
                     LocalDate.of(2023, 10, 3),
                     LocalDate.of(2023, 10, 31),
@@ -191,7 +191,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by number" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(1)
             }
 
@@ -212,7 +212,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by multiple numbers" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(1, 2, 3)
             }
 
@@ -237,7 +237,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by ObjectId" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(ObjectId("651bd39c0ff5011eca8979ca"))
             }
 
@@ -260,7 +260,7 @@ class InSearchOperatorDslTest : FreeSpec({
 
         "should build a value by multiple ObjectId" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 value(
                     ObjectId("651bd39c0ff5011eca8979ca"),
                     ObjectId("651bd39c0ff5011eca8979cb"),
@@ -293,7 +293,7 @@ class InSearchOperatorDslTest : FreeSpec({
     "score" - {
         "should build a score by score option" {
             // given
-            val operator = inSearchOperator {
+            val operator = `in` {
                 score {
                     constant(1.0)
                 }

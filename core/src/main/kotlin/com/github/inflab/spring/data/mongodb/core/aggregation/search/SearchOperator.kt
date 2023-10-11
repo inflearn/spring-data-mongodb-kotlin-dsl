@@ -166,5 +166,5 @@ interface SearchOperator {
      * @param configuration The configuration block for the [InSearchOperatorDsl].
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/in">in</a>
      */
-    fun inSearchOperator(configuration: InSearchOperatorDsl.() -> Unit)
+    fun `in`(configuration: InSearchOperatorDsl.() -> Unit)
 }
