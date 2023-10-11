@@ -268,6 +268,16 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that limits the number of documents passed to the next stage in the pipeline.
+     *
+     * @param maxElements Must not be less than zero.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/limit/">$limit (aggregation)</a>
+     */
+    fun limit(maxElements: Long) {
+        operations += Aggregation.limit(maxElements)
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
