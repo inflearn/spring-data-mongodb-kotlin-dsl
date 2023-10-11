@@ -27,7 +27,7 @@ class InSearchRepository(
                         }
                     }
                     should {
-                        inSearchOperator {
+                        `in` {
                             path("_id")
                             value(
                                 ObjectId("5ca4bbcea2dd94ee58162a72"),
