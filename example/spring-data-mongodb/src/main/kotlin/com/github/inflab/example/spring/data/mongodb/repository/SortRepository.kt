@@ -2,9 +2,7 @@ package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.bson.Document
-import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.query.TextCriteria
 import org.springframework.stereotype.Repository
