@@ -278,6 +278,17 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that separates documents into groups according to a "group key".
+     * The output is one document for each unique group key.
+     *
+     * @param configuration The configuration block for the [GroupStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/group">$group (aggregation)</a>
+     */
+    fun group(configuration: GroupStageDsl.() -> Unit) {
+        operations += GroupStageDsl().apply(configuration).build()
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
