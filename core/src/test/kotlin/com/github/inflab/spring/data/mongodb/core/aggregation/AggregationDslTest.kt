@@ -313,4 +313,20 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "group" - {
+        "should create group stage" {
+            // when
+            val aggregation = aggregation {
+                group {
+                    _idNull()
+                }
+            }
+
+            // then
+            aggregation.toString() shouldBe Aggregation.newAggregation(
+                Aggregation.group(),
+            ).toString()
+        }
+    }
 })
