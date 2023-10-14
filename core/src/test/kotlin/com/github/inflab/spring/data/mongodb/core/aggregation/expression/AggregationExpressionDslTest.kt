@@ -303,4 +303,20 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "count" - {
+        "should build an expression" {
+            // when
+            val result = expression { count() }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}count": {}
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

@@ -5,6 +5,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithme
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
+import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
 import kotlin.reflect.KProperty
@@ -155,4 +156,11 @@ class AggregationExpressionDsl {
      */
     fun subtract(configuration: SubtractExpressionDsl.() -> AggregationExpression): AggregationExpression =
         SubtractExpressionDsl().configuration()
+
+    /**
+     * Returns the number of documents in a group.
+     */
+    fun count() = AggregationExpression {
+        Document("\$count", Document())
+    }
 }
