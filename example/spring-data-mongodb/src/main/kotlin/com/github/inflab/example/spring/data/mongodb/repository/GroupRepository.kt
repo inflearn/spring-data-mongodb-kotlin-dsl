@@ -29,7 +29,7 @@ class GroupRepository(
     fun count(): AggregationResults<CountDto> {
         val aggregation = aggregation {
             group {
-                _idNull()
+                idNull()
                 "count" accumulator {
                     count()
                 }
@@ -47,7 +47,7 @@ class GroupRepository(
     fun groupByItemHaving(): AggregationResults<GroupByItemHavingDto> {
         val aggregation = aggregation {
             group {
-                _id(Sales::item)
+                id(Sales::item)
                 "totalSaleAmount" accumulator {
                     // TODO: add $sum operator
                     AccumulatorOperators.Sum.sumOf(
@@ -81,7 +81,7 @@ class GroupRepository(
             )
 
             group {
-                _id {
+                id {
                     // TODO: add $dayOfYear operator
                     DateOperators.DateToString.dateOf(Sales::date.name).toString("%Y-%m-%d")
                 }

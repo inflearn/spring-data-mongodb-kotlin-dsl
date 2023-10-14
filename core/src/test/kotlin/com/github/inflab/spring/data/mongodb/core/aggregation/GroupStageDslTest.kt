@@ -11,7 +11,7 @@ internal class GroupStageDslTest : FreeSpec({
         "should build by null" {
             // when
             val stage = group {
-                _idNull()
+                idNull()
             }
 
             // then
@@ -33,7 +33,7 @@ internal class GroupStageDslTest : FreeSpec({
             // given
             val path = "path"
             val stage = group {
-                _id(path)
+                id(path)
             }
 
             // when
@@ -55,7 +55,7 @@ internal class GroupStageDslTest : FreeSpec({
             // given
             data class Test(val property: String)
             val stage = group {
-                _id(Test::property)
+                id(Test::property)
             }
 
             // when
@@ -76,7 +76,7 @@ internal class GroupStageDslTest : FreeSpec({
         "should build by expression" {
             // given
             val stage = group {
-                _id {
+                id {
                     abs("field")
                 }
             }
