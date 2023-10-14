@@ -1,11 +1,13 @@
 package com.github.inflab.example.spring.data.mongodb.repository.atlas
 
-import com.github.inflab.example.spring.data.mongodb.entity.sample.Users
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.bson.types.ObjectId
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
@@ -13,6 +15,29 @@ import java.time.LocalDateTime
 class EqualsSearchRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
+
+    data class UserAccount(
+        @Field("new_user")
+        val newUser: Boolean,
+        @Field("active_user")
+        val activeUser: Boolean,
+    )
+
+    @Document("users")
+    data class Users(
+        @Id
+        val id: String,
+        val name: String,
+        @Field("verified_user")
+        val verifiedUser: Boolean,
+        val account: UserAccount,
+        val teammates: List<String>,
+        val region: String,
+        @Field("account_created")
+        val accountCreated: LocalDateTime,
+        @Field("employee_number")
+        val employeeNumber: Int,
+    )
 
     data class NameAndScoreDto(val name: String, val score: Double)
 
