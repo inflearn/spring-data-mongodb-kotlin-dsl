@@ -319,7 +319,7 @@ internal class AggregationDslTest : FreeSpec({
             // when
             val aggregation = aggregation {
                 group {
-                    _idNull()
+                    idNull()
                 }
             }
 
