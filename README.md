@@ -33,6 +33,86 @@ dependencies {
 }
 ```
 
+## Why do you need this library?
+
+### Type-safe DSL for aggregation operations
+
+Spring Data MongoDB provides a convenient way to create [aggregation operations](https://www.mongodb.com/docs/manual/aggregation/).
+With this library, you can use aggregation operations in a more concise and type-safe way.
+
+For example, if you want to use the `$subtract` operator in the `$project` stage, 
+you can write the following code using Spring Data MongoDB.
+
+```java
+Aggregation.newAggregation(
+    Aggregation.project()
+        .andInclude("item")
+        .and(ArithmeticOperators.Subtract.valueOf("date").subtract(5 * 60 * 1000))
+        .`as`("dateDifference"),
+)
+```
+
+you can write the same code as follows.
+
+```kotlin
+aggregation {
+    project {
+        +Sales::item
+        "dateDifference" expression {
+            subtract {
+                of(Sales::date) - (5 * 60 * 1000)
+            }
+        }
+    }
+}
+```
+
+### DSL for Atlas Search
+
+Spring Data MongoDB does not provide a convenient way to use [Atlas Search](https://docs.atlas.mongodb.com/atlas-search).
+In [official documentation](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.aggregation.supported-aggregation-operations),
+it suggests using `stage` method and passing the aggregation pipeline as a string.
+
+```java
+Aggregation.stage("""
+    { $search : {
+        "near": {
+          "path": "released",
+          "origin": { "$date": { "$numberLong": "..." } } ,
+          "pivot": 7
+        }
+      }
+    }
+""");
+```
+
+This approach has the following disadvantages.
+
+- It is not type-safe.
+- It is not easy to read and maintain.
+- It is easy to make a mistake in the query.
+
+However, if you use this library, you can use Atlas Search in a type-safe way.
+
+```kotlin
+aggregation {
+    search {
+        near {
+            path(Movies::released)
+            origin(LocalDateTime.now())
+            pivot(7)
+        }
+    }
+}
+```
+
+### KDoc for all DSL functions and properties
+
+This library provides KDoc for all DSL functions and properties.
+You can easily find out what each function and property does by hovering over it in your IDE.
+
+![kdoc.png](image/kdoc.png)
+
 ## Examples
 
 This project provides `example` module that contains examples of how to use the library.
@@ -107,18 +187,17 @@ There are two types of tests: one that requires a MongoDB Community instance and
 
 - MongoDB Community
 
-The repositories that are not under the `com.github.inflab.example.spring.data.mongodb.repository.atlas` package requires a MongoDB Community instance.
+The repositories that are **not under** the `com.github.inflab.example.spring.data.mongodb.repository.atlas` package requires a MongoDB Community instance.
 To run the MongoDB Community instance, we use [Testcontainers](https://www.testcontainers.org/).
 Therefore, you need to install and run Docker on your machine.
 
 - MongoDB Atlas
 
 The repositories that are under the `com.github.inflab.example.spring.data.mongodb.repository.atlas` package requires a MongoDB Atlas instance.
-You need to create a MongoDB Atlas instance and set the connection information in the `application.yml` file.
+You need to [create a MongoDB Atlas instance](https://www.mongodb.com/docs/atlas/getting-started) and set the connection information in the `application.yml` file.
 
 > [!NOTE]
-> you can copy a sample `application.yml` file
-> from [application.sample.yml](example/spring-data-mongodb/src/test/resources/application.sample.yml)
+> you can create the `application.yml` file by copying `example/spring-data-mongodb/src/test/resources/application.sample.yml` file.
 
 ```yaml
 spring:
@@ -132,7 +211,7 @@ spring:
 You should refer to [the following manual](https://www.mongodb.com/docs/atlas/sample-data/) to configure sample data as well.
 Because most example codes are provided based on the sample data.
 If test codes are using `Atlas Search`, you also need to create a suitable search index.
-Please refer to each example documentation for more information.
+Please refer to each documentation of the example code for more information.
 
 ## Contributors
 
