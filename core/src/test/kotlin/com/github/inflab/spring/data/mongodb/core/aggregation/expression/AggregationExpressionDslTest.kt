@@ -319,4 +319,20 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "sum" - {
+        "should build an expression" {
+            // when
+            val result = expression { sum() }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}sum": 1
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
