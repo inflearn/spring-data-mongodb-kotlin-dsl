@@ -163,4 +163,12 @@ class AggregationExpressionDsl {
     fun count() = AggregationExpression {
         Document("\$count", Document())
     }
+
+    /**
+     * Returns a sum of numerical values.
+     * Ignores non-numeric values.
+     */
+    fun sum() = AggregationExpression {
+        Document("\$sum", 1)
+    }
 }
