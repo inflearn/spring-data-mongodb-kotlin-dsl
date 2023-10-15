@@ -4,7 +4,6 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators
-import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
 import org.springframework.data.mongodb.core.aggregation.DateOperators
@@ -49,13 +48,11 @@ class GroupRepository(
             group {
                 id(Sales::item)
                 "totalSaleAmount" accumulator {
-                    // TODO: add $sum operator
                     AccumulatorOperators.Sum.sumOf(
                         ArithmeticOperators.Multiply.valueOf(Sales::price.name).multiplyBy(Sales::quantity.name),
                     )
                 }
             }
-            // TODO: add $match operator
             match(Criteria.where("totalSaleAmount").gt(100))
         }
 
@@ -74,7 +71,6 @@ class GroupRepository(
      */
     fun groupByDayAndYear(): AggregationResults<GroupByDayAndYearDto> {
         val aggregation = aggregation {
-            // TODO: add $match operator
             match(
                 Criteria.where(Sales::date.name).gte(LocalDateTime.of(2014, 1, 1, 0, 0, 0))
                     .lt(LocalDateTime.of(2015, 1, 1, 0, 0, 0)),
@@ -96,8 +92,7 @@ class GroupRepository(
                     AccumulatorOperators.Avg.avgOf(Sales::quantity.name)
                 }
                 "count" accumulator {
-                    // TODO: add $sum operator
-                    AggregationExpression { org.bson.Document("\$sum", 1) }
+                    sum()
                 }
             }
 
