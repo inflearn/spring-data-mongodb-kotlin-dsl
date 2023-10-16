@@ -289,6 +289,16 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that add fields in documents.
+     *
+     * @param configuration The configuration block for the [AddFieldsStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/addFields">$addFields (aggregation)</a>
+     */
+    fun addFields(configuration: AddFieldsStageDsl.() -> Unit) {
+        operations += AddFieldsStageDsl().apply(configuration).get()
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
