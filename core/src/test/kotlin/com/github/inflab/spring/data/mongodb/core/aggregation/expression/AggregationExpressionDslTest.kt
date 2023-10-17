@@ -335,4 +335,42 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "literal" - {
+        "should build by value" {
+            // when
+            val result = expression {
+                literal(3)
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}literal": 3
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build by expression" {
+            // when
+            val result = expression {
+                literal {
+                    abs(3)
+                }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}literal": {
+                    "${'$'}abs": 3
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
