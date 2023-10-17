@@ -8,6 +8,7 @@ import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators
+import org.springframework.data.mongodb.core.aggregation.LiteralOperators
 import kotlin.reflect.KProperty
 
 /**
@@ -171,4 +172,24 @@ class AggregationExpressionDsl {
     fun sum() = AggregationExpression {
         Document("\$sum", 1)
     }
+
+    /**
+     * Returns a value without parsing.
+     * Use for values that the aggregation pipeline may interpret as an expression.
+     *
+     * @param T The type of the value.
+     * @param value The raw value.
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/literal/#mongodb-expression-exp.-literal">$literal</a>
+     */
+    fun <T> literal(value: T): AggregationExpression = LiteralOperators.valueOf(value as Any).asLiteral()
+
+    /**
+     * Returns a value without parsing.
+     * Use for values that the aggregation pipeline may interpret as an expression.
+     *
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/literal/#mongodb-expression-exp.-literal">$literal</a>
+     */
+    fun literal(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        LiteralOperators.valueOf(AggregationExpressionDsl().configuration()).asLiteral()
 }
