@@ -33,4 +33,25 @@ class LiteralExpressionRepository(
 
         return mongoTemplate.aggregate<StoreInventory, CostsOneDollarDto>(aggregation)
     }
+
+    @Document("books")
+    data class Book(@Id val id: Long, val title: String, val condition: String)
+
+    data class EditionNumberValueDto(val id: Long, val title: String, val editionNumber: Int)
+
+    /**
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/literal/#treat---as-a-literal">Treat $ as a literal</a>
+     */
+    fun addEditionNumberValue(): AggregationResults<EditionNumberValueDto> {
+        val aggregation = aggregation {
+            project {
+                +Book::title.name
+                "editionNumber" expression {
+                    literal(1)
+                }
+            }
+        }
+
+        return mongoTemplate.aggregate<Book, EditionNumberValueDto>(aggregation)
+    }
 }
