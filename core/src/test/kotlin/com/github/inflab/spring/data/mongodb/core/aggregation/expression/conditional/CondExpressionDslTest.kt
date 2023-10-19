@@ -16,7 +16,7 @@ internal class CondExpressionDslTest : FreeSpec({
 
             // when
             val result = cond {
-                case(document) then true otherwise false
+                case(document) thenValue true otherwiseValue false
             }
 
             // then
@@ -41,7 +41,7 @@ internal class CondExpressionDslTest : FreeSpec({
 
             // when
             val result = cond {
-                case(field) then true otherwise false
+                case(field) thenValue true otherwiseValue false
             }
 
             // then
@@ -64,7 +64,7 @@ internal class CondExpressionDslTest : FreeSpec({
 
             // when
             val result = cond {
-                case(Test::property) then true otherwise false
+                case(Test::property) thenValue true otherwiseValue false
             }
 
             // then
@@ -87,7 +87,7 @@ internal class CondExpressionDslTest : FreeSpec({
 
             // when
             val result = cond {
-                case(criteria) then true otherwise false
+                case(criteria) thenValue true otherwiseValue false
             }
 
             // then
@@ -107,7 +107,7 @@ internal class CondExpressionDslTest : FreeSpec({
         "should create a condition by expression" {
             // when
             val result = cond {
-                case { abs("field") } then true otherwise false
+                case { abs("field") } thenValue true otherwiseValue false
             }
 
             // then
@@ -131,7 +131,7 @@ internal class CondExpressionDslTest : FreeSpec({
         "should create a then by string field" {
             // when
             val result = cond {
-                case("field") then "thenField" otherwise false
+                case("field") then "thenField" otherwiseValue false
             }
 
             // then
@@ -148,10 +148,33 @@ internal class CondExpressionDslTest : FreeSpec({
             )
         }
 
+        "should create a then by property" {
+            // given
+            data class Test(val property: Long?)
+
+            // when
+            val result = cond {
+                case("field") then Test::property otherwiseValue false
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}cond": {
+                    "if": "${'$'}field",
+                    "then": "${'$'}property",
+                    "else": false
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
         "should create a then by expression" {
             // when
             val result = cond {
-                case("field") then { literal(1) } otherwise false
+                case("field") then { literal(1) } otherwiseValue false
             }
 
             // then
@@ -172,10 +195,10 @@ internal class CondExpressionDslTest : FreeSpec({
     }
 
     "otherwise" - {
-        "should create a otherwise by string field" {
+        "should create an otherwise by string field" {
             // when
             val result = cond {
-                case("field") then true otherwise "otherwiseField"
+                case("field") thenValue true otherwise "otherwiseField"
             }
 
             // then
@@ -192,10 +215,33 @@ internal class CondExpressionDslTest : FreeSpec({
             )
         }
 
-        "should create a otherwise by expression" {
+        "should create an otherwise by property" {
+            // given
+            data class Test(val property: String?)
+
             // when
             val result = cond {
-                case("field") then true otherwise { literal(1) }
+                case("field") thenValue true otherwise Test::property
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}cond": {
+                    "if": "${'$'}field",
+                    "then": true,
+                    "else": "${'$'}property"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should create an otherwise by expression" {
+            // when
+            val result = cond {
+                case("field") thenValue true otherwise { literal(1) }
             }
 
             // then
