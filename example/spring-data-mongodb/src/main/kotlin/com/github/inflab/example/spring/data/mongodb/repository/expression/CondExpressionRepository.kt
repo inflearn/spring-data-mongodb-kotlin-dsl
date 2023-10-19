@@ -16,7 +16,7 @@ class CondExpressionRepository(
     @Document("inventory")
     data class Inventory(@Id val id: Long, val item: String, val qty: Int)
 
-    data class DiscountDto(@Id val id: Long, val item: String, val discount: Int)
+    data class DiscountDto(val id: Long, val item: String, val discount: Int)
 
     /**
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cond/#example">Example</a>
@@ -30,7 +30,7 @@ class CondExpressionRepository(
                         case {
                             // TODO: add $gte expression
                             ComparisonOperators.Gte.valueOf(Inventory::qty.name).greaterThanEqualToValue(250)
-                        } then 30 otherwise 20
+                        } thenValue 30 otherwiseValue 20
                     }
                 }
             }

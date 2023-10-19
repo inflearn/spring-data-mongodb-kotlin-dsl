@@ -81,7 +81,7 @@ class CondExpressionDsl {
      * @param value the value to be used if the condition evaluates `true`.
      * Can be a [Document], a value that is supported by MongoDB or a value that can be converted to a MongoDB representation but must not be `null`.
      */
-    infix fun Case.then(value: Any) = Then(this.value.then(value))
+    infix fun Case.thenValue(value: Any) = Then(this.value.then(value))
 
     /**
      * Then the given [field] from the previously specified argument.
@@ -89,6 +89,13 @@ class CondExpressionDsl {
      * @param field The name of the field.
      */
     infix fun Case.then(field: String) = Then(this.value.thenValueOf(field))
+
+    /**
+     * Then the given [property] from the previously specified argument.
+     *
+     * @param property The property of the field.
+     */
+    infix fun Case.then(property: KProperty<*>) = then(property.toDotPath())
 
     /**
      * Then the given [configuration] from the previously specified argument.
@@ -104,7 +111,7 @@ class CondExpressionDsl {
      * @param value the value to be used if the condition evaluates `false`.
      * Can be a [Document], a value that is supported by MongoDB or a value that can be converted to a MongoDB representation but must not be `null`.
      */
-    infix fun Then.otherwise(value: Any) = this.value.otherwise(value)
+    infix fun Then.otherwiseValue(value: Any) = this.value.otherwise(value)
 
     /**
      * Otherwise the given [field] from the previously specified argument.
@@ -112,6 +119,13 @@ class CondExpressionDsl {
      * @param field The name of the field.
      */
     infix fun Then.otherwise(field: String) = this.value.otherwiseValueOf(field)
+
+    /**
+     * Otherwise the given [property] from the previously specified argument.
+     *
+     * @param property The property of the field.
+     */
+    infix fun Then.otherwise(property: KProperty<*>) = otherwise(property.toDotPath())
 
     /**
      * Otherwise the given [configuration] from the previously specified argument.
