@@ -38,7 +38,7 @@ internal class LiteralExpressionRepositoryTest : FreeSpec({
                 id = 2,
                 title = "The Little Prince",
                 condition = "new",
-            )
+            ),
         )
 
         mongoTemplate.insertAll(books)
@@ -62,7 +62,7 @@ internal class LiteralExpressionRepositoryTest : FreeSpec({
 
         // then
         result.mappedResults shouldBe listOf(
-            LiteralExpressionRepository.EditionNumberValueDto(id = 1, title = "Dracula",  editionNumber = 1),
+            LiteralExpressionRepository.EditionNumberValueDto(id = 1, title = "Dracula", editionNumber = 1),
             LiteralExpressionRepository.EditionNumberValueDto(id = 2, title = "The Little Prince", editionNumber = 1),
         )
     }

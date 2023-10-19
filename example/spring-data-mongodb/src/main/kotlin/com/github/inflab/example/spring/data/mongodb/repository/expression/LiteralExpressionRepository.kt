@@ -45,7 +45,7 @@ class LiteralExpressionRepository(
     fun addEditionNumberValue(): AggregationResults<EditionNumberValueDto> {
         val aggregation = aggregation {
             project {
-                +Book::title.name
+                +Book::title
                 "editionNumber" expression {
                     literal(1)
                 }
