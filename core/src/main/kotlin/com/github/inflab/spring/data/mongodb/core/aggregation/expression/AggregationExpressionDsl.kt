@@ -5,6 +5,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithme
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
@@ -214,4 +215,18 @@ class AggregationExpressionDsl {
      */
     fun cond(configuration: CondExpressionDsl.() -> AggregationExpression): AggregationExpression =
         CondExpressionDsl().configuration()
+
+    /**
+     * Evaluates input expressions for null values and returns:
+     *
+     * - The first non-null input expression value found.
+     * - A replacement expression value if all input expressions evaluate to null.
+     *
+     * `$ifNull` treats undefined values and missing fields as null.
+     *
+     * @param configuration The configuration block for the [IfNullExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ifNull/#-ifnull--aggregation-">$ifNull</a>
+     */
+    fun ifNull(configuration: IfNullExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        IfNullExpressionDsl().configuration()
 }
