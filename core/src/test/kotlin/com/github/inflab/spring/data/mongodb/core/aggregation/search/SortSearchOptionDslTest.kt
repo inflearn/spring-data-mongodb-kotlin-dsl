@@ -2,6 +2,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import java.time.temporal.Temporal
 
 internal class SortSearchOptionDslTest : FreeSpec({
@@ -23,6 +24,7 @@ internal class SortSearchOptionDslTest : FreeSpec({
         val result = option.build()
 
         // then
+        result.shouldNotBeNull()
         result.shouldBeJson(
             """
             {
@@ -65,6 +67,7 @@ internal class SortSearchOptionDslTest : FreeSpec({
         val result = option.build()
 
         // then
+        result.shouldNotBeNull()
         result.shouldBeJson(
             """
                 {
@@ -109,6 +112,7 @@ internal class SortSearchOptionDslTest : FreeSpec({
         val result = option.build()
 
         // then
+        result.shouldNotBeNull()
         result.shouldBeJson(
             """
                 {

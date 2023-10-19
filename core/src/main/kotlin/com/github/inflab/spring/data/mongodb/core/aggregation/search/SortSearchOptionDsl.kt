@@ -122,9 +122,12 @@ class SortSearchOptionDsl {
     @JvmName("byStringIterable")
     infix fun KProperty<Iterable<String?>?>.by(order: Order) = this.toDotPath() by order
 
-    internal fun build(): Document {
-        val document = Document()
+    internal fun build(): Document? {
+        if (options.isEmpty()) {
+            return null
+        }
 
+        val document = Document()
         options.forEach {
             when (it) {
                 is SortOption.Field -> document[it.field] = it.order.value
