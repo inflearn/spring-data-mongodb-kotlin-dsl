@@ -100,7 +100,7 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/sort">Sort Atlas Search Results</a>
      */
     fun sort(configuration: SortSearchOptionDsl.() -> Unit) {
-        document["sort"] = SortSearchOptionDsl().apply(configuration).build()
+        SortSearchOptionDsl().apply(configuration).build()?.let { document["sort"] = it }
     }
 
     internal fun build(): SearchOperation {

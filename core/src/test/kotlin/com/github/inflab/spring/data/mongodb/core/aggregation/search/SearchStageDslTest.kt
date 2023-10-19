@@ -188,6 +188,25 @@ internal class SearchStageDslTest : FreeSpec({
     }
 
     "sort" - {
+        "should not build when there is empty option" {
+            // given
+            val stage = search {
+                sort { }
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {}
+                }
+                """.trimIndent(),
+            )
+        }
+
         "should build a sort option" {
             // given
             val stage = search {
