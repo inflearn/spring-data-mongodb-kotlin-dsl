@@ -4,6 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithme
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
@@ -204,4 +205,13 @@ class AggregationExpressionDsl {
      */
     fun let(configuration: LetExpressionDsl.() -> Unit): AggregationExpression =
         LetExpressionDsl().apply(configuration).build()
+
+    /**
+     * Evaluates a boolean expression to return one of the two specified return expressions.
+     *
+     * @param configuration The configuration block for the [CondExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cond/#-cond--aggregation-">$cond</a>
+     */
+    fun cond(configuration: CondExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        CondExpressionDsl().configuration()
 }
