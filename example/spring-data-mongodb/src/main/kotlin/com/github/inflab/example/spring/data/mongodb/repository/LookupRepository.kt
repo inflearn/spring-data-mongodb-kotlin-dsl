@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators.In
 import org.springframework.data.mongodb.core.aggregation.EvaluationOperators.Expr
-import org.springframework.data.mongodb.core.aggregation.VariableOperators
 import org.springframework.data.mongodb.core.aggregation.VariableOperators.Let.ExpressionVariable
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.stereotype.Repository
@@ -70,11 +69,11 @@ class LookupRepository(
                 from(RESTAURANTS)
                 localField("restaurant_name")
                 foreignField("name")
-                let(
-                    VariableOperators.Let.just(
+                let {
+                    variable(
                         ExpressionVariable.newVariable("orders_drink").forField("drink"),
-                    ),
-                )
+                    )
+                }
                 pipeline {
                     match {
                         Expr.valueOf(In.arrayOf("\$beverages").containsValue("\$\$orders_drink"))
