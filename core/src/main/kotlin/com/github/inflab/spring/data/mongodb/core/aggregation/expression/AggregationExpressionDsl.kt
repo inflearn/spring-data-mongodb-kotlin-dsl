@@ -3,9 +3,10 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
-import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.SwitchExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
@@ -229,4 +230,14 @@ class AggregationExpressionDsl {
      */
     fun ifNull(configuration: IfNullExpressionDsl.() -> AggregationExpression): AggregationExpression =
         IfNullExpressionDsl().configuration()
+
+    /**
+     * Evaluates a series of case expressions.
+     * When it finds an expression which evaluates to true, $switch executes a specified expression and breaks out of the control flow.
+     *
+     * @param configuration The configuration block for the [SwitchExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/switch/#-switch--aggregation-">$switch</a>
+     */
+    fun switch(configuration: SwitchExpressionDsl.() -> Unit): AggregationExpression =
+        SwitchExpressionDsl().apply(configuration).build()
 }
