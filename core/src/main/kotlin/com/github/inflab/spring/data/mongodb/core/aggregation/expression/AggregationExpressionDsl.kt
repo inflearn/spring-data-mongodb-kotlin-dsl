@@ -3,6 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.AddExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
@@ -192,4 +193,15 @@ class AggregationExpressionDsl {
      */
     fun literal(configuration: AggregationExpressionDsl.() -> AggregationExpression): AggregationExpression =
         LiteralOperators.valueOf(AggregationExpressionDsl().configuration()).asLiteral()
+
+    /**
+     * Defines variables for use within the scope of a subexpression and returns the result of the subexpression.
+     * Accepts named parameters.
+     * Accepts any number of argument expressions.
+     *
+     * @param configuration The configuration block for the [LetExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/let/#mongodb-expression-exp.-let">$let</a>
+     */
+    fun let(configuration: LetExpressionDsl.() -> Unit): AggregationExpression =
+        LetExpressionDsl().apply(configuration).build()
 }

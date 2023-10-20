@@ -2,8 +2,6 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
-import org.springframework.data.mongodb.core.aggregation.StringOperators
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Let
 import org.springframework.data.mongodb.core.mapping.Document
 
 internal class LookupStageDslTest : FreeSpec({
@@ -253,13 +251,9 @@ internal class LookupStageDslTest : FreeSpec({
         "should build a let option" {
             // given
             val stage = lookup {
-                let(
-                    Let.define(
-                        Let.ExpressionVariable.newVariable("order").forExpression(
-                            org.bson.Document("\$reverseArray", "\$order"),
-                        ),
-                    ).andApply(StringOperators.valueOf("test").ltrim()),
-                )
+                let {
+                    variable("order", org.bson.Document("\$reverseArray", "\$order"))
+                }
             }
 
             // when

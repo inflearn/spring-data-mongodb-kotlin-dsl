@@ -1,8 +1,8 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation
 
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.variable.LetExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
-import org.springframework.data.mongodb.core.aggregation.VariableOperators.Let
 import org.springframework.data.mongodb.core.mapping.Document
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
@@ -106,10 +106,10 @@ class LookupStageDsl {
      * Specifies variables to use in the `pipeline` stages.
      * Use the variable expressions to access the fields from the joined collection's documents that are input to the `pipeline`.
      *
-     * @param let The variables to use in the `pipeline` stages.
+     * @param configuration The configuration block for [LetExpressionDsl].
      */
-    fun let(let: Let) {
-        operation.let(let)
+    fun let(configuration: LetExpressionDsl.() -> Unit) {
+        operation.let(LetExpressionDsl().apply(configuration).build())
     }
 
     /**
