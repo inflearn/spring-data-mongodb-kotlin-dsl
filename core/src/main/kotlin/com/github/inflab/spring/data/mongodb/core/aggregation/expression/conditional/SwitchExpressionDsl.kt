@@ -32,8 +32,10 @@ class SwitchExpressionDsl {
     }
 
     /**
-     * @param defaultValue Optional. The path to take if no branch case expression evaluates to true.
+     * The path to take if no branch case expression evaluates to true.
      * Although optional, if default is unspecified and no branch case evaluates to true, $switch returns an error.
+     *
+     * @param defaultValue The default value.
      */
     fun default(defaultValue: Any) {
         this.defaultValue = defaultValue
