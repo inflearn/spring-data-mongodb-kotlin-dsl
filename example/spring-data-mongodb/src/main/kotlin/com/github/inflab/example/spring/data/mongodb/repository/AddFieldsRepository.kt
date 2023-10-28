@@ -1,6 +1,7 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
+import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -27,7 +28,7 @@ class AddFieldsRepository(
     fun addFieldsToEmbeddedDocument(): AggregationResults<Vehicle> {
         val aggregation = aggregation {
             addFields {
-                "specs.fuel_type" set "unleaded"
+                Vehicle::specs..Specs::fuelType set "unleaded"
             }
         }
 
