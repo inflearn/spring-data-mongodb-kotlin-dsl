@@ -2,6 +2,7 @@ package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -18,7 +19,7 @@ class AddFieldsRepository(
 
     data class Animal(val id: Long, val dogs: Long, val cats: Long)
 
-    data class Fruit(@Field("_id") val id: String, val item: String, val type: String)
+    data class Fruit(@Id val id: String, val item: String, val type: String)
 
     // TODO: https://www.mongodb.com/docs/v7.0/reference/operator/aggregation/addFields/#using-two--addfields-stages
 
