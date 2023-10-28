@@ -3,17 +3,20 @@ package com.github.inflab.spring.data.mongodb.core.mapping
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Field
 
 internal class KPropertyPathTest : FreeSpec({
     data class Child(
+        @Id val id: Long,
         val name: String,
         val names: List<String>,
         @Field(name = "real_name") val realName: String,
         @Field("real_names") val realNames: List<String>,
         @Field(order = 1) val order: Int,
     )
-    data class Parent(val child: Child, val children: List<Child>)
+
+    data class Parent(@Field("x") @Id val id: Long, val child: Child, val children: List<Child>)
     data class GrandParent(val parent: Parent)
 
     "should return field name for a simple property" {
@@ -124,5 +127,38 @@ internal class KPropertyPathTest : FreeSpec({
 
         // then
         actual shouldBe "parent.children.name"
+    }
+
+    "should return _id for a property with @Id annotation" {
+        // given
+        val property = Child::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "_id"
+    }
+
+    "should return _id for a nested property with @Id annotation" {
+        // given
+        val property = Parent::child..Child::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "child._id"
+    }
+
+    "should return _id for a property with @Id and @Field annotation" {
+        // given
+        val property = Parent::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "_id"
     }
 })
