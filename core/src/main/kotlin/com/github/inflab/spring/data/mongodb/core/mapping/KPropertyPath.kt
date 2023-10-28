@@ -1,5 +1,6 @@
 package com.github.inflab.spring.data.mongodb.core.mapping
 
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Field
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
@@ -37,6 +38,11 @@ internal fun asString(property: KProperty<*>): String =
  * @since 1.0
  */
 internal fun toFieldName(property: KProperty<*>): String {
+    val idAnnotation = property.javaField?.getAnnotation(Id::class.java)
+    if (idAnnotation != null) {
+        return "_id"
+    }
+
     val fieldAnnotation = property.javaField?.getAnnotation(Field::class.java) ?: return property.name
 
     return fieldAnnotation.value.ifEmpty { fieldAnnotation.name.ifEmpty { property.name } }
