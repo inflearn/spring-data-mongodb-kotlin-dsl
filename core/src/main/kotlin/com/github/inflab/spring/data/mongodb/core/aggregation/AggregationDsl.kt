@@ -299,6 +299,16 @@ class AggregationDsl {
     }
 
     /**
+     * Configures a stage that set in documents.
+     *
+     * @param configuration The configuration block for the [SetStageDsl].
+     * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/set">$set (aggregation)</a>
+     */
+    fun set(configuration: SetStageDsl.() -> Unit) {
+        operations += SetStageDsl().apply(configuration).get()
+    }
+
+    /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
      * @return The [Aggregation] built using the configured operations.
