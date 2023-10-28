@@ -37,15 +37,20 @@ internal fun asString(property: KProperty<*>): String =
  * @author Jake Son
  * @since 1.0
  */
+@Suppress("detekt:style:ReturnCount")
 internal fun toFieldName(property: KProperty<*>): String {
     val idAnnotation = property.javaField?.getAnnotation(Id::class.java)
     if (idAnnotation != null) {
         return "_id"
     }
 
-    val fieldAnnotation = property.javaField?.getAnnotation(Field::class.java) ?: return property.name
+    val fieldAnnotation = property.javaField?.getAnnotation(Field::class.java)
 
-    return fieldAnnotation.value.ifEmpty { fieldAnnotation.name.ifEmpty { property.name } }
+    if (fieldAnnotation != null) {
+        return fieldAnnotation.value.ifEmpty { fieldAnnotation.name.ifEmpty { property.name } }
+    }
+
+    return property.name
 }
 
 /**
