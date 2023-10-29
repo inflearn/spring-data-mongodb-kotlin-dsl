@@ -70,7 +70,7 @@ class MoreLikeThisSearchRepository(
 
                     mustNot {
                         equal {
-                            path("_id")
+                            path(Movies::id)
                             value(ObjectId("573a1396f29313caabce4a9a"))
                         }
                     }
@@ -134,7 +134,7 @@ class MoreLikeThisSearchRepository(
 
                     mustNot {
                         equal {
-                            path("_id")
+                            path(Movies::id)
                             value(ObjectId("573a1394f29313caabcde9ef"))
                         }
                     }

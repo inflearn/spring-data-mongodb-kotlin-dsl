@@ -38,7 +38,7 @@ internal class SortRepositoryTest : FreeSpec({
         val result = sortRepository.sortByBorough()
 
         // then
-        result.mappedResults.map { it["_id"] } shouldBe listOf(3, 5, 1, 4, 2)
+        result.mappedResults.map { it.id } shouldBe listOf(3, 5, 1, 4, 2)
     }
 
     "sortByScore" {
