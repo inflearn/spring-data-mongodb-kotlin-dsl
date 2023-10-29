@@ -3,13 +3,14 @@ package com.github.inflab.example.spring.data.mongodb.repository
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
-import org.bson.Document
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators.Avg
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators.Sum
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators.ConcatArrays
+import org.springframework.data.mongodb.core.aggregation.LiteralOperators.Literal
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.isEqualTo
@@ -123,7 +124,7 @@ class SetRepository(
             match(Criteria.where(Score::id.toDotPath()).isEqualTo(1))
             set {
                 // TODO: add $concatArrays expression
-                Score::homework set Document("\$concatArrays", listOf("\$${Score::homework.toDotPath()}", listOf(7)))
+                Score::homework set ConcatArrays.arrayOf(Score::homework.toDotPath()).concat(Literal.asLiteral(listOf(7)))
             }
         }
 
