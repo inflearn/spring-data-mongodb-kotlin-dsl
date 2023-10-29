@@ -31,7 +31,7 @@ internal fun asString(property: KProperty<*>): String =
     }
 
 /**
- * Get field name from [Field] annotation or property name.
+ * Get field name from [Field] annotation, [Id] annotation or property name.
  *
  * @param property property to get field name from
  * @author Jake Son
@@ -47,7 +47,17 @@ internal fun toFieldName(property: KProperty<*>): String {
     val fieldAnnotation = property.javaField?.getAnnotation(Field::class.java)
 
     if (fieldAnnotation != null) {
-        return fieldAnnotation.value.ifEmpty { fieldAnnotation.name.ifEmpty { property.name } }
+        if (fieldAnnotation.value.isNotEmpty()) {
+            return fieldAnnotation.value
+        }
+
+        if (fieldAnnotation.name.isNotEmpty()) {
+            return fieldAnnotation.name
+        }
+    }
+
+    if (property.name == "id") {
+        return "_id"
     }
 
     return property.name
