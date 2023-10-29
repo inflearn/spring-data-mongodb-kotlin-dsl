@@ -134,6 +134,28 @@ class SetRepositoryTest : FreeSpec({
         )
     }
 
+    "addElementToAnArray" {
+        // given
+        val documents = listOf(
+            mapOf("_id" to 1, "student" to "Maya", "homework" to listOf(10, 5, 10), "quiz" to listOf(10, 8), "extraCredit" to 0),
+            mapOf("_id" to 2, "student" to "Ryan", "homework" to listOf(5, 6, 5), "quiz" to listOf(8, 8), "extraCredit" to 8),
+        ).map(::Document)
+        mongoTemplate.insert(documents, SetRepository.SCORES)
+
+        // when
+        val result = setRepository.addElementToAnArray().mappedResults
+
+        // then
+        result shouldHaveSize 1
+        result[0] shouldBe SetRepository.Score(
+            id = 1,
+            student = "Maya",
+            homework = listOf(10, 5, 10, 7),
+            quiz = listOf(10, 8),
+            extraCredit = 0,
+        )
+    }
+
     "createNewFieldWithExistingFields" {
         // given
         val documents = listOf(

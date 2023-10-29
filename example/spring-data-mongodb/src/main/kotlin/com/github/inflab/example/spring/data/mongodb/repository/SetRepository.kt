@@ -1,7 +1,9 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
+import org.bson.Document
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
@@ -9,12 +11,23 @@ import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators.Av
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators.Sum
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.mapping.Field
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Repository
 
 @Repository
 class SetRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
+
+    data class Score(
+        @Id val id: Long,
+        val student: String,
+        val homework: List<Long>,
+        val quiz: List<Long>,
+        val extraCredit: Long,
+    )
+
     data class ScoreWithAvgQuiz(
         @Id val id: Long,
         val student: String,
@@ -102,7 +115,20 @@ class SetRepository(
         return mongoTemplate.aggregate<Fruit>(aggregation, FRUITS)
     }
 
-    // TODO: https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#add-element-to-an-array
+    /**
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#add-element-to-an-array">Add Element to an Array</a>
+     */
+    fun addElementToAnArray(): AggregationResults<Score> {
+        val aggregation = aggregation {
+            match(Criteria.where(Score::id.toDotPath()).isEqualTo(1))
+            set {
+                // TODO: add $concatArrays expression
+                Score::homework set Document("\$concatArrays", listOf("\$${Score::homework.toDotPath()}", listOf(7)))
+            }
+        }
+
+        return mongoTemplate.aggregate<Score>(aggregation, SCORES)
+    }
 
     /**
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#creating-a-new-field-with-existing-fields">Creating a New Field with Existing Fields</a>
