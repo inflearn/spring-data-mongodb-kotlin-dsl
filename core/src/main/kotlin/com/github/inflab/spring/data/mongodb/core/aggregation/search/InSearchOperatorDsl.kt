@@ -46,30 +46,10 @@ class InSearchOperatorDsl {
      * Value or values to search.
      * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
      *
-     * @param value Value to search.
-     */
-    fun value(value: Boolean) {
-        document["value"] = value
-    }
-
-    /**
-     * Value or values to search.
-     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
-     *
      * @param value Values to search.
      */
     fun value(vararg value: Boolean) {
         document["value"] = value.toList()
-    }
-
-    /**
-     * Value or values to search.
-     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
-     *
-     * @param value Value to search.
-     */
-    fun value(value: Temporal) {
-        document["value"] = value
     }
 
     /**
@@ -86,30 +66,10 @@ class InSearchOperatorDsl {
      * Value or values to search.
      * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
      *
-     * @param value Value to search.
-     */
-    fun value(value: Number) {
-        document["value"] = value
-    }
-
-    /**
-     * Value or values to search.
-     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
-     *
      * @param value Values to search.
      */
     fun value(vararg value: Number) {
         document["value"] = value.toList()
-    }
-
-    /**
-     * Value or values to search.
-     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
-     *
-     * @param value Value to search.
-     */
-    fun value(value: ObjectId) {
-        document["value"] = value
     }
 
     /**
