@@ -29,13 +29,14 @@ class InSearchOperatorDsl {
     }
 
     /**
-     * The score assigned to matching search term results. Use one of the following options to modify the score:
+     * The score assigned to matching search term results.
+     * Use one of the following options to modify the score:
      *
      * - boost: multiply the result score by the given number.
      * - constant: replace the result score with the given number.
      * - function: replace the result score using the given expression.
      *
-     *  @param scoreConfiguration The configuration block for [ScoreSearchOptionDsl]
+     *  @param scoreConfiguration The configuration block for [ScoreSearchOptionDsl].
      */
     fun score(scoreConfiguration: ScoreSearchOptionDsl.() -> Unit) {
         document["score"] = ScoreSearchOptionDsl().apply(scoreConfiguration).get()
