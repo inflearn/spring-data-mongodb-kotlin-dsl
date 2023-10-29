@@ -1,6 +1,7 @@
 package com.github.inflab.example.spring.data.mongodb.repository
 
 import com.github.inflab.spring.data.mongodb.core.aggregation.aggregation
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
@@ -13,7 +14,7 @@ class UnionWithRepository(
 ) {
 
     data class SalesDto(
-        val id: String,
+        @Id val id: String,
         val store: String,
         val item: String,
         val quantity: Int,
@@ -47,7 +48,7 @@ class UnionWithRepository(
             }
 
             sort {
-                "_id" by asc
+                SalesDto::id by asc
                 "store" by asc
                 "item" by asc
             }
