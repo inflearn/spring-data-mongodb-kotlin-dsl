@@ -151,7 +151,7 @@ internal class KPropertyPathTest : FreeSpec({
         actual shouldBe "child._id"
     }
 
-    "should return _id for a property with @Id and @Field annotation" {
+    "should return _id for a named id property with @Id and @Field annotation" {
         // given
         val property = Parent::id
 
@@ -160,5 +160,41 @@ internal class KPropertyPathTest : FreeSpec({
 
         // then
         actual shouldBe "_id"
+    }
+
+    "should return _id for a named id property without annotation" {
+        // given
+        data class Test(val id: Long)
+        val property = Test::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "_id"
+    }
+
+    "should return _id for a named id property with empty @Field annotation" {
+        // given
+        data class Test(@Field val id: Long)
+        val property = Test::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "_id"
+    }
+
+    "should return field name for a named id property with @Field annotation" {
+        // given
+        data class Test(@Field("x") val id: Long)
+        val property = Test::id
+
+        // when
+        val actual = property.toDotPath()
+
+        // then
+        actual shouldBe "x"
     }
 })
