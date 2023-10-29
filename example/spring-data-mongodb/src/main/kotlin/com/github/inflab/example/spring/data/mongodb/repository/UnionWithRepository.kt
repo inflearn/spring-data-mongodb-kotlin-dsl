@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
-import org.springframework.data.mongodb.core.aggregation.SetOperation
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -24,33 +23,40 @@ class UnionWithRepository(
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#report-1--all-sales-by-year-and-stores-and-items">All Sales by Year and Stores and Items</a>
      */
     fun findSalesByYearAndStoresAndItems(): AggregationResults<SalesDto> {
-        // TODO: apply $set dsl
         val aggregation = aggregation {
-            stage(SetOperation.set("_id").toValue("2017"))
+            set {
+                SalesDto::id set "2017"
+            }
 
             unionWith {
                 coll(SALES_2018)
                 pipeline {
-                    stage(SetOperation.set("_id").toValue("2018"))
+                    set {
+                        SalesDto::id set "2018"
+                    }
                 }
             }
             unionWith {
                 coll(SALES_2019)
                 pipeline {
-                    stage(SetOperation.set("_id").toValue("2019"))
+                    set {
+                        SalesDto::id set "2019"
+                    }
                 }
             }
             unionWith {
                 coll(SALES_2020)
                 pipeline {
-                    stage(SetOperation.set("_id").toValue("2020"))
+                    set {
+                        SalesDto::id set "2020"
+                    }
                 }
             }
 
             sort {
                 SalesDto::id by asc
-                "store" by asc
-                "item" by asc
+                SalesDto::store by asc
+                SalesDto::item by asc
             }
         }
 

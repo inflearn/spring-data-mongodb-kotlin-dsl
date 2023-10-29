@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators.ArrayElemAt
 import org.springframework.data.mongodb.core.aggregation.ReplaceWithOperation
-import org.springframework.data.mongodb.core.aggregation.SetOperation
 import org.springframework.data.mongodb.core.aggregation.SystemVariable
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
@@ -217,11 +216,10 @@ class SortSearchRepository(
                     .`as`("meta"),
             )
 
-            // TODO: add $set stage
-            stage(
-                SetOperation.set("meta")
-                    .toValueOf(ArrayElemAt.arrayOf("\$meta").elementAt(0)),
-            )
+            set {
+                // TODO: add $arrayElemAt expression
+                "meta" set ArrayElemAt.arrayOf("\$meta").elementAt(0)
+            }
         }
 
         return mongoTemplate.aggregate<Movies, SortByFacetDto>(aggregation)
