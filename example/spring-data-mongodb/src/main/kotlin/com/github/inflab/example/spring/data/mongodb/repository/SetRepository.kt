@@ -62,12 +62,12 @@ class SetRepository(
         val aggregation = aggregation {
             set {
                 // TODO: add $sum expression
-                "totalHomework" set Sum.sumOf("homework")
-                "totalQuiz" set Sum.sumOf("quiz")
+                ScoreWithTotal::totalHomework set Sum.sumOf("homework")
+                ScoreWithTotal::totalQuiz set Sum.sumOf("quiz")
             }
             set {
-                "totalScore" set {
-                    add { of("totalHomework") and "totalQuiz" and "extraCredit" }
+                ScoreWithTotal::totalScore set {
+                    add { of(ScoreWithTotal::totalHomework) and ScoreWithTotal::totalQuiz and ScoreWithTotal::extraCredit }
                 }
             }
         }
@@ -137,7 +137,7 @@ class SetRepository(
         val aggregation = aggregation {
             set {
                 // TODO: add $avg expression
-                "quizAverage" set Avg.avgOf("quiz")
+                ScoreWithAvgQuiz::quizAverage set Avg.avgOf("quiz")
             }
         }
 
