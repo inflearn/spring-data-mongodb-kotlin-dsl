@@ -43,19 +43,6 @@ class InSearchOperatorDsl {
     }
 
     /**
-     * The indexed field to search.
-     * You can also specify a wildcard path to search.
-     * See path construction for more information.
-     *
-     * @param path Indexed field to search.
-     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
-     */
-    @JvmName("pathIterable")
-    fun path(path: KProperty<Iterable<*>?>) {
-        document["path"] = path.toDotPath()
-    }
-
-    /**
      * The score assigned to matching search term results.
      * Use one of the following options to modify the score:
      *

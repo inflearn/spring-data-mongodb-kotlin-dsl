@@ -312,7 +312,7 @@ class AggregationDsl {
      * Configures a stage that randomly selects the specified number of documents from the input documents to the pipeline.
      *
      * @param sampleSize Must not be less than zero.
-     * @see <a href="https:://www.mongodb.com/docs/manual/reference/operator/aggregation/sample/">$sample (aggregation)</a>
+     * @see <a href="https:://www.mongodb.com/docs/manual/reference/operator/aggregation/sample">$sample (aggregation)</a>
      */
     fun sample(sampleSize: Long) {
         operations += Aggregation.sample(sampleSize)

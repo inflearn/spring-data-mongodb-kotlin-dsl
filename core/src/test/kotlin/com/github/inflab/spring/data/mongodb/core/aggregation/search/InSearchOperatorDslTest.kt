@@ -6,7 +6,7 @@ import org.bson.types.ObjectId
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class InSearchOperatorDslTest : FreeSpec({
+internal class InSearchOperatorDslTest : FreeSpec({
     fun `in`(block: InSearchOperatorDsl.() -> Unit): InSearchOperatorDsl =
         InSearchOperatorDsl().apply(block)
 
