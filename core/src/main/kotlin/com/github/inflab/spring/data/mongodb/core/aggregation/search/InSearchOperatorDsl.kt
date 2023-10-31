@@ -1,9 +1,11 @@
 package com.github.inflab.spring.data.mongodb.core.aggregation.search
 
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.bson.Document
 import org.bson.types.ObjectId
 import java.time.temporal.Temporal
+import kotlin.reflect.KProperty
 
 /**
  * A Kotlin DSL to configure the in operator using idiomatic Kotlin code.
@@ -26,6 +28,31 @@ class InSearchOperatorDsl {
      */
     fun path(path: String) {
         document["path"] = path
+    }
+
+    /**
+     * The indexed field to search.
+     * You can also specify a wildcard path to search.
+     * See path construction for more information.
+     *
+     * @param path Indexed field to search.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
+     */
+    fun path(path: KProperty<*>) {
+        document["path"] = path.toDotPath()
+    }
+
+    /**
+     * The indexed field to search.
+     * You can also specify a wildcard path to search.
+     * See path construction for more information.
+     *
+     * @param path Indexed field to search.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/path-construction/#std-label-ref-path">Path Construction</a>
+     */
+    @JvmName("pathIterable")
+    fun path(path: KProperty<Iterable<*>?>) {
+        document["path"] = path.toDotPath()
     }
 
     /**
