@@ -329,4 +329,16 @@ internal class AggregationDslTest : FreeSpec({
             ).toString()
         }
     }
+
+    "sample" {
+        // when
+        val aggregation = aggregation {
+            sample(3L)
+        }
+
+        // then
+        aggregation.toString() shouldBe Aggregation.newAggregation(
+            Aggregation.sample(3L),
+        ).toString()
+    }
 })
