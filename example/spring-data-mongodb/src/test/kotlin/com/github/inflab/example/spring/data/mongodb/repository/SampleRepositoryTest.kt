@@ -11,7 +11,7 @@ internal class SampleRepositoryTest : FreeSpec({
     val sampleRepository = SampleRepository(mongoTemplate)
 
     beforeSpec {
-        val documents = listOf<User>(
+        val documents = listOf(
             User(id = "1", name = "dave123", q1 = true, q2 = true),
             User(id = "2", name = "dave2", q1 = false, q2 = false),
             User(id = "3", name = "ahn", q1 = true, q2 = true),

@@ -37,8 +37,6 @@ class InSearchRepository(
             }
         }
 
-        println(aggregation.toString())
-
         return mongoTemplate.aggregate<Customers, NameAndBirthDateDto>(aggregation)
     }
 
@@ -66,8 +64,6 @@ class InSearchRepository(
                 +Customers::accounts
             }
         }
-
-        println(aggregation.toString())
 
         return mongoTemplate.aggregate<Customers, NameAndAccountsDto>(aggregation)
     }
@@ -99,7 +95,7 @@ class InSearchRepository(
                 }
             }
 
-            // TODO: add $limit stage
+            limit(5)
 
             project {
                 +Customers::name

@@ -52,8 +52,6 @@ class IfNullExpressionRepository(
             }
         }
 
-        println(aggregation.toString())
-
         return mongoTemplate.aggregate<Inventory, ValueDto>(aggregation)
     }
 }
