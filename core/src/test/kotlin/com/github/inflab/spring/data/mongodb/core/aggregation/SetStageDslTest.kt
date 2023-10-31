@@ -3,7 +3,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 
-class SetStageDslTest : FreeSpec({
+internal class SetStageDslTest : FreeSpec({
     fun set(configuration: SetStageDsl.() -> Unit): SetStageDsl =
         SetStageDsl().apply(configuration)
 
