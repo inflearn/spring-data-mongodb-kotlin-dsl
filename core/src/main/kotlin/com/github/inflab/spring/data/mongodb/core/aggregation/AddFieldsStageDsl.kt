@@ -59,7 +59,7 @@ class AddFieldsStageDsl {
      *
      * @param configuration The configuration block where you can use DSL to define aggregation expression.
      */
-    infix fun KProperty<Any?>.set(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+    infix fun KProperty<*>.set(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
         builder.addField(this.toDotPath()).withValue(AggregationExpressionDsl().configuration())
     }
 
@@ -68,7 +68,7 @@ class AddFieldsStageDsl {
      *
      * @param path The path of the field to contain value to be added.
      */
-    infix fun KProperty<Any?>.set(path: KProperty<Any?>) {
+    infix fun KProperty<*>.set(path: KProperty<Any?>) {
         builder.addField(this.toDotPath()).withValue("${'$'}${path.toDotPath()}")
     }
 
@@ -77,7 +77,7 @@ class AddFieldsStageDsl {
      *
      * @param value The value of the field to add.
      */
-    infix fun KProperty<Any?>.set(value: Any?) {
+    infix fun KProperty<*>.set(value: Any?) {
         builder.addField(this.toDotPath()).withValue(value)
     }
 
@@ -86,7 +86,7 @@ class AddFieldsStageDsl {
      *
      * @param fieldPath The path of the field to contain value to be added.
      */
-    infix fun KProperty<Any?>.setByField(fieldPath: String) {
+    infix fun KProperty<*>.setByField(fieldPath: String) {
         builder.addField(this.toDotPath()).withValue("$$fieldPath")
     }
 
