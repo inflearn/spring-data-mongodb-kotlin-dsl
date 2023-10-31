@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class InSearchRepository(
@@ -14,15 +15,75 @@ class InSearchRepository(
 ) {
 
     /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/in/#examples">Array Value Field Match</a>
+     */
+    fun findBirthDate(): AggregationResults<NameAndBirthDateDto> {
+        val aggregation = aggregation {
+            search {
+                `in` {
+                    path(Customers::birthdate)
+                    value(
+                        LocalDateTime.of(1977, 3, 2, 2, 20, 31),
+                        LocalDateTime.of(1977, 3, 1, 0, 0, 0),
+                        LocalDateTime.of(1977, 5, 6, 21, 57, 35),
+                    )
+                }
+            }
+
+            project {
+                excludeId()
+                +Customers::name
+                +Customers::birthdate
+            }
+        }
+
+        println(aggregation.toString())
+
+        return mongoTemplate.aggregate<Customers, NameAndBirthDateDto>(aggregation)
+    }
+
+    data class NameAndBirthDateDto(val name: String, val birthdate: LocalDateTime)
+
+    /**
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/in/#examples">Array Value Field Match</a>
+     */
+    fun findAccountsByArray(): AggregationResults<NameAndAccountsDto> {
+        val aggregation = aggregation {
+            search {
+                `in` {
+                    path("accounts")
+                    value(
+                        371138,
+                        371139,
+                        371140,
+                    )
+                }
+            }
+
+            project {
+                excludeId()
+                +Customers::name
+                +Customers::accounts
+            }
+        }
+
+        println(aggregation.toString())
+
+        return mongoTemplate.aggregate<Customers, NameAndAccountsDto>(aggregation)
+    }
+
+    data class NameAndAccountsDto(val name: String, val accounts: List<Int>)
+
+    /**
      * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/in/#examples">Compound Query Match</a>
      */
-    fun findScoreByCompound(): AggregationResults<NameAndScores> {
+    fun findScoreByCompound(): AggregationResults<NameAndScoresDto> {
         val aggregation = aggregation {
             search {
                 compound {
                     must {
                         text {
-                            path("name")
+                            path(Customers::name)
                             query("James")
                         }
                     }
@@ -46,8 +107,8 @@ class InSearchRepository(
             }
         }
 
-        return mongoTemplate.aggregate<Customers, NameAndScores>(aggregation)
+        return mongoTemplate.aggregate<Customers, NameAndScoresDto>(aggregation)
     }
 
-    data class NameAndScores(val id: String, val name: String, val score: Double)
+    data class NameAndScoresDto(val id: String, val name: String, val score: Double)
 }

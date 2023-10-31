@@ -11,7 +11,7 @@ data class Customers(
     val username: String,
     val name: String,
     val address: String,
-    val birthDate: LocalDateTime,
+    val birthdate: LocalDateTime,
     val email: String,
     val accounts: List<Int>,
 )
