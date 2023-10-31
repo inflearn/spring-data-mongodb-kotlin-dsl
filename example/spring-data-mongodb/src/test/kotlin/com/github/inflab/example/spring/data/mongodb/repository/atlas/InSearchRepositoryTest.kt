@@ -29,7 +29,7 @@ internal class InSearchRepositoryTest(
 
         // then
         result.mappedResults.map { it.name } shouldBe listOf("Elizabeth Ray")
-        result.mappedResults.map { it.accounts } shouldBe listOf(371138, 324287, 276528, 332179, 422649, 387979)
+        result.mappedResults.map { it.accounts } shouldBe listOf(listOf(371138, 324287, 276528, 332179, 422649, 387979))
     }
 
     "findScoreByCompound" {
