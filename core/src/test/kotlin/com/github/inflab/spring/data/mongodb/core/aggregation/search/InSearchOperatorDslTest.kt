@@ -49,7 +49,9 @@ class InSearchOperatorDslTest : FreeSpec({
                     """
                 {
                   "in": {
-                    "value": $it
+                    "value": [
+                      $it
+                    ]
                   }
                 }
                     """.trimIndent(),
@@ -95,9 +97,11 @@ class InSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "in": {
-                    "value": {
-                      "${'$'}date": "2023-10-03T17:37:26Z"
-                    }
+                    "value": [
+                      {
+                        "${'$'}date": "2023-10-03T17:37:26Z"
+                      }
+                    ]
                   }
                 }
                 """.trimIndent(),
@@ -149,9 +153,11 @@ class InSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "in": {
-                    "value": {
-                      "${'$'}date": "2023-10-03T00:00:00Z"
-                    }
+                    "value": [
+                      {
+                        "${'$'}date": "2023-10-03T00:00:00Z"
+                      }
+                    ]
                   }
                 }
                 """.trimIndent(),
@@ -203,7 +209,9 @@ class InSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "in": {
-                    "value": 1
+                    "value": [
+                      1
+                    ]
                   }
                 }
                 """.trimIndent(),
@@ -249,9 +257,11 @@ class InSearchOperatorDslTest : FreeSpec({
                 """
                 {
                   "in": {
-                    "value": {
-                      "${'$'}oid": "651bd39c0ff5011eca8979ca"
-                    }
+                    "value": [
+                      {
+                        "${'$'}oid": "651bd39c0ff5011eca8979ca"
+                      }
+                    ]
                   }
                 }
                 """.trimIndent(),
