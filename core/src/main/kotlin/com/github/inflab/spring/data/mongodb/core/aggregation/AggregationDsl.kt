@@ -318,6 +318,10 @@ class AggregationDsl {
         operations += Aggregation.sample(sampleSize)
     }
 
+    fun replaceRoot(configuration: ReplaceRootDsl.() -> Unit) {
+        operations += ReplaceRootDsl().apply(configuration).get()
+    }
+
     /**
      * Builds the [Aggregation] using the configured [AggregationOperation]s.
      *
