@@ -51,9 +51,9 @@ class ReplaceRootDsl {
      *
      * @param configuration The configuration block where you can use DSL to define aggregation expression.
      */
-//    fun newRoot(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
-//        operation = ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
-//    }
+    fun expressions(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+        operation = ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
+    }
 
     internal fun get() = checkNotNull(operation) { "ReplaceRoot operation must not be null!" }
 
