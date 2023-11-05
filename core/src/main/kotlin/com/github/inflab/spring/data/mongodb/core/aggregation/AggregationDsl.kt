@@ -318,6 +318,12 @@ class AggregationDsl {
         operations += Aggregation.sample(sampleSize)
     }
 
+    /**
+     * Configures a stage that replaces the input document with the specified document
+     *
+     * @param configuration The configuration block for the [ReplaceRootDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot">$replaceRoot (aggregation)</a>
+     */
     fun replaceRoot(configuration: ReplaceRootDsl.() -> Unit) {
         operations += ReplaceRootDsl().apply(configuration).get()
     }
