@@ -2,6 +2,7 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
+import java.util.OptionalInt.of
 
 class ReplaceRootDslTest : FreeSpec({
 
@@ -334,6 +335,36 @@ class ReplaceRootDslTest : FreeSpec({
                     """.trimIndent(),
                 )
             }
+        }
+    }
+
+    "Expressions" - {
+        "should set new root from aggregation expression" {
+            // given
+            val stage = replaceRoot {
+                expressions {
+                    add { of(1) and 2 }
+                }
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}replaceRoot": {
+                    "newRoot": {
+                      "${'$'}add": [
+                        1,
+                        2
+                      ]
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
         }
     }
 })
