@@ -4,6 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.Aggrega
 import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
 import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
+import org.springframework.data.mongodb.core.aggregation.ReplaceRootOperation
 import org.springframework.data.mongodb.core.aggregation.ReplaceRootOperation.ReplaceRootDocumentOperation
 import kotlin.reflect.KProperty
 
@@ -16,24 +17,52 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class ReplaceRootDsl {
-    private var operation = ReplaceRootDocumentOperation()
+    private var operation: ReplaceRootOperation? = null
 
     /**
-     * Specifies the new root document.
+     * Specifies the new root document with document operation.
      *
-     * @param configuration The configuration for the [ReplacementDocumentDsl]
+     * @param configuration The configuration for the [ReplacementDocumentOperationDsl]
      */
-    fun newRoot(configuration: ReplacementDocumentDsl.() -> Unit) {
-        ReplacementDocumentDsl().configuration()
+    fun newRoot(configuration: ReplacementDocumentOperationDsl.() -> Unit) {
+        operation = ReplacementDocumentOperationDsl().apply(configuration).get()
     }
 
-    internal fun get() = operation
+    /**
+     * Specifies field name for the new root document.
+     *
+     * @param path The path of the field to replace new root.
+     */
+    fun newRoot(path: String) {
+        operation = ReplaceRootOperation.builder().withValueOf(path)
+    }
+
+    /**
+     * Specifies field name for the new root document.
+     *
+     * @param path The path of the field to replace new root.
+     */
+    fun newRoot(path: KProperty<*>) {
+        operation = ReplaceRootOperation.builder().withValueOf(path.toDotPath())
+    }
+
+    /**
+     * Specifies the new root document with aggregation expression.
+     *
+     * @param configuration The configuration block where you can use DSL to define aggregation expression.
+     */
+//    fun newRoot(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
+//        operation = ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
+//    }
+
+    internal fun get() = checkNotNull(operation) { "ReplaceRoot operation must not be null!" }
 
     /**
      * A Kotlin DSL to configure replacement document using idiomatic Kotlin code.
      */
-    inner class ReplacementDocumentDsl(
+    class ReplacementDocumentOperationDsl(
         private val prefix: String = "",
+        private var operation: ReplaceRootDocumentOperation = ReplaceRootDocumentOperation(),
     ) {
 
         /**
@@ -67,10 +96,10 @@ class ReplaceRootDsl {
          * Adds nested new fields to documents.
          *
          * @param path The path of the field to contain value to be added.
-         * @param configuration The configuration block for [ReplacementDocumentDsl]
+         * @param configuration The configuration block for [ReplacementDocumentOperationDsl]
          */
-        fun nested(path: String, configuration: ReplacementDocumentDsl.() -> Unit) {
-            ReplacementDocumentDsl(path.addPrefix()).configuration()
+        fun nested(path: String, configuration: ReplacementDocumentOperationDsl.() -> Unit) {
+            operation = ReplacementDocumentOperationDsl(path.addPrefix(), operation).apply(configuration).get()
         }
 
         /**
@@ -113,10 +142,10 @@ class ReplaceRootDsl {
          * Adds nested new fields to documents.
          *
          * @param path The path of the field to contain value to be added.
-         * @param configuration The configuration block for [ReplacementDocumentDsl]
+         * @param configuration The configuration block for [ReplacementDocumentOperationDsl]
          */
-        fun nested(path: KProperty<*>, configuration: ReplacementDocumentDsl.() -> Unit) {
-            ReplacementDocumentDsl(path.toDotPath().addPrefix()).configuration()
+        fun nested(path: KProperty<*>, configuration: ReplacementDocumentOperationDsl.() -> Unit) {
+            operation = ReplacementDocumentOperationDsl(path.toDotPath().addPrefix(), operation).apply(configuration).get()
         }
 
         /**
@@ -138,5 +167,7 @@ class ReplaceRootDsl {
 
             return "$prefix.$this"
         }
+
+        internal fun get() = operation
     }
 }
