@@ -33,8 +33,8 @@ class ReplaceRootDsl {
             operation = operation.andValue(value).`as`(this.addPrefix())
         }
 
-        fun nested(path: String, configuration: NewRootDsl.() -> Void) {
-            NewRootDsl(path).configuration()
+        fun nested(path: String, configuration: NewRootDsl.() -> Unit) {
+            NewRootDsl(path.addPrefix()).configuration()
         }
 
         infix fun String.setByField(fieldPath: String) {
@@ -55,6 +55,10 @@ class ReplaceRootDsl {
 
         infix fun KProperty<*>.setByField(fieldPath: String) {
             operation = operation.andValue("$$fieldPath").`as`(this.toDotPath().addPrefix())
+        }
+
+        fun nested(path: KProperty<*>, configuration: NewRootDsl.() -> Unit) {
+            NewRootDsl(path.toDotPath().addPrefix()).configuration()
         }
 
         private fun String.addPrefix(): String {
