@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ObjectOperators.MergeObjects
 import org.springframework.data.mongodb.core.aggregation.StringOperators.Concat
+import org.springframework.data.mongodb.core.aggregation.SystemVariable
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.stereotype.Repository
@@ -96,7 +97,7 @@ class ReplaceRootRepository(
                             ContactInfo::cell.toDotPath() to "",
                             ContactInfo::home.toDotPath() to "",
                         ),
-                    ).mergeWith("\$\$ROOT")
+                    ).mergeWith(SystemVariable.ROOT)
                 }
             }
         }
