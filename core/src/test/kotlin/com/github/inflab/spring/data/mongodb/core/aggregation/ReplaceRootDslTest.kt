@@ -4,7 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
 import java.util.OptionalInt.of
 
-class ReplaceRootDslTest : FreeSpec({
+internal class ReplaceRootDslTest : FreeSpec({
 
     fun replaceRoot(configuration: ReplaceRootDsl.() -> Unit): ReplaceRootDsl =
         ReplaceRootDsl().apply(configuration)

@@ -22,7 +22,7 @@ class ReplaceRootDsl {
     /**
      * Specifies the new root document with document operation.
      *
-     * @param configuration The configuration for the [ReplacementDocumentOperationDsl]
+     * @param configuration The configuration block for the [ReplacementDocumentOperationDsl].
      */
     fun newRoot(configuration: ReplacementDocumentOperationDsl.() -> Unit) {
         operation = ReplacementDocumentOperationDsl().apply(configuration).get()
@@ -49,7 +49,7 @@ class ReplaceRootDsl {
     /**
      * Specifies the new root document with aggregation expression.
      *
-     * @param configuration The configuration block where you can use DSL to define aggregation expression.
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
     fun expressions(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
         operation = ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
@@ -68,7 +68,7 @@ class ReplaceRootDsl {
         /**
          * Adds new fields to documents with aggregation expression.
          *
-         * @param configuration The configuration block where you can use DSL to define aggregation expression.
+         * @param configuration The configuration block for the [AggregationExpressionDsl].
          */
         infix fun String.set(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
             operation = operation.and(AggregationExpressionDsl().configuration()).`as`(this.addPrefix())
@@ -79,7 +79,7 @@ class ReplaceRootDsl {
          *
          * @param path The path of the field to contain value to be added.
          */
-        infix fun String.set(path: KProperty<Any?>) {
+        infix fun String.set(path: KProperty<*>) {
             operation = operation.andValue("$${path.toDotPath()}").`as`(this.addPrefix())
         }
 
@@ -96,7 +96,7 @@ class ReplaceRootDsl {
          * Adds nested new fields to documents.
          *
          * @param path The path of the field to contain value to be added.
-         * @param configuration The configuration block for [ReplacementDocumentOperationDsl]
+         * @param configuration The configuration block for [ReplacementDocumentOperationDsl].
          */
         fun nested(path: String, configuration: ReplacementDocumentOperationDsl.() -> Unit) {
             operation = ReplacementDocumentOperationDsl(path.addPrefix(), operation).apply(configuration).get()
@@ -114,7 +114,7 @@ class ReplaceRootDsl {
         /**
          * Adds new fields to documents with aggregation expression.
          *
-         * @param configuration The configuration block where you can use DSL to define aggregation expression.
+         * @param configuration The configuration block for the [AggregationExpressionDsl].
          */
         infix fun KProperty<*>.set(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
             operation = operation.and(AggregationExpressionDsl().configuration()).`as`(this.toDotPath().addPrefix())
@@ -125,7 +125,7 @@ class ReplaceRootDsl {
          *
          * @param path The path of the field to contain value to be added.
          */
-        infix fun KProperty<*>.set(path: KProperty<Any?>) {
+        infix fun KProperty<*>.set(path: KProperty<*>) {
             operation = operation.andValue("$${path.toDotPath()}").`as`(this.toDotPath().addPrefix())
         }
 
@@ -142,7 +142,7 @@ class ReplaceRootDsl {
          * Adds nested new fields to documents.
          *
          * @param path The path of the field to contain value to be added.
-         * @param configuration The configuration block for [ReplacementDocumentOperationDsl]
+         * @param configuration The configuration block for [ReplacementDocumentOperationDsl].
          */
         fun nested(path: KProperty<*>, configuration: ReplacementDocumentOperationDsl.() -> Unit) {
             operation = ReplacementDocumentOperationDsl(
