@@ -52,6 +52,7 @@ class ReplaceRootRepository(
     fun replaceRootWithNestedArray(): AggregationResults<Grade> {
         val aggregation = aggregation {
             unwind { path(Student::grades) }
+            // TODO: add $gte operators
             match(Criteria.where((Student::grades..Grade::grade).toDotPath()).gte(90))
             replaceRoot {
                 newRoot(Student::grades)
