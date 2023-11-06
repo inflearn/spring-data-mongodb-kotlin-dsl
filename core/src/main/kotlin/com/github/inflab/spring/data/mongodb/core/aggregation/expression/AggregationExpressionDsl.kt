@@ -67,7 +67,7 @@ class AggregationExpressionDsl {
      * @param configuration The configuration block for the [AddExpressionDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/add/#mongodb-expression-exp.-add">$add</a>
      */
-    fun add(configuration: AddExpressionDsl.() -> AddExpressionDsl.Operands) =
+    fun add(configuration: AddExpressionDsl.() -> AddExpressionDsl.Operands): AggregationExpression =
         AddExpressionDsl().build(configuration)
 
     /**

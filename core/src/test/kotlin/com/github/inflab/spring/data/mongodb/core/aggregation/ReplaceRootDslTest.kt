@@ -2,17 +2,18 @@ package com.github.inflab.spring.data.mongodb.core.aggregation
 
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
-import java.util.OptionalInt.of
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression
+import org.springframework.data.mongodb.core.aggregation.ReplaceRootOperation
 
 internal class ReplaceRootDslTest : FreeSpec({
 
-    fun replaceRoot(configuration: ReplaceRootDsl.() -> Unit): ReplaceRootDsl =
-        ReplaceRootDsl().apply(configuration)
+    fun replaceRoot(configuration: ReplaceRootDsl.() -> ReplaceRootOperation): ReplaceRootOperation =
+        ReplaceRootDsl().configuration()
 
     "newRoot" - {
         "ReplacementDocumentOperationDsl" - {
             "should set field with aggregation expression" {
-                // given
+                // given, when
                 val stage = replaceRoot {
                     newRoot {
                         "a" set {
@@ -21,11 +22,8 @@ internal class ReplaceRootDslTest : FreeSpec({
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -46,17 +44,16 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set field with path" {
                 // given
                 data class Test(val a: Int, val targetPath: Int)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         "a" set Test::targetPath
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -70,18 +67,15 @@ internal class ReplaceRootDslTest : FreeSpec({
             }
 
             "should set field with value" {
-                // given
+                // given, when
                 val stage = replaceRoot {
                     newRoot {
                         "a" set 1
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -95,18 +89,15 @@ internal class ReplaceRootDslTest : FreeSpec({
             }
 
             "should set field with value of other field" {
-                // given
+                // given, when
                 val stage = replaceRoot {
                     newRoot {
                         "a" setByField "b"
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -122,6 +113,8 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set nested field" {
                 // given
                 data class Test(val a: Long, val b: Long, val c: Long, val d: Long)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         nested("a") {
@@ -137,11 +130,8 @@ internal class ReplaceRootDslTest : FreeSpec({
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -165,6 +155,8 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set field path with aggregation expression" {
                 // given
                 data class Test(val sourcePath: Int, val targetPath: Int)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         Test::targetPath set {
@@ -173,11 +165,8 @@ internal class ReplaceRootDslTest : FreeSpec({
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -199,17 +188,16 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set field path with path" {
                 // given
                 data class Test(val sourcePath: Int, val targetPath: Int)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         Test::targetPath set Test::sourcePath
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -225,17 +213,16 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set field path with value" {
                 // given
                 data class Test(val sourcePath: Int, val targetPath: Int)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         Test::targetPath set 1
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -251,6 +238,8 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set nested field path" {
                 // given
                 data class Test(val a: Long, val b: Long, val c: Long, val d: Long)
+
+                // when
                 val stage = replaceRoot {
                     newRoot {
                         nested(Test::a) {
@@ -266,11 +255,8 @@ internal class ReplaceRootDslTest : FreeSpec({
                     }
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -294,16 +280,13 @@ internal class ReplaceRootDslTest : FreeSpec({
 
         "FieldReplacement" - {
             "should set new root from a field" {
-                // given
+                // given, when
                 val stage = replaceRoot {
                     newRoot("a")
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -317,15 +300,14 @@ internal class ReplaceRootDslTest : FreeSpec({
             "should set new root from a field path" {
                 // given
                 data class Test(val a: Long)
+
+                // when
                 val stage = replaceRoot {
                     newRoot(Test::a)
                 }
 
-                // when
-                val result = stage.get()
-
                 // then
-                result.shouldBeJson(
+                stage.shouldBeJson(
                     """
                 {
                   "${'$'}replaceRoot": {
@@ -338,20 +320,17 @@ internal class ReplaceRootDslTest : FreeSpec({
         }
     }
 
-    "Expressions" - {
+    "AggregationExpressions" - {
         "should set new root from aggregation expression" {
-            // given
+            // given, when
             val stage = replaceRoot {
-                expressions {
+                newRoot<AggregationExpression> {
                     add { of(1) and 2 }
                 }
             }
 
-            // when
-            val result = stage.get()
-
             // then
-            result.shouldBeJson(
+            stage.shouldBeJson(
                 """
                 {
                   "${'$'}replaceRoot": {

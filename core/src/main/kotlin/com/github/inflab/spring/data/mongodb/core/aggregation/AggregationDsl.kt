@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions.DomainTypeMapping
+import org.springframework.data.mongodb.core.aggregation.ReplaceRootOperation
 import org.springframework.data.mongodb.core.aggregation.UnsetOperation
 import org.springframework.data.mongodb.core.query.Collation
 import org.springframework.data.mongodb.core.query.Criteria
@@ -324,8 +325,8 @@ class AggregationDsl {
      * @param configuration The configuration block for the [ReplaceRootDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot">$replaceRoot (aggregation)</a>
      */
-    fun replaceRoot(configuration: ReplaceRootDsl.() -> Unit) {
-        operations += ReplaceRootDsl().apply(configuration).get()
+    fun replaceRoot(configuration: ReplaceRootDsl.() -> ReplaceRootOperation) {
+        operations += ReplaceRootDsl().configuration()
     }
 
     /**
