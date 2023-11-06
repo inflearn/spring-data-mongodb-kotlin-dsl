@@ -145,7 +145,10 @@ class ReplaceRootDsl {
          * @param configuration The configuration block for [ReplacementDocumentOperationDsl]
          */
         fun nested(path: KProperty<*>, configuration: ReplacementDocumentOperationDsl.() -> Unit) {
-            operation = ReplacementDocumentOperationDsl(path.toDotPath().addPrefix(), operation).apply(configuration).get()
+            operation = ReplacementDocumentOperationDsl(
+                path.toDotPath().addPrefix(),
+                operation,
+            ).apply(configuration).get()
         }
 
         /**
@@ -157,9 +160,6 @@ class ReplaceRootDsl {
             operation = operation.andValue("$$fieldPath").`as`(this.toDotPath().addPrefix())
         }
 
-        /**
-         * add prefix to the field name.
-         */
         private fun String.addPrefix(): String {
             if (prefix.isEmpty()) {
                 return this
