@@ -17,45 +17,41 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class ReplaceRootDsl {
-    private var operation: ReplaceRootOperation? = null
 
     /**
      * Specifies the new root document with document operation.
      *
      * @param configuration The configuration block for the [ReplacementDocumentOperationDsl].
      */
-    fun newRoot(configuration: ReplacementDocumentOperationDsl.() -> Unit) {
-        operation = ReplacementDocumentOperationDsl().apply(configuration).get()
-    }
+    fun newRoot(configuration: ReplacementDocumentOperationDsl.() -> Unit): ReplaceRootDocumentOperation =
+        ReplacementDocumentOperationDsl().apply(configuration).get()
 
     /**
      * Specifies field name for the new root document.
      *
      * @param path The path of the field to replace new root.
      */
-    fun newRoot(path: String) {
-        operation = ReplaceRootOperation.builder().withValueOf(path)
-    }
+    fun newRoot(path: String): ReplaceRootOperation =
+        ReplaceRootOperation.builder().withValueOf(path)
 
     /**
      * Specifies field name for the new root document.
      *
      * @param path The path of the field to replace new root.
      */
-    fun newRoot(path: KProperty<*>) {
-        operation = ReplaceRootOperation.builder().withValueOf(path.toDotPath())
-    }
+    fun newRoot(path: KProperty<*>): ReplaceRootOperation =
+        ReplaceRootOperation.builder().withValueOf(path.toDotPath())
 
     /**
      * Specifies the new root document with aggregation expression.
      *
+     * @param T The type of [AggregationExpression].
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    fun expressions(configuration: AggregationExpressionDsl.() -> AggregationExpression) {
-        operation = ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
-    }
-
-    internal fun get() = checkNotNull(operation) { "ReplaceRoot operation must not be null!" }
+    inline fun <reified T : AggregationExpression> newRoot(
+        configuration: AggregationExpressionDsl.() -> T,
+    ): ReplaceRootOperation =
+        ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
 
     /**
      * A Kotlin DSL to configure replacement document using idiomatic Kotlin code.
@@ -148,7 +144,7 @@ class ReplaceRootDsl {
             operation = ReplacementDocumentOperationDsl(
                 path.toDotPath().addPrefix(),
                 operation,
-            ).apply(configuration).get()
+            ).apply(configuration).get() as ReplaceRootDocumentOperation
         }
 
         /**

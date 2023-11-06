@@ -5,6 +5,7 @@ import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
 import com.github.inflab.spring.data.mongodb.core.mapping.rangeTo
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.aggregation.ObjectOperators.MergeObjects
 import org.springframework.data.mongodb.core.aggregation.StringOperators.Concat
@@ -30,7 +31,7 @@ class ReplaceRootRepository(
     fun replaceRootWithEmbeddedDocumentField(): AggregationResults<Pet> {
         val aggregation = aggregation {
             replaceRoot {
-                expressions {
+                newRoot<AggregationExpression> {
                     // TODO: add $mergeObjects expressions
                     MergeObjects.merge(
                         mapOf(
@@ -87,7 +88,7 @@ class ReplaceRootRepository(
     fun replaceRootWithNewlyCreatedDocumentAndDefaultDocument(): AggregationResults<ContactInfo> {
         val aggregation = aggregation {
             replaceRoot {
-                expressions {
+                newRoot<AggregationExpression> {
                     // TODO: add $mergeObjects expressions
                     MergeObjects.merge(
                         mapOf(
