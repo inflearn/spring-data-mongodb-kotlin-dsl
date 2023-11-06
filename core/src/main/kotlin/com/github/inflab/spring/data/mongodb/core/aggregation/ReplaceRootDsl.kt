@@ -48,7 +48,7 @@ class ReplaceRootDsl {
      * @param T The type of [AggregationExpression].
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    inline fun <reified T : AggregationExpression> newRoot(
+    fun <T : AggregationExpression> newRoot(
         configuration: AggregationExpressionDsl.() -> T,
     ): ReplaceRootOperation =
         ReplaceRootOperation.builder().withValueOf(AggregationExpressionDsl().configuration())
