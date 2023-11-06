@@ -6,7 +6,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.bson.Document
 
-class ReplaceRootRepositoryTest : FreeSpec({
+internal class ReplaceRootRepositoryTest : FreeSpec({
     val mongoTemplate = makeMongoTemplate()
     val replaceRootRepository = ReplaceRootRepository(mongoTemplate)
 
