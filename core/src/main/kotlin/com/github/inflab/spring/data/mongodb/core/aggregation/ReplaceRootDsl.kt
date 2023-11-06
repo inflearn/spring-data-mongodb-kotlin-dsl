@@ -80,7 +80,7 @@ class ReplaceRootDsl {
          * @param path The path of the field to contain value to be added.
          */
         infix fun String.set(path: KProperty<Any?>) {
-            operation = operation.andValue("${'$'}${path.toDotPath()}").`as`(this.addPrefix())
+            operation = operation.andValue("$${path.toDotPath()}").`as`(this.addPrefix())
         }
 
         /**
@@ -126,7 +126,7 @@ class ReplaceRootDsl {
          * @param path The path of the field to contain value to be added.
          */
         infix fun KProperty<*>.set(path: KProperty<Any?>) {
-            operation = operation.andValue("${'$'}${path.toDotPath()}").`as`(this.toDotPath().addPrefix())
+            operation = operation.andValue("$${path.toDotPath()}").`as`(this.toDotPath().addPrefix())
         }
 
         /**
