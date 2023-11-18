@@ -1,0 +1,104 @@
+package com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison
+
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.AggregationExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.annotation.AggregationMarker
+import com.github.inflab.spring.data.mongodb.core.extension.toDotPath
+import org.bson.Document
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression
+import kotlin.reflect.KProperty
+
+/**
+ * A Kotlin DSL to configure `$cmp` [CmpExpressionDsl] using idiomatic Kotlin code.
+ *
+ * @author minwoo
+ * @since 1.0
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/cmp">cmp</a>
+ */
+@AggregationMarker
+class CmpExpressionDsl {
+    /**
+     * Represents all operands inside `$cmp` as a list.
+     *
+     * @property values The list that contains all operands.
+     */
+    @JvmInline
+    value class Operands(val values: MutableList<Any>)
+
+    /**
+     * Creates a [Operands] with the given [value].
+     *
+     * @param value The number.
+     */
+    fun of(value: Number) = Operands(mutableListOf(value))
+
+    /**
+     * Creates a [Operands] with the given [field].
+     *
+     * @param field The name of the field.
+     */
+    fun of(field: String) = Operands(mutableListOf("$$field"))
+
+    /**
+     * Creates a [Operands] with the given [property].
+     *
+     * @param property The name of the field.
+     */
+    fun of(property: KProperty<Number?>) = of(property.toDotPath())
+
+    /**
+     * Creates a [Operands] with the given [AggregationExpression].
+     *
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
+     */
+    fun of(configuration: AggregationExpressionDsl.() -> AggregationExpression) =
+        Operands(mutableListOf(AggregationExpressionDsl().configuration()))
+
+    /**
+     * Compares [value] and returns the result.
+     *
+     * @param value The value to compare.
+     */
+    infix fun Operands.compareTo(value: Number): Operands {
+        values.add(value)
+        return this
+    }
+
+    /**
+     * Compares [field] and returns the result.
+     *
+     * @param field The name of the field.
+     */
+    infix fun Operands.compareTo(field: String): Operands {
+        values.add("$$field")
+        return this
+    }
+
+    /**
+     * Compares [property] and returns the result.
+     *
+     * @param property The name of the field.
+     */
+    infix fun Operands.compareTo(property: KProperty<Number?>): Operands {
+        compareTo(property.toDotPath())
+        return this
+    }
+
+    /**
+     * Compares [AggregationExpression] and returns the result.
+     *
+     * @param configuration The configuration block for the [AggregationExpressionDsl].
+     */
+    infix fun Operands.compareTo(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
+        values.add(AggregationExpressionDsl().configuration())
+        return this
+    }
+
+    internal fun build(configuration: CmpExpressionDsl.() -> Operands) = AggregationExpression { context ->
+        Document(
+            "\$cmp",
+            configuration().values.map {
+                if (it is AggregationExpression) it.toDocument(context) else it
+            },
+        )
+    }
+}

@@ -373,4 +373,28 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "cmp" - {
+        "should build an expression" {
+            // given
+            val value = 1
+
+            // when
+            val result = expression {
+                cmp { of(value) compareTo value }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}cmp": [
+                    1,
+                    1
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
