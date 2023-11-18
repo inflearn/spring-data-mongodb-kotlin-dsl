@@ -22,7 +22,7 @@ class EqExpressionRepository(
         val qty: Int,
     )
 
-    data class EqDto(val item: String, val qty: Int, val cmpTo250: Int)
+    data class EqDto(val item: String, val qty: Int, val qtyEq250: Boolean)
 
     /**
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#example">Equal qty to 250</a>
