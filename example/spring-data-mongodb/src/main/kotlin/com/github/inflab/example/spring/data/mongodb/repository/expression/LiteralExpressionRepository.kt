@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.AggregationResults
-import org.springframework.data.mongodb.core.aggregation.ComparisonOperators
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.stereotype.Repository
 
@@ -25,8 +24,11 @@ class LiteralExpressionRepository(
         val aggregation = aggregation {
             project {
                 "costsOneDollar" expression {
-                    // TODO: add $eq operator
-                    ComparisonOperators.Eq.valueOf(StoreInventory::price.name).equalTo(literal("$1"))
+                    eq {
+                        of(StoreInventory::price) equal {
+                            literal("$1")
+                        }
+                    }
                 }
             }
         }
