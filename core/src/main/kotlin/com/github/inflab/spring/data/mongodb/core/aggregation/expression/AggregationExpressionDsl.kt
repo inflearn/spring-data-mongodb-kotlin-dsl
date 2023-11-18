@@ -4,6 +4,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithme
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.DivideExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.CmpExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.EqExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.SwitchExpressionDsl
@@ -253,4 +254,15 @@ class AggregationExpressionDsl {
      */
     fun cmp(configuration: CmpExpressionDsl.() -> CmpExpressionDsl.Operands): AggregationExpression =
         CmpExpressionDsl().build(configuration)
+
+    /**
+     * Compares two values and returns:
+     * - true when the values are equivalent.
+     * - false when the values are not equivalent.
+     *
+     * @param configuration The configuration block for the [CmpExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#-eq--aggregation-">$eq</a>
+     */
+    fun eq(configuration: EqExpressionDsl.() -> EqExpressionDsl.Operands): AggregationExpression =
+        EqExpressionDsl().build(configuration)
 }
