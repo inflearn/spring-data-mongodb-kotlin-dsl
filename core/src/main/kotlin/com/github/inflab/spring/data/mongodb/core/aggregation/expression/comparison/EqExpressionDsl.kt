@@ -46,6 +46,14 @@ class EqExpressionDsl {
     fun of(property: KProperty<Number?>) = of(property.toDotPath())
 
     /**
+     * Creates a [Operands] with the given [property].
+     *
+     * @param property The name of the field.
+     */
+    @JvmName("ofString")
+    fun of(property: KProperty<String?>) = of(property.toDotPath())
+
+    /**
      * Creates a [Operands] with the given [AggregationExpression].
      *
      * @param configuration The configuration block for the [AggregationExpressionDsl].
@@ -79,6 +87,17 @@ class EqExpressionDsl {
      * @param property The name of the field.
      */
     infix fun Operands.equal(property: KProperty<Number?>): Operands {
+        equal(property.toDotPath())
+        return this
+    }
+
+    /**
+     * Compares [property] and returns true or false.
+     *
+     * @param property The name of the field.
+     */
+    @JvmName("equalString")
+    infix fun Operands.equal(property: KProperty<String?>): Operands {
         equal(property.toDotPath())
         return this
     }
