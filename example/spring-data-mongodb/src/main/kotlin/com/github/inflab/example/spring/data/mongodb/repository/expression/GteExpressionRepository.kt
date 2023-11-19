@@ -9,33 +9,37 @@ import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.stereotype.Repository
 
 @Repository
-class CondExpressionRepository(
+class GteExpressionRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
-    @Document("inventory")
-    data class Inventory(@Id val id: Long, val item: String, val qty: Int)
 
-    data class DiscountDto(val id: Long, val item: String, val discount: Int)
+    @Document("inventory")
+    data class Inventory(
+        @Id
+        val id: Long,
+        val item: String,
+        val description: String,
+        val qty: Int,
+    )
+
+    data class GteDto(val item: String, val qty: Int, val qtyGte250: Boolean)
 
     /**
-     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cond/#example">Example</a>
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/gte/#example">qty greater than or equal 250</a>
      */
-    fun findDiscount(): AggregationResults<DiscountDto> {
+    fun qtyGte250(): AggregationResults<GteDto> {
         val aggregation = aggregation {
             project {
                 +Inventory::item
-                "discount" expression {
-                    cond {
-                        case {
-                            gte {
-                                of(Inventory::qty) greaterThanEqual 250
-                            }
-                        } thenValue 30 otherwiseValue 20
+                +Inventory::qty
+                "qtyGte250" expression {
+                    gte {
+                        of(Inventory::qty) greaterThanEqual 250
                     }
                 }
             }
         }
 
-        return mongoTemplate.aggregate<Inventory, DiscountDto>(aggregation)
+        return mongoTemplate.aggregate<Inventory, GteDto>(aggregation)
     }
 }
