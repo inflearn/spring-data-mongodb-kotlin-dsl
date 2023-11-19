@@ -421,4 +421,28 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "gt" - {
+        "should build an expression" {
+            // given
+            val value = 1
+
+            // when
+            val result = expression {
+                gt { of(value) greaterThan value }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}gt": [
+                    1,
+                    1
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

@@ -5,6 +5,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithme
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.arithmetic.SubtractExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.CmpExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.EqExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.GtExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.SwitchExpressionDsl
@@ -260,9 +261,20 @@ class AggregationExpressionDsl {
      * - true when the values are equivalent.
      * - false when the values are not equivalent.
      *
-     * @param configuration The configuration block for the [CmpExpressionDsl].
+     * @param configuration The configuration block for the [EqExpressionDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#-eq--aggregation-">$eq</a>
      */
     fun eq(configuration: EqExpressionDsl.() -> EqExpressionDsl.Operands): AggregationExpression =
         EqExpressionDsl().build(configuration)
+
+    /**
+     * Compares two values and returns:
+     * - true when the first value is greater than the second value.
+     * - false when the first value is less than or equivalent to the second value.
+     *
+     * @param configuration The configuration block for the [GtExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/gt/#-gt--aggregation-">$gt</a>
+     */
+    fun gt(configuration: GtExpressionDsl.() -> GtExpressionDsl.Operands): AggregationExpression =
+        GtExpressionDsl().build(configuration)
 }
