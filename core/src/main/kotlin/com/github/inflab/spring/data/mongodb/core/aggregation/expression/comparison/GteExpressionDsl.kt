@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import kotlin.reflect.KProperty
 
 /**
- * A Kotlin DSL to configure `$gt` [GtExpressionDsl] using idiomatic Kotlin code.
+ * A Kotlin DSL to configure `$gte` [GteExpressionDsl] using idiomatic Kotlin code.
  *
  * @author minwoo
  * @since 1.0
- * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/gt">$gt</a>
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/gte">$gte</a>
  */
 @AggregationMarker
-class GtExpressionDsl {
+class GteExpressionDsl {
     /**
-     * Represents all operands inside `$gt` as a list.
+     * Represents all operands inside `$gte` as a list.
      *
      * @property values The list that contains all operands.
      */
@@ -66,7 +66,7 @@ class GtExpressionDsl {
      *
      * @param value The value to compare.
      */
-    infix fun Operands.greaterThan(value: Number): Operands {
+    infix fun Operands.greaterThanEqual(value: Number): Operands {
         values.add(value)
         return this
     }
@@ -76,7 +76,7 @@ class GtExpressionDsl {
      *
      * @param field The name of the field.
      */
-    infix fun Operands.greaterThan(field: String): Operands {
+    infix fun Operands.greaterThanEqual(field: String): Operands {
         values.add("$$field")
         return this
     }
@@ -86,8 +86,8 @@ class GtExpressionDsl {
      *
      * @param property The name of the field.
      */
-    infix fun Operands.greaterThan(property: KProperty<Number?>): Operands {
-        greaterThan(property.toDotPath())
+    infix fun Operands.greaterThanEqual(property: KProperty<Number?>): Operands {
+        greaterThanEqual(property.toDotPath())
         return this
     }
 
@@ -96,9 +96,9 @@ class GtExpressionDsl {
      *
      * @param property The name of the field.
      */
-    @JvmName("greaterThanString")
-    infix fun Operands.greaterThan(property: KProperty<String?>): Operands {
-        greaterThan(property.toDotPath())
+    @JvmName("greaterThanEqualString")
+    infix fun Operands.greaterThanEqual(property: KProperty<String?>): Operands {
+        greaterThanEqual(property.toDotPath())
         return this
     }
 
@@ -107,14 +107,14 @@ class GtExpressionDsl {
      *
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    infix fun Operands.greaterThan(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
+    infix fun Operands.greaterThanEqual(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
         values.add(AggregationExpressionDsl().configuration())
         return this
     }
 
-    internal fun build(configuration: GtExpressionDsl.() -> Operands) = AggregationExpression { context ->
+    internal fun build(configuration: GteExpressionDsl.() -> Operands) = AggregationExpression { context ->
         Document(
-            "\$gt",
+            "\$gte",
             configuration().values.map {
                 if (it is AggregationExpression) it.toDocument(context) else it
             },
