@@ -38,19 +38,24 @@ class SwitchExpressionRepository(
                 "summary" expression {
                     switch {
                         branch(
-                            // TODO: add $gte and $avg operator
                             {
-                                ComparisonOperators.Gte.valueOf(AccumulatorOperators.Avg.avgOf(Grade::scores.name))
-                                    .greaterThanEqualToValue(90)
+                                gte {
+                                    of({
+                                        AccumulatorOperators.Avg.avgOf(Grade::scores.name)
+                                    }) greaterThanEqual 90
+                                }
                             },
                             "Doing great!",
                         )
                         branch(
-                            // TODO: add $and, $gte, $avg and $lt operator
+                            // TODO: add $and, $avg and $lt operator
                             {
                                 BooleanOperators.And.and(
-                                    ComparisonOperators.Gte.valueOf(AccumulatorOperators.Avg.avgOf(Grade::scores.name))
-                                        .greaterThanEqualToValue(80),
+                                    gte {
+                                        of({
+                                            AccumulatorOperators.Avg.avgOf(Grade::scores.name)
+                                        }) greaterThanEqual 80
+                                    },
                                     ComparisonOperators.Lt.valueOf(AccumulatorOperators.Avg.avgOf(Grade::scores.name))
                                         .lessThanValue(90),
                                 )
