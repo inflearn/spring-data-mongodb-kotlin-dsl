@@ -25,7 +25,7 @@ class CmpExpressionRepository(
     data class CmpDto(val item: String, val qty: Int, val cmpTo250: Int)
 
     /**
-     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cmp/#example">Compare To 250</a>
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cmp/#example">qty compare to 250</a>
      */
     fun compareTo250(): AggregationResults<CmpDto> {
         val aggregation = aggregation {

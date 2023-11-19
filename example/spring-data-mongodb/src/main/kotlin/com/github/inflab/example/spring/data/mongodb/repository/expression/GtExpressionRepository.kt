@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.stereotype.Repository
 
 @Repository
-class EqExpressionRepository(
+class GtExpressionRepository(
     private val mongoTemplate: MongoTemplate,
 ) {
 
@@ -22,24 +22,24 @@ class EqExpressionRepository(
         val qty: Int,
     )
 
-    data class EqDto(val item: String, val qty: Int, val qtyEq250: Boolean)
+    data class GtDto(val item: String, val qty: Int, val qtyGt250: Boolean)
 
     /**
-     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#example">qty equal to 250</a>
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/gt/#example">qty greater than 250</a>
      */
-    fun qtyEq250(): AggregationResults<EqDto> {
+    fun qtyGt250(): AggregationResults<GtDto> {
         val aggregation = aggregation {
             project {
                 +Inventory::item
                 +Inventory::qty
-                "qtyEq250" expression {
-                    eq {
-                        of(Inventory::qty) equal 250
+                "qtyGt250" expression {
+                    gt {
+                        of(Inventory::qty) greaterThan 250
                     }
                 }
             }
         }
 
-        return mongoTemplate.aggregate<Inventory, EqDto>(aggregation)
+        return mongoTemplate.aggregate<Inventory, GtDto>(aggregation)
     }
 }
