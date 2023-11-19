@@ -8,16 +8,16 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import kotlin.reflect.KProperty
 
 /**
- * A Kotlin DSL to configure `$eq` [EqExpressionDsl] using idiomatic Kotlin code.
+ * A Kotlin DSL to configure `$gt` [GtExpressionDsl] using idiomatic Kotlin code.
  *
  * @author minwoo
  * @since 1.0
- * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/eq">$eq</a>
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/gt">$gt</a>
  */
 @AggregationMarker
-class EqExpressionDsl {
+class GtExpressionDsl {
     /**
-     * Represents all operands inside `$eq` as a list.
+     * Represents all operands inside `$gt` as a list.
      *
      * @property values The list that contains all operands.
      */
@@ -50,7 +50,7 @@ class EqExpressionDsl {
      *
      * @param property The name of the field.
      */
-    @JvmName("ofString")
+    @JvmName("greaterThanString")
     fun of(property: KProperty<String?>) = of(property.toDotPath())
 
     /**
@@ -66,7 +66,7 @@ class EqExpressionDsl {
      *
      * @param value The value to compare.
      */
-    infix fun Operands.equal(value: Number): Operands {
+    infix fun Operands.greaterThan(value: Number): Operands {
         values.add(value)
         return this
     }
@@ -76,7 +76,7 @@ class EqExpressionDsl {
      *
      * @param field The name of the field.
      */
-    infix fun Operands.equal(field: String): Operands {
+    infix fun Operands.greaterThan(field: String): Operands {
         values.add("$$field")
         return this
     }
@@ -86,8 +86,8 @@ class EqExpressionDsl {
      *
      * @param property The name of the field.
      */
-    infix fun Operands.equal(property: KProperty<Number?>): Operands {
-        equal(property.toDotPath())
+    infix fun Operands.greaterThan(property: KProperty<Number?>): Operands {
+        greaterThan(property.toDotPath())
         return this
     }
 
@@ -96,9 +96,9 @@ class EqExpressionDsl {
      *
      * @param property The name of the field.
      */
-    @JvmName("equalString")
-    infix fun Operands.equal(property: KProperty<String?>): Operands {
-        equal(property.toDotPath())
+    @JvmName("greaterThanString")
+    infix fun Operands.greaterThan(property: KProperty<String?>): Operands {
+        greaterThan(property.toDotPath())
         return this
     }
 
@@ -107,14 +107,14 @@ class EqExpressionDsl {
      *
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    infix fun Operands.equal(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
+    infix fun Operands.greaterThan(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
         values.add(AggregationExpressionDsl().configuration())
         return this
     }
 
-    internal fun build(configuration: EqExpressionDsl.() -> Operands) = AggregationExpression { context ->
+    internal fun build(configuration: GtExpressionDsl.() -> Operands) = AggregationExpression { context ->
         Document(
-            "\$eq",
+            "\$gt",
             configuration().values.map {
                 if (it is AggregationExpression) it.toDocument(context) else it
             },

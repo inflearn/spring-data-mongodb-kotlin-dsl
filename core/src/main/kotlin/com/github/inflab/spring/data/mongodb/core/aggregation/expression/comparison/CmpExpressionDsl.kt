@@ -12,7 +12,7 @@ import kotlin.reflect.KProperty
  *
  * @author minwoo
  * @since 1.0
- * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/cmp">cmp</a>
+ * @see <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/cmp">$cmp</a>
  */
 @AggregationMarker
 class CmpExpressionDsl {
