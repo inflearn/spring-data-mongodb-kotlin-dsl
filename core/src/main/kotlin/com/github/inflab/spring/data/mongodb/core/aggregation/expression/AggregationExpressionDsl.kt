@@ -8,6 +8,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.compari
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.GtExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.GteExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.LtExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.LteExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.SwitchExpressionDsl
@@ -301,4 +302,15 @@ class AggregationExpressionDsl {
      */
     fun lt(configuration: LtExpressionDsl.() -> LtExpressionDsl.Operands): AggregationExpression =
         LtExpressionDsl().build(configuration)
+
+    /**
+     * Compares two values and returns:
+     * - true when the first value is less than or equivalent to the second value.
+     * - false when the first value is greater than the second value.
+     *
+     * @param configuration The configuration block for the [LteExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/lte/#-lte--aggregation-">$lt</a>
+     */
+    fun lte(configuration: LteExpressionDsl.() -> LteExpressionDsl.Operands): AggregationExpression =
+        LteExpressionDsl().build(configuration)
 }

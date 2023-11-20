@@ -469,4 +469,52 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "lt" - {
+        "should build an expression" {
+            // given
+            val value = 1
+
+            // when
+            val result = expression {
+                lt { of(value) lessThan value }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}lt": [
+                    1,
+                    1
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "lte" - {
+        "should build an expression" {
+            // given
+            val value = 1
+
+            // when
+            val result = expression {
+                lte { of(value) lessThanEqual value }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}lte": [
+                    1,
+                    1
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
