@@ -517,4 +517,28 @@ internal class AggregationExpressionDslTest : FreeSpec({
             )
         }
     }
+
+    "ne" - {
+        "should build an expression" {
+            // given
+            val value = 1
+
+            // when
+            val result = expression {
+                ne { of(value) notEqual value }
+            }
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}ne": [
+                    1,
+                    1
+                  ]
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

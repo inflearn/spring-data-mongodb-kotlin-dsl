@@ -9,6 +9,7 @@ import com.github.inflab.spring.data.mongodb.core.aggregation.expression.compari
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.GteExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.LtExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.LteExpressionDsl
+import com.github.inflab.spring.data.mongodb.core.aggregation.expression.comparison.NeExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.CondExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.IfNullExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.conditional.SwitchExpressionDsl
@@ -313,4 +314,15 @@ class AggregationExpressionDsl {
      */
     fun lte(configuration: LteExpressionDsl.() -> LteExpressionDsl.Operands): AggregationExpression =
         LteExpressionDsl().build(configuration)
+
+    /**
+     * Compares two values and returns:
+     * - true when the values are not equivalent.
+     * - false when the values are equivalent.
+     *
+     * @param configuration The configuration block for the [NeExpressionDsl].
+     * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/ne/#-ne--aggregation-">$lt</a>
+     */
+    fun ne(configuration: NeExpressionDsl.() -> NeExpressionDsl.Operands): AggregationExpression =
+        NeExpressionDsl().build(configuration)
 }
