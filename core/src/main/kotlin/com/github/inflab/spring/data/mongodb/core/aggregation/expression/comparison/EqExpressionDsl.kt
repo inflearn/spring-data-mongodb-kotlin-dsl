@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 import kotlin.reflect.KProperty
 
 /**
- * A Kotlin DSL to configure `$eq` [EqExpressionDsl] using idiomatic Kotlin code.
+ * A Kotlin DSL to configure `$eq` [AggregationExpression] using idiomatic Kotlin code.
  *
  * @author minwoo
  * @since 1.0
