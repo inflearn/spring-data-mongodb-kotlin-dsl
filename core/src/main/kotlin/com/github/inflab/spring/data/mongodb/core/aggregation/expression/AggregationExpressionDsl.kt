@@ -257,8 +257,8 @@ class AggregationExpressionDsl {
      * @param configuration The configuration block for the [CmpExpressionDsl].
      * @see <a href="https://www.mongodb.com/docs/manual/reference/operator/aggregation/cmp/#-cmp--aggregation-">$cmp</a>
      */
-    fun cmp(configuration: CmpExpressionDsl.() -> CmpExpressionDsl.Operands): AggregationExpression =
-        CmpExpressionDsl().build(configuration)
+    fun cmp(configuration: CmpExpressionDsl.() -> AggregationExpression): AggregationExpression =
+        CmpExpressionDsl().configuration()
 
     /**
      * Compares two values and returns:
