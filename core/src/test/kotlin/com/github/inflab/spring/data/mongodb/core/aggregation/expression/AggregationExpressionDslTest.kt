@@ -377,11 +377,11 @@ internal class AggregationExpressionDslTest : FreeSpec({
     "cmp" - {
         "should build an expression" {
             // given
-            val value = 1
+            val value = "path"
 
             // when
             val result = expression {
-                cmp { of(value) compareTo value }
+                cmp { of(value) compareTo "value" }
             }
 
             // then
@@ -389,8 +389,8 @@ internal class AggregationExpressionDslTest : FreeSpec({
                 """
                 {
                   "${'$'}cmp": [
-                    1,
-                    1
+                    "${'$'}path",
+                    "value"
                   ]
                 }
                 """.trimIndent(),

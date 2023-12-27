@@ -16,89 +16,81 @@ import kotlin.reflect.KProperty
  */
 @AggregationMarker
 class CmpExpressionDsl {
+
     /**
-     * Represents all operands inside `$cmp` as a list.
+     * Represents a first argument inside `$cmp`.
      *
-     * @property values The list that contains all operands.
+     * @property value The first argument.
      */
     @JvmInline
-    value class Operands(val values: MutableList<Any>)
+    value class FirstArg(val value: Any)
 
     /**
-     * Creates a [Operands] with the given [value].
-     *
-     * @param value The number.
-     */
-    fun of(value: Number) = Operands(mutableListOf(value))
-
-    /**
-     * Creates a [Operands] with the given [field].
+     * Creates a new [FirstArg].
      *
      * @param field The name of the field.
      */
-    fun of(field: String) = Operands(mutableListOf("$$field"))
+    fun of(field: String) = FirstArg(field)
 
     /**
-     * Creates a [Operands] with the given [property].
+     * Creates a new [FirstArg].
      *
-     * @param property The name of the field.
+     * @param property The property of the field.
      */
-    fun of(property: KProperty<Number?>) = of(property.toDotPath())
+    fun of(property: KProperty<*>) = of(property.toDotPath())
 
     /**
-     * Creates a [Operands] with the given [AggregationExpression].
+     * Creates a new [FirstArg].
      *
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
     fun of(configuration: AggregationExpressionDsl.() -> AggregationExpression) =
-        Operands(mutableListOf(AggregationExpressionDsl().configuration()))
+        FirstArg(AggregationExpressionDsl().configuration())
 
     /**
-     * Compares [value] and returns the result.
-     *
-     * @param value The value to compare.
-     */
-    infix fun Operands.compareTo(value: Number): Operands {
-        values.add(value)
-        return this
-    }
-
-    /**
-     * Compares [field] and returns the result.
+     * Compares [field] from the previously specified argument.
      *
      * @param field The name of the field.
      */
-    infix fun Operands.compareTo(field: String): Operands {
-        values.add("$$field")
-        return this
-    }
+    infix fun FirstArg.compareTo(field: Any) = this.toExpression(field)
 
     /**
-     * Compares [property] and returns the result.
+     * Compares [field] from the previously specified argument.
      *
-     * @param property The name of the field.
+     * @param field The name of the field.
      */
-    infix fun Operands.compareTo(property: KProperty<Number?>): Operands {
-        compareTo(property.toDotPath())
-        return this
-    }
+    infix fun FirstArg.compareByField(field: String) = this.toExpression("$$field")
 
     /**
-     * Compares [AggregationExpression] and returns the result.
+     * Compares [property] from the previously specified argument.
+     *
+     * @param property The property of the field.
+     */
+    infix fun FirstArg.compareByField(property: KProperty<*>) = this.toExpression("$${property.toDotPath()}")
+
+    /**
+     * Subtract the result of the given [AggregationExpression] from the previously specified argument.
      *
      * @param configuration The configuration block for the [AggregationExpressionDsl].
      */
-    infix fun Operands.compareTo(configuration: AggregationExpressionDsl.() -> AggregationExpression): Operands {
-        values.add(AggregationExpressionDsl().configuration())
-        return this
-    }
+    infix fun FirstArg.compareTo(configuration: AggregationExpressionDsl.() -> AggregationExpression) =
+        this.toExpression(AggregationExpressionDsl().configuration())
 
-    internal fun build(configuration: CmpExpressionDsl.() -> Operands) = AggregationExpression { context ->
+    private fun FirstArg.toExpression(second: Any) = AggregationExpression { context ->
         Document(
             "\$cmp",
-            configuration().values.map {
-                if (it is AggregationExpression) it.toDocument(context) else it
-            },
+            listOf(
+                when (value) {
+                    is AggregationExpression -> value.toDocument(context)
+                    is String -> "$$value"
+                    else -> value
+                },
+                if (second is AggregationExpression) {
+                    second.toDocument(context)
+                } else {
+                    second
+                },
+            ),
         )
     }
 }

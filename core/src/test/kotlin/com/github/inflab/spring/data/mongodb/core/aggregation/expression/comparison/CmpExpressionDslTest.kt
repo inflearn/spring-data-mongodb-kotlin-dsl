@@ -3,88 +3,47 @@ package com.github.inflab.spring.data.mongodb.core.aggregation.expression.compar
 import com.github.inflab.spring.data.mongodb.core.aggregation.expression.AggregationExpressionDsl
 import com.github.inflab.spring.data.mongodb.core.util.shouldBeJson
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression
 
 internal class CmpExpressionDslTest : FreeSpec({
-    fun cmp(block: CmpExpressionDsl.() -> CmpExpressionDsl.Operands) =
-        CmpExpressionDsl().build(block)
-
     "of" - {
-        "should add an operand by number" {
-            // given
-            val number = 100
-
-            // when
-            val expression = cmp { of(number) }
-
-            // then
-            expression.shouldBeJson(
-                """
-                {
-                  "${'$'}cmp": [
-                    100
-                  ]
-                }
-                """.trimIndent(),
-            )
-        }
-
-        "should create a operands by field" {
+        "should create an operands by field" {
             // given
             val field = "field"
 
             // when
-            val expression = cmp { of(field) }
+            val result = CmpExpressionDsl().of(field)
 
             // then
-            expression.shouldBeJson(
-                """
-                {
-                  "${'$'}cmp": [
-                    "$$field"
-                  ]
-                }
-                """.trimIndent(),
-            )
+            result shouldBe CmpExpressionDsl.FirstArg(field)
         }
 
-        "should add an operand by property" {
+        "should create an operand by property" {
             // given
-            data class Test(val field: Long?)
+            data class Test(val field: String)
 
             // when
-            val expression = cmp { of(Test::field) }
+            val result = CmpExpressionDsl().of(Test::field)
 
             // then
-            expression.shouldBeJson(
-                """
-                {
-                  "${'$'}cmp": [
-                    "${'$'}field"
-                  ]
-                }
-                """.trimIndent(),
-            )
+            result shouldBe CmpExpressionDsl.FirstArg("field")
         }
 
-        "should add an operand by expression" {
+        "should create an operand by expression" {
             // given
             val expression: AggregationExpressionDsl.() -> AggregationExpression = {
                 exp(2)
             }
 
             // when
-            val result = cmp { of(expression) }
+            val result = CmpExpressionDsl().of(expression)
 
             // then
-            result.shouldBeJson(
+            (result.value as AggregationExpression).shouldBeJson(
                 """
                 {
-                  "${'$'}cmp": [
-                    {
-                      "${'$'}exp": 2
-                    }
-                  ]
+                  "${'$'}exp": 2
                 }
                 """.trimIndent(),
             )
@@ -92,19 +51,22 @@ internal class CmpExpressionDslTest : FreeSpec({
     }
 
     "compareTo" - {
-        "should compareTo an operand by number" {
+        "should build an operand by number" {
             // given
-            val number = 100
+            val firstArg = CmpExpressionDsl.FirstArg("firstArg")
+            val block: CmpExpressionDsl.() -> AggregationExpression = {
+                firstArg compareTo 100
+            }
 
             // when
-            val expression = cmp { of(number) compareTo number }
+            val result = CmpExpressionDsl().block()
 
             // then
-            expression.shouldBeJson(
+            result.shouldBeJson(
                 """
                 {
                   "${'$'}cmp": [
-                    100,
+                    "$${firstArg.value}",
                     100
                   ]
                 }
@@ -112,39 +74,47 @@ internal class CmpExpressionDslTest : FreeSpec({
             )
         }
 
-        "should compareTo an operand by string" {
+        "should build an operand by string" {
             // given
-            val field = "field"
+            val firstArg = CmpExpressionDsl.FirstArg("firstArg")
+            val secondArg = "secondArg"
+            val block: CmpExpressionDsl.() -> AggregationExpression = {
+                firstArg compareTo secondArg
+            }
 
             // when
-            val expression = cmp { of(field) compareTo field }
+            val result = CmpExpressionDsl().block()
 
             // then
-            expression.shouldBeJson(
+            result.shouldBeJson(
                 """
                 {
                   "${'$'}cmp": [
-                    "$$field",
-                    "$$field"
+                    "${'$'}${firstArg.value}",
+                    "$secondArg"
                   ]
                 }
                 """.trimIndent(),
             )
         }
 
-        "should compareTo an operand by property" {
+        "should build an operand by property" {
             // given
-            data class Test(val field: Int?)
+            val firstArg = CmpExpressionDsl.FirstArg("firstArg")
+            data class Test(val field: Int)
+            val block: CmpExpressionDsl.() -> AggregationExpression = {
+                firstArg compareByField Test::field
+            }
 
             // when
-            val expression = cmp { of(Test::field) compareTo Test::field }
+            val result = CmpExpressionDsl().block()
 
             // then
-            expression.shouldBeJson(
+            result.shouldBeJson(
                 """
                 {
                   "${'$'}cmp": [
-                    "${'$'}field",
+                    "${'$'}firstArg",
                     "${'$'}field"
                   ]
                 }
@@ -152,23 +122,25 @@ internal class CmpExpressionDslTest : FreeSpec({
             )
         }
 
-        "should compareTo an operand by expression" {
+        "should build an operand by expression" {
             // given
+            val firstArg = CmpExpressionDsl.FirstArg("firstArg")
             val expression: AggregationExpressionDsl.() -> AggregationExpression = {
                 abs(-100)
             }
+            val block: CmpExpressionDsl.() -> AggregationExpression = {
+                firstArg compareTo expression
+            }
 
             // when
-            val result = cmp { of(expression) compareTo expression }
+            val result = CmpExpressionDsl().block()
 
             // then
             result.shouldBeJson(
                 """
                 {
                   "${'$'}cmp": [
-                    {
-                      "${'$'}abs": -100
-                    },
+                    "${'$'}firstArg",
                     {
                       "${'$'}abs": -100
                     }
