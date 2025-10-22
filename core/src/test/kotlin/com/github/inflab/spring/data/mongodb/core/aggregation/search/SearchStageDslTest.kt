@@ -257,4 +257,50 @@ internal class SearchStageDslTest : FreeSpec({
             )
         }
     }
+
+    "searchAfter" - {
+        "should build a searchAfter option" {
+            // given
+            val stage = search {
+                searchAfter = "token"
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {
+                    "searchAfter": "token"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
+    "searchBefore" - {
+        "should build a searchBefore option" {
+            // given
+            val stage = search {
+                searchBefore = "token"
+            }
+
+            // when
+            val result = stage.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${"$"}search": {
+                    "searchBefore": "token"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })
