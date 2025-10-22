@@ -245,6 +245,31 @@ internal class ProjectStageDslTest : FreeSpec({
         }
     }
 
+    "searchSequenceToken" - {
+        "should add search sequence token meta with given alias" {
+            // given
+            val stage = project {
+                searchSequenceToken("alias")
+            }
+
+            // when
+            val result = stage.get()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "${'$'}project": {
+                    "alias": {
+                      "${'$'}meta": "searchSequenceToken"
+                    }
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
     "searchHighlights" - {
         "should add search highlights meta with given alias" {
             // given

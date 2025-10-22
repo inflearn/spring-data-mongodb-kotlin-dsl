@@ -60,6 +60,28 @@ class SearchStageDsl : SearchOperator by SearchOperatorDsl(), SearchCollector by
         }
 
     /**
+     * A token that specifies the point after which to return search results.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/paginate-results/#search-after-a-specific-point-of-reference">Search After</a>
+     */
+    var searchAfter: String? = null
+        set(value) {
+            value?.let { document["searchAfter"] = it }
+            field = value
+        }
+
+    /**
+     * A token that specifies the point before which to return search results.
+     *
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/paginate-results/#search-before-a-specific-point-of-reference">Search Before</a>
+     */
+    var searchBefore: String? = null
+        set(value) {
+            value?.let { document["searchBefore"] = it }
+            field = value
+        }
+
+    /**
      * Configures an option to include a lower bound count of the number of documents that match the query.
      *
      * @param threshold Number of documents to include in the exact count.

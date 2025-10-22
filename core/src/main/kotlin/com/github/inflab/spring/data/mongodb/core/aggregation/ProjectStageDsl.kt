@@ -139,6 +139,16 @@ class ProjectStageDsl {
         addMetaDataKeyword("indexKey", alias)
     }
 
+    /**
+     * Specifies an alias that contains the search sequence token for paginating through Atlas Search results.
+     *
+     * @param alias The alias for the field.
+     * @see <a href="https://www.mongodb.com/docs/atlas/atlas-search/paginate-results/#paginate-the-results">Paginate the results</a>
+     */
+    fun searchSequenceToken(alias: String = "paginationToken") {
+        addMetaDataKeyword("searchSequenceToken", alias)
+    }
+
     private fun addMetaDataKeyword(keyword: String, alias: String) {
         operation = operation.andExpression("{\$meta: \"$keyword\"}").`as`(alias)
     }
