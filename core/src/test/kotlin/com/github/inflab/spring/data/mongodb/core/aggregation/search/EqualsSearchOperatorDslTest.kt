@@ -168,6 +168,27 @@ internal class EqualsSearchOperatorDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should build a value by String" {
+            // given
+            val operator = equal {
+                value("stringValue")
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "equals": {
+                    "value": "stringValue"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
     }
 
     "score" - {
