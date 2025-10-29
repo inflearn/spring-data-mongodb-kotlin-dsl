@@ -73,6 +73,15 @@ class EqualsSearchOperatorDsl {
     }
 
     /**
+     * Value to query for string, indexed as MongoDB Search token type.
+     *
+     * @param value Value must be a string.
+     */
+    fun value(value: String) {
+        document["value"] = value
+    }
+
+    /**
      * The score assigned to matching search term results. Use one of the following options to modify the score:
      *
      * - boost: multiply the result score by the given number.
