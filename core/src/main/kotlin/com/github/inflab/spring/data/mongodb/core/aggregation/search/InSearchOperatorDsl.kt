@@ -140,5 +140,26 @@ class InSearchOperatorDsl {
         document["value"] = value
     }
 
+    /**
+     * Value or values to search.
+     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
+     *
+     * @param value Values to search.
+     */
+    fun value(vararg value: String) {
+        document["value"] = value.toList()
+    }
+
+    /**
+     * Value or values to search.
+     * Value can be either a single value or an array of values of only one of the supported BSON types and can't be a mix of different types.
+     *
+     * @param value Values to search.
+     */
+    @JvmName("valueStringIterable")
+    fun value(value: Iterable<String>) {
+        document["value"] = value
+    }
+
     internal fun build() = Document("in", document)
 }

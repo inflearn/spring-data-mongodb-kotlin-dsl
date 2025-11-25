@@ -298,6 +298,54 @@ internal class InSearchOperatorDslTest : FreeSpec({
                 """.trimIndent(),
             )
         }
+
+        "should build a value by string" {
+            // given
+            val operator = `in` {
+                value("value1")
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "in": {
+                    "value": [
+                      "value1"
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build a value by multiple strings" {
+            // given
+            val operator = `in` {
+                value("value1", "value2", "value3")
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "in": {
+                    "value": [
+                      "value1",
+                      "value2",
+                      "value3"
+                    ]
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
     }
 
     "score" - {
