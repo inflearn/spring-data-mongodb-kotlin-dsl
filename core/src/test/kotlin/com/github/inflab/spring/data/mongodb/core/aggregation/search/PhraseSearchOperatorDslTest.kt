@@ -260,4 +260,27 @@ internal class PhraseSearchOperatorDslTest : FreeSpec({
             )
         }
     }
+
+    "synonyms" - {
+        "should build a synonyms" {
+            // given
+            val operator = phrase {
+                synonyms("synonyms")
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "phrase": {
+                    "synonyms": "synonyms"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
 })

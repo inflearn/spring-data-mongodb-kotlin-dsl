@@ -110,5 +110,16 @@ class PhraseSearchOperatorDsl {
         document["score"] = ScoreSearchOptionDsl().apply(scoreConfiguration).get()
     }
 
+    /**
+     * Required for running queries using synonyms.
+     * Name of the synonym mapping definition in the index definition.
+     * Value can't be an empty string.
+     *
+     * @param value Name of the synonym mapping definition in the index definition.
+     */
+    fun synonyms(value: String) {
+        document["synonyms"] = value
+    }
+
     internal fun build() = Document("phrase", document)
 }
