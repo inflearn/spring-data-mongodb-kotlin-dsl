@@ -283,6 +283,50 @@ internal class TextSearchOperatorDslTest : FreeSpec({
         }
     }
 
+    "matchCriteria" - {
+        "should build a matchCriteria with any" {
+            // given
+            val operator = text {
+                matchCriteria(TextMatchCriteria.ANY)
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "text": {
+                    "matchCriteria": "any"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+
+        "should build a matchCriteria with all" {
+            // given
+            val operator = text {
+                matchCriteria(TextMatchCriteria.ALL)
+            }
+
+            // when
+            val result = operator.build()
+
+            // then
+            result.shouldBeJson(
+                """
+                {
+                  "text": {
+                    "matchCriteria": "all"
+                  }
+                }
+                """.trimIndent(),
+            )
+        }
+    }
+
     "score" - {
         "should build a score" {
             // given

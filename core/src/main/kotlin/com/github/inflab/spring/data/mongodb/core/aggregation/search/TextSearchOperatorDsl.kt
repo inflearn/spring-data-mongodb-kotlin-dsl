@@ -110,6 +110,17 @@ class TextSearchOperatorDsl {
     }
 
     /**
+     * The criteria to use to match the terms in the query.
+     * The default value is [TextMatchCriteria.ANY].
+     * We recommend that you always include the matchCriteria option when you use the synonyms option.
+     *
+     * @param matchCriteria The criteria to use to match the terms in the query. [TextMatchCriteria]
+     */
+    fun matchCriteria(matchCriteria: TextMatchCriteria) {
+        document["matchCriteria"] = matchCriteria.name.lowercase()
+    }
+
+    /**
      * The score assigned to matching search term results. Use one of the following options to modify the score:
      *
      * - boost: multiply the result score by the given number.
